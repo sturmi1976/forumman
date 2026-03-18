@@ -2,7 +2,7 @@
 
 $EM_CONF[$_EXTKEY] = [
     'title' => 'Forum Manager',
-    'description' => 'Forum Description',
+    'description' => 'A modern TYPO3 forum extension for private messaging, threads, and community discussions.',
     'category' => 'fe',
     'state' => 'stable',
     'author' => 'Andre Lanius',
