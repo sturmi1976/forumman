@@ -1,0 +1,13 @@
+plugin.tx_forumman_forumforumlist {
+    view {
+        templateRootPaths.0 = EXT:forumman/Resources/Private/Templates/
+        templateRootPaths.10 = {$plugin.tx_forumman_forumforumlist.view.templateRootPath}
+        partialRootPaths.0 = EXT:forumman/Resources/Private/Partials/
+        partialRootPaths.10 = {$plugin.tx_forumman_forumforumlist.view.partialRootPath}
+        layoutRootPaths.0 = EXT:forumman/Resources/Private/Layouts/
+        layoutRootPaths.10 = {$plugin.tx_forumman_forumforumlist.view.layoutRootPath}
+    }
+    persistence {
+        storagePid = {$plugin.plugin.tx_forumman_forumforumlist.persistence.storagePid}
+    }
+}

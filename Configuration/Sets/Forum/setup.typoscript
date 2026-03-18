@@ -1,0 +1,64 @@
+@import 'EXT:forumman/Configuration/Sets/Forum/TypoScript/*.typoscript'
+
+
+
+plugin.tx_forumman {
+    view {
+        templateRootPaths.0 = EXT:forumman/Resources/Private/Templates/
+        templateRootPaths.10 = {$forumman.templateRootPath}
+        partialRootPaths.0  = EXT:forumman/Resources/Private/Partials/
+        partialRootPaths.10 = {$forumman.partialRootPath}
+        layoutRootPaths.0   = EXT:forumman/Resources/Private/Layouts/
+        layoutRootPaths.10 = {$forumman.layoutRootPath}
+    }
+    persistence {
+        storagePid = {$forumman.pid}
+    }
+    settings {
+      storageFolder = {$forumman.pid}
+      forumPagePid = {$forumman.uid}
+      registerUid = {$forumman.register_uid}
+      userStorageFolder = {$forumman.user_uid}
+    }
+}
+
+
+
+config {
+  pageTitleProviders {
+    forum {
+      provider = Lanius\Forumman\PageTitle\ForumPageTitleProvider
+      before = record
+    }
+  }
+}
+
+
+
+
+
+
+
+ajaxJson = PAGE
+ajaxJson {
+    typeNum = 445
+    config {
+        disableAllHeaderCode = 1
+        additionalHeaders = Content-Type:application/json
+        no_cache = 1
+    }
+    10 = USER
+    10 {
+        userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+        extensionName = Forumman
+        pluginName = ForumForumlist
+        vendorName = Lanius
+        controller = Message
+        action = send
+        switchableControllerActions {
+            Message {
+                1 = send
+            }
+        }
+    }
+}

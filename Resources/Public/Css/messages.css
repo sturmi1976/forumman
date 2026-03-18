@@ -1,0 +1,241 @@
+.forum-modal {
+    display:none;
+    position:fixed;
+    z-index:999;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.6);
+}
+
+.forum-modal-content {
+    background:#fff;
+    margin:5% auto;
+    padding:25px;
+    width:95%;
+    border-radius:8px;
+    position:relative;
+}
+
+.forum-modal-close {
+    position:absolute;
+    right:15px;
+    top:10px;
+    font-size:24px;
+    cursor:pointer;
+}
+
+
+/* Container für die Meldungen */
+#forumMessageResponse {
+    margin-top: 1rem;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Erfolgreiche Meldung */
+#forumMessageResponse .success {
+    background-color: #e6f4ea; /* hellgrün */
+    color: #2f855a; /* dunkelgrün */
+    border-left: 4px solid #2f855a;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Fehlermeldung */
+#forumMessageResponse .error {
+    background-color: #fde2e2; /* hellrot */
+    color: #c53030; /* dunkelrot */
+    border-left: 4px solid #c53030;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Kleine Animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+
+
+
+.forum-mailbox {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-width: 900px;
+}
+
+/* einzelner Eintrag */
+.mailbox-item {
+    margin-bottom: 12px;
+}
+
+/* Link als Card */
+.mailbox-item a {
+    display: block;
+    padding: 16px 20px;
+    background: #ffffff;
+    border: 1px solid #e6e8ec;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+/* Hover Effekt */
+.mailbox-item a:hover {
+    background: #f8fafc;
+    border-color: #d0d7e2;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+}
+
+/* Betreff */
+.mailbox-subject {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 6px;
+}
+
+/* Meta Infos */
+.mailbox-meta {
+    font-size: 13px;
+    color: #6b7280;
+}
+
+/* kleine Trennung zwischen User und Datum */
+.mailbox-meta::before {
+    content: "";
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+
+    .mailbox-item a {
+        padding: 14px 16px;
+    }
+
+    .mailbox-subject {
+        font-size: 15px;
+    }
+
+}
+
+
+.mailbox-empty {
+    max-width: 900px;
+    padding: 40px 30px;
+    text-align: center;
+    background: #ffffff;
+    border: 1px dashed #d9dee7;
+    border-radius: 12px;
+    color: #6b7280;
+    font-size: 15px;
+}
+
+/* optionales Icon */
+.mailbox-empty::before {
+    content: "📭";
+    display: block;
+    font-size: 42px;
+    margin-bottom: 10px;
+    opacity: 0.7;
+}
+
+
+
+
+.mailbox-single-container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 30px 25px;
+    background: #ffffff;
+    border: 1px solid #e6e8ec;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    font-family: "Inter", sans-serif;
+}
+
+.mailbox-single-header h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 10px;
+}
+
+.mailbox-single-meta {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 25px;
+}
+
+.mailbox-single-content p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #374151;
+    white-space: pre-wrap; /* Zeilenumbrüche bleiben erhalten */
+}
+
+.mailbox-single-footer {
+    margin-top: 30px;
+    text-align: left;
+}
+
+.mailbox-back-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #3b82f6;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 8px;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.mailbox-back-button:hover {
+    background: #2563eb;
+    transform: translateY(-1px);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .mailbox-single-container {
+        padding: 20px 15px;
+    }
+
+    .mailbox-single-header h2 {
+        font-size: 20px;
+    }
+
+    .mailbox-single-content p {
+        font-size: 15px;
+    }
+}
+
+
+.mailbox-delete-button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-left: 12px;
+    background: #ef4444; /* roter Button */
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 8px;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.mailbox-delete-button:hover {
+    background: #b91c1c;
+    transform: translateY(-1px);
+}

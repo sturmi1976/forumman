@@ -1,0 +1,67 @@
+{namespace fm=Lanius\Forumman\ViewHelpers}
+
+
+<h1>{f:translate(key: 'register.headline', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}</h1>
+
+<f:if condition="{error_username}">
+    <div class="alert alert-danger mb-5 mt-4" role="alert">
+            {error_username}
+    </div>
+</f:if>
+
+<f:if condition="{error_email}">
+    <div class="alert alert-danger mb-5 mt-4" role="alert">
+            {error_email}
+    </div>
+</f:if>
+
+<f:if condition="{error_passwords}">
+    <div class="alert alert-danger mb-5 mt-4" role="alert">
+            {error_passwords}
+    </div>
+</f:if>
+
+<f:if condition="{error_passwords2}">
+    <div class="alert alert-danger mb-5 mt-4" role="alert">
+            {error_passwords2}
+    </div>
+</f:if>
+
+<f:if condition="{error_captcha}">
+    <div class="alert alert-danger mb-3" role="alert">
+        {error_captcha}
+    </div>
+</f:if>
+
+<f:form action="index" method="post" class="form">
+
+    <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <f:form.textfield property="username" value="{username}" id="username" name="username" class="form-control" required="required" />
+    </div>
+
+    <div class="mb-3">
+        <label for="email" class="form-label">E-Mail</label>
+        <f:form.textfield property="email" value="{email}" id="email" name="email" class="form-control" required="required" />
+    </div>
+
+    <div class="mb-3">
+        <label for="password" class="form-label">Passwort</label>
+        <f:form.password property="password1" id="password1" value="{password1}" name="password1" class="form-control" required="required" />
+    </div>
+
+    <div class="mb-3">
+        <label for="password_repeat" class="form-label">Passwort wiederholen</label>
+        <f:form.password property="password2" id="password2" value="{password2}" name="password2" class="form-control" required="required" />
+    </div>
+
+    <div class="mb-3">
+    <label class="form-label">Bitte löse das Captcha</label>
+    <img src="{captchaImage}" alt="Captcha" class="mb-2" />
+    <f:form.textfield property="captcha" name="captcha" class="form-control" required="required" />
+</div>
+
+
+    <f:form.submit value="Jetzt registrieren" class="btn btn-primary" name="submit" />
+
+</f:form>

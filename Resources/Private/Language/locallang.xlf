@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="EXT:forumman/Resources/Private/Language/locallang.xlf" date="2020-10-18T18:20:51Z" product-name="forumman">
+        <header/>
+        <body>
+            <trans-unit id="register.confirmation_text_error">
+                <source>An error has occurred</source>
+            </trans-unit>
+            <trans-unit id="register.confirmation_text_success">
+                <source>Your account has been successfully activated</source>
+            </trans-unit>
+            <trans-unit id="register.success_text">
+                <source><![CDATA[<h1>Registration successful</h1><p>You have received an email with a confirmation link.<br />To activate your account, please click this link.</p>]]></source>
+            </trans-unit>
+            <trans-unit id="register.headline">
+                <source>Register</source>
+            </trans-unit>
+            <trans-unit id="user.titletag">
+                <source>Userprofil by %s</source>
+            </trans-unit>
+            <trans-unit id="user.titletag_with_company">
+                <source>Userprofil by %s // %s</source>
+            </trans-unit>
+            <trans-unit id="content_error">
+                <source>Please enter a message.</source>
+            </trans-unit>
+            <trans-unit id="receiver_error">
+                <source>Recipient is missing.</source>
+            </trans-unit>
+            <trans-unit id="success_message">
+                <source>Your message has been sent successfully.</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

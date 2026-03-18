@@ -1,0 +1,82 @@
+<?php
+
+declare(strict_types=1);
+
+/*
+ * This file is part of the package lanius/forumman.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
+namespace Lanius\Forumman\Domain\Model;
+
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+
+final class Forums extends AbstractEntity
+{
+    //protected int $category = 0;
+    protected string $description = '';
+    protected string $title = '';
+    // Kategorie als Objekt-Relation
+    protected ?Categories $category = null;
+
+    protected int $sorting = 0;
+
+    protected int $threadCount = 0;
+protected int $postCount = 0;
+
+
+public function getThreadCount(): int
+{
+    return $this->threadCount;
+}
+
+public function setThreadCount(int $threadCount): void
+{
+    $this->threadCount = $threadCount;
+}
+
+public function getPostCount(): int
+{
+    return $this->postCount;
+}
+
+public function setPostCount(int $postCount): void
+{
+    $this->postCount = $postCount;
+}
+
+    public function getSorting(): int
+    {
+        return $this->sorting;
+    }
+
+    public function getCategory(): ?Categories
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Categories $category): void
+    {
+        $this->category = $category;
+    }
+
+
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
+    }
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+    public function setTitle(string $title): void
+    {
+        $this->title = $title;
+    }
+}

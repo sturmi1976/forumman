@@ -1,0 +1,52 @@
+<h1>Neuen Beitrag erstellen im Forum: {forum.title}</h1>
+
+<f:form action="createThread" object="{post}" objectName="post" method="post">
+
+    <!-- Forum -->
+    <f:form.hidden property="forum" value="{forum.uid}" />
+
+    <!-- Titel -->
+    <div class="form-group">
+        <label for="title">Titel</label>
+        <f:form.textfield property="title" id="title" class="form-control" required="required" />
+    </div>
+
+    <!-- Inhalt -->
+    <div class="form-group">
+        <label for="content">Inhalt</label>
+        <div class="editor-container editor-container_classic-editor">
+            <div class="editor-container__editor">
+        <f:form.textarea property="content" id="content" class="form-control" rows="6" />
+        </div></div>
+    </div>
+
+    <!-- User -->
+    <f:form.hidden property="user" value="{userid}" />
+
+    <!-- Buttons -->
+    <div class="button_tool_bar">
+        <div class="tool_bar_left">
+            <f:link.action action="index" controller="Forum" class="btn btn-secondary">
+                Zurück zur Übersicht
+            </f:link.action>
+        </div>
+
+        <div class="tool_bar_right">
+            <f:form.submit value="Beitrag erstellen" class="btn btn-primary" />
+        </div>
+    </div>
+
+</f:form>
+
+
+
+<style>
+.ck-editor__editable {
+  min-height: 500px;
+  width:100%;
+}
+.editor-container_classic-editor .editor-container__editor {
+    min-width: 100%;
+    max-width: 100%;
+}
+</style>

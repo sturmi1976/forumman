@@ -1,0 +1,115 @@
+{namespace core = TYPO3\CMS\Core\ViewHelpers}
+
+
+
+<h1 class="tx_forumman_forumtitle">{forum.title}</h1>
+
+<!-- Threads Liste -->
+<div class="button_tool_bar">
+    <div class="tool_bar_left">
+    <f:link.page pageUid="{settings.forumPagePid}" class="btn back-link">
+    Zurück zur Forenübersicht
+</f:link.page>
+</div>
+<div class="tool_bar_right">
+    <f:security.ifAuthenticated>
+        <f:link.action action="newThread" arguments="{forumUid: forum.uid}" class="btn btn-primary new-thread">
+        Beitrag erstellen
+    </f:link.action>
+    </f:security.ifAuthenticated>
+    </div>
+</div>
+
+ <f:if condition="!{threads}">
+    <div class="no_threads_found">
+        <div class="alert alert-secondary text-center" role="alert">
+            Keine Beiträge vorhanden!
+        </div>
+    </div>
+ </f:if>
+
+
+<f:for each="{threads}" as="thread">
+
+    <article class="thread-card">
+        <h2 class="thread-title">
+            <f:link.action action="show" arguments="{post: thread, forum: forum}">
+                {thread.title}
+            </f:link.action>
+        </h2>
+        <div class="thread-content">
+            <f:format.raw>
+            {thread.content -> f:format.crop(maxCharacters:200)}
+        </f:format.raw>
+        </div>
+        <div class="thread-meta">
+            <span class="thread-date">Erstellt am: {thread.createdAt -> f:format.date(format:'d.m.Y, H:i')}</span>
+            <span class="thread-author">
+                Verfasser:<br />
+                
+                <f:link.action action="show" controller="User" arguments="{user: thread.user}" class="userlink">
+                    <f:format.htmlspecialchars>
+                        <f:format.case mode="capitalWords">
+                            {thread.user.username}
+                        </f:format.case>
+                    </f:format.htmlspecialchars> 
+                </f:link.action>
+            </span>
+        </div>
+    </article>
+</f:for>
+
+
+<f:if condition="{paginator.numberOfPages} > 1">
+<!-- Pagination -->
+<div class="pagination">
+    <ul class="pagination">
+    <!-- Vorherige Seite -->
+    <f:if condition="{previousPage}">
+    <li class="page-item">
+        <f:link.action action="showThreads" arguments="{forumUid: forum.uid, currentPage: previousPage}" class="page-link">
+            &laquo; Zurück
+        </f:link.action>
+    </li>
+</f:if>
+
+    <f:if condition="{pagination.hasLessPages}">
+<a href="javascript:void();" class="page-link">
+...
+</a>
+</f:if>
+
+    <!-- Seitenzahlen im Sliding Window -->
+    <f:for each="{pagination.allPageNumbers}" as="page">
+        <li class="page-item">
+        <f:link.action action="showThreads" arguments="{forumUid: forum.uid, currentPage: page}" class="page-link {f:if(condition:'{currentPageNumber}=={page}',then:'active')}">
+            <f:if condition="{page} == {pagination.currentPage}">
+                <strong>{page}</strong>
+            <f:else>
+                {page}
+            </f:else>
+            </f:if>
+        </f:link.action>
+    </li>
+    </f:for>
+
+    <f:if condition="{pagination.hasMorePages}">
+        <li class="page-item">
+<a href="javascript:void();" class="page-link">
+...
+</a>
+        </li>
+</f:if>
+
+    <!-- Nächste Seite -->
+    <f:if condition="{nextPage}">
+    <li class="page-item">
+        <f:link.action action="showThreads" arguments="{forumUid: forum.uid, currentPage: nextPage}" class="page-link">
+            Weiter &raquo;
+        </f:link.action>
+    </li>
+</f:if>
+
+</ul>
+</div>
+</f:if>

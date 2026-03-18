@@ -1,0 +1,62 @@
+categories:
+  Forumman:
+    label: 'Forum Manager'           # Hauptkategorie
+  Forumman.templates:
+    label: 'Templates'                     # Unterkategorie Templates
+    parent: Forumman
+  Forumman.pages:
+    label: 'Pages'                         # Unterkategorie Pages
+    parent: Forumman
+  Forumman.uids:
+    label: 'Page Uids and folder'
+    parent: Forumman
+
+settings:
+  forumman.templateRootPath:
+    label: 'Templates'                     # Label für das Feld
+    category: Forumman.templates             # Kategorie zuordnen
+    description: 'Path to template root'   # Beschreibung
+    type: string                           # Datentyp
+    default: 'EXT:forumman/Resources/Private/Templates/'  # Standardwert
+
+  forumman.partialRootPath:
+    label: 'Partials'
+    category: Forumman.templates
+    description: 'Path to partial root'
+    type: string
+    default: 'EXT:forumman/Resources/Private/Partials/'
+
+  forumman.layoutRootPath:
+    label: 'Layouts'
+    category: Forumman.templates
+    description: 'Path to layout root'
+    type: string
+    default: 'EXT:forumman/Resources/Private/Layouts/'
+
+  forumman.pid:
+    label: 'Storage folder'
+    category: Forumman.uids
+    description: 'The uid of storage folder'
+    type: string
+    default: '0'
+
+  forumman.uid:
+    label: 'Uid of Forum Page'
+    category: Forumman.uids
+    description: 'The uid of Forum Page (Frontend Plugin)'
+    type: string
+    default: '0'
+
+  forumman.register_uid:
+    label: 'Uid of Register Page'
+    category: Forumman.uids
+    description: 'The uid of Register Page (Frontend Plugin - Registerform)'
+    type: string
+    default: '0'
+
+  forumman.user_uid:
+    label: 'Uid of User Storage Folder'
+    category: Forumman.uids
+    description: 'The uid of User Storage Folder'
+    type: string
+    default: '0'

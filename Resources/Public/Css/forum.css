@@ -1,0 +1,420 @@
+.forum {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 15px;
+    font-family: 'Inter', system-ui, sans-serif;
+}
+
+.forum-category {
+    margin-bottom: 50px;
+}
+
+.forum-category-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    border-left: 4px solid #4f46e5; /* violett-farbener Akzent */
+    padding-left: 10px;
+    color: #111827;
+    margin-bottom: 20px;
+}
+
+.forum-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.forum-card {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 16px 20px;
+    border-radius: 12px;
+    background-color: #f9fafb;
+    border: 1px solid #e5e7eb;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.forum-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.forum-main {
+    flex: 1 1 60%;
+    min-width: 200px;
+}
+
+.forum-title {
+    margin: 0 0 6px 0;
+    font-size: 1.2rem;
+}
+
+.forum-title a {
+    text-decoration: none;
+    color: #1f2937;
+    transition: color 0.2s;
+}
+
+.forum-title a:hover {
+    color: #4f46e5;
+}
+
+.forum-description {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #6b7280;
+}
+
+.forum-meta {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+    flex-wrap: wrap;
+    min-width: 150px;
+    justify-content: flex-end;
+}
+
+.forum-stat {
+    text-align: center;
+}
+
+.forum-stat-number {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #111827;
+    display: block;
+}
+
+.forum-stat-label {
+    font-size: 0.75rem;
+    color: #6b7280;
+}
+
+
+
+/* Container */
+.forum-threads {
+    max-width: 900px;
+    margin: 2rem auto;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: #333;
+}
+
+/* Header */
+.forum-threads-header {
+    margin-bottom: 1.5rem;
+}
+.forum-threads-header h1 {
+    font-size: 2rem;
+    margin: 0 0 0.5rem 0;
+}
+.forum-threads-header .forum-description {
+    font-size: 1rem;
+    color: #666;
+}
+
+/* Threads */
+.thread-list {
+    display: grid;
+    gap: 1rem;
+}
+.thread-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    background-color: #fafafa;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.thread-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+.thread-title {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.25rem;
+}
+.thread-title a {
+    color: #0056b3;
+    text-decoration: none;
+}
+.thread-title a:hover {
+    text-decoration: underline;
+}
+.thread-content {
+    font-size: 0.95rem;
+    color: #444;
+    margin-bottom: 0.5rem;
+}
+.thread-meta {
+    font-size: 0.85rem;
+    color: #888;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Pagination */
+.pagination-wrapper {
+    margin-top: 2rem;
+    text-align: center;
+}
+.pagination {
+    display: inline-flex;
+    list-style: none;
+    padding: 0;
+    gap: 0.25rem;
+}
+.page-item {
+}
+.page-link {
+    display: inline-block;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #333;
+    text-decoration: none;
+    transition: background-color 0.2s, color 0.2s;
+}
+.page-link:hover {
+    background-color: #f0f0f0;
+}
+.page-link.active, .page-link strong {
+    background-color: #0056b3;
+    color: #fff;
+    border-color: #0056b3;
+}
+.page-item.prev .page-link,
+.page-item.next .page-link {
+    font-weight: bold;
+}
+
+
+.button_tool_bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+}
+
+/* Basis Button Style */
+.btn {
+    display: inline-block;
+    padding: 10px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+/* Zurück Button */
+.back-link {
+    background: #f3f4f6;
+    color: #333;
+    border: 1px solid #ddd;
+}
+
+.back-link:hover {
+    background: #e5e7eb;
+}
+
+/* Neuer Thread Button */
+.btn-primary {
+    background: #2563eb;
+    color: #fff;
+    border: 1px solid #1d4ed8;
+}
+
+.btn-primary:hover {
+    background: #1d4ed8;
+}
+
+
+
+
+/* Grundlegendes Card Styling */
+.card {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15); /* stärkerer Schatten */
+    overflow: hidden;
+    max-width: 400px;
+    margin: 20px auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.2);
+}
+
+/* Card Body */
+.card-body {
+    padding: 1.5rem;
+}
+
+/* Card Title */
+.card-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 1.5rem;
+}
+
+/* Info Paragraph */
+.card-body p {
+    font-size: 0.95rem;
+    color: #555;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 1rem;
+}
+
+/* Account Menu */
+.account-menu {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 1.5rem;
+}
+
+.account-menu li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0.5rem 0;
+}
+
+.account-menu li a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.account-menu li a:hover {
+    color: #0056b3;
+}
+
+/* Icon Styling */
+.account-menu .t3js-icon svg {
+    width: 20px;
+    height: 20px;
+    fill: #555;
+    flex-shrink: 0;
+}
+
+/* Button Styling */
+.btn {
+    display: inline-block;
+    padding: 0.55rem 1.2rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+}
+
+/* Responsive Anpassung */
+@media (max-width: 480px) {
+    .card {
+        margin: 15px;
+        padding: 1rem;
+    }
+}
+
+
+
+
+.post-wrapper, .reply-wrapper {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background-color: #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.post-header, .reply-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.avatar {
+    margin-right: 1rem;
+    flex-shrink: 0;
+}
+
+.avatar img {
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+}
+
+.post-meta h1 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.post-meta p, .reply-meta {
+    margin: 0;
+    color: #555;
+}
+
+.reply-date {
+    font-size: 0.875rem;
+    color: #999;
+    margin-left: 0.5rem;
+}
+
+.reply-content {
+    margin-top: 0.5rem;
+    padding-left: 4rem;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.pagination ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    gap: 0.25rem;
+}
+
+.page-item .page-link {
+    display: block;
+    padding: 0.5rem 0.75rem;
+    border-radius: 4px;
+    background: #f5f5f5;
+    color: #333;
+    text-decoration: none;
+}
+
+.page-item .page-link:hover {
+    background: #e0e0e0;
+}
+
+.page-item .page-link.active, .page-item .page-link strong {
+    background: #007bff;
+    color: #fff;
+}

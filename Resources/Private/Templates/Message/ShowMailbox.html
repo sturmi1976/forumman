@@ -1,0 +1,44 @@
+<h2>
+    Mailbox
+    <span class="mailbox-count">
+        ({f:count(subject: messages)})
+    </span>
+</h2>
+
+<f:if condition="{messages}">
+    <f:then>
+    <ul class="forum-mailbox">
+        <f:for each="{messages}" as="message">
+            <li class="mailbox-item">
+
+                <a href="{f:uri.action(
+                    action: 'show',
+                    controller: 'Message',
+                    arguments: {message: message}
+                )}">
+
+                    <div class="mailbox-subject">
+                        <strong>{message.subject}</strong>
+                    </div>
+
+                    <div class="mailbox-meta">
+                        Von User: {message.sender.username}
+                        • 
+                        <f:format.date format="d.m.Y H:i">
+                            {message.sentAt}
+                        </f:format.date>
+                    </div>
+
+                </a>
+
+            </li>
+        </f:for>
+    </ul>
+</f:then>
+<f:else>
+    <div class="mailbox-empty">
+        <p>Keine Nachrichten vorhanden.</p>
+    </div>
+</f:else>
+
+</f:if>

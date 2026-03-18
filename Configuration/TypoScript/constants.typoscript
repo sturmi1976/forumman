@@ -1,0 +1,10 @@
+plugin.tx_forumman_forumforumlist {
+    view {
+        templateRootPath = EXT:forumman/Resources/Private/Templates/
+        partialRootPath = EXT:forumman/Resources/Private/Partials/
+        layoutRootPath = EXT:forumman/Resources/Private/Layouts/
+    }
+    persistence {
+        storagePid = 0
+    }
+}

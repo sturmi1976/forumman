@@ -1,0 +1,125 @@
+<!-- Zurück-Button ganz oben -->
+<div class="back-button">
+    <f:link.action action="showThreads" arguments="{forumUid: post.forum.uid}" class="btn btn-secondary">
+        &laquo; Zurück zum Forum
+    </f:link.action>
+</div>
+
+<!-- Haupt-Post -->
+<div class="post-wrapper">
+    <div class="post-header">
+        <div class="avatar">
+            <f:if condition="{post.user.image}">
+                <f:then>
+                    <f:image image="{post.user.image}" alt="Avatar von {post.user.username}" width="80" height="80" />
+                </f:then>
+                <f:else>
+                    <f:image src="EXT:forumman/Resources/Public/Images/no_pic.png" width="80" height="80" alt="no image" />
+                </f:else>
+            </f:if>
+        </div>
+        <div class="post-meta">
+            <h1>{post.title}</h1>
+            <p>
+                <strong>Erstellt von:</strong>
+                <f:format.htmlspecialchars>
+                    <f:format.case mode="capitalWords">{post.user.username}</f:format.case>
+                </f:format.htmlspecialchars>
+            </p>
+            <p><strong>Erstellt am:</strong> {post.createdAt -> f:format.date(format:'d.m.Y, H:i')}</p>
+        </div>
+    </div>
+
+    <div class="post-content">
+        <f:format.html>{post.content}</f:format.html>
+        <f:if condition="{post.user.signature}">
+            <hr />
+            <f:format.raw>{post.user.signature}</f:format.raw>
+        </f:if>
+    </div>
+</div>
+
+<!-- Antworten -->
+<h3>Antworten</h3>
+<f:for each="{replies}" as="reply">
+    <div class="reply-wrapper">
+        <div class="reply-header">
+            <div class="avatar">
+                <f:if condition="{reply.user.image}">
+                    <f:then>
+                        <f:image image="{reply.user.image}" alt="Avatar von {reply.user.username}" width="60" height="60" />
+                    </f:then>
+                    <f:else>
+                        <f:image src="EXT:forumman/Resources/Public/Images/no_pic.png" width="60" height="60" alt="no image" />
+                    </f:else>
+                </f:if>
+            </div>
+            <div class="reply-meta">
+                <strong>{reply.user.username}</strong>
+                <span class="reply-date">{reply.createdAt -> f:format.date(format:'d.m.Y, H:i')}</span>
+            </div>
+        </div>
+        <div class="reply-content">
+            <f:format.raw>{reply.content}</f:format.raw>
+        </div>
+    </div>
+</f:for>
+
+<!-- Pagination -->
+<f:if condition="{paginator.numberOfPages} > 1">
+    <div class="pagination">
+        <ul class="pagination">
+
+            <f:if condition="{previousPage}">
+                <li class="page-item">
+                    <f:if condition="{previousPage} == 1">
+                        <f:then>
+                            <f:link.action action="show" arguments="{post: post, forum: post.forum}" class="page-link">
+                                &laquo; Zurück
+                            </f:link.action>
+                        </f:then>
+                        <f:else>
+                            <f:link.action action="show" arguments="{post: post, forum: post.forum, currentPage: previousPage}" class="page-link">
+                                &laquo; Zurück
+                            </f:link.action>
+                        </f:else>
+                    </f:if>
+                </li>
+            </f:if>
+
+            <f:if condition="{pagination.hasLessPages}">
+                <li class="page-item"><span class="page-link">...</span></li>
+            </f:if>
+
+            <f:for each="{pagination.allPageNumbers}" as="page">
+                <li class="page-item">
+                    <f:if condition="{page} == 1">
+                        <f:then>
+                            <f:link.action action="show" arguments="{post: post, forum: post.forum}" class="page-link {f:if(condition:'{pagination.currentPage}=={page}',then:'active')}">
+                                <f:if condition="{pagination.currentPage} == 1"><strong>{page}</strong><f:else>{page}</f:else></f:if>
+                            </f:link.action>
+                        </f:then>
+                        <f:else>
+                            <f:link.action action="show" arguments="{post: post, forum: post.forum, currentPage: page}" class="page-link {f:if(condition:'{pagination.currentPage}=={page}',then:'active')}">
+                                <f:if condition="{pagination.currentPage} == {page}"><strong>{page}</strong><f:else>{page}</f:else></f:if>
+                            </f:link.action>
+                        </f:else>
+                    </f:if>
+                </li>
+            </f:for>
+
+            <f:if condition="{pagination.hasMorePages}">
+                <li class="page-item"><span class="page-link">...</span></li>
+            </f:if>
+
+            <f:if condition="{nextPage}">
+                <li class="page-item">
+                    <f:link.action action="show" arguments="{post: post, forum: post.forum, currentPage: nextPage}" class="page-link">
+                        Weiter &raquo;
+                    </f:link.action>
+                </li>
+            </f:if>
+
+        </ul>
+    </div>
+</f:if>

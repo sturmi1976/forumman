@@ -1,0 +1,35 @@
+
+
+<div class="mailbox-single-container">
+
+    <div class="mailbox-single-header">
+        <h2>{message.subject}</h2>
+        <div class="mailbox-single-meta">
+            Von: <strong>{message.sender.username}</strong>  
+            • <f:format.date format="d.m.Y H:i">{message.sentAt}</f:format.date>
+        </div>
+    </div>
+
+    <div class="mailbox-single-content">
+        <f:format.raw>{message.content}</f:format.raw>
+    </div>
+
+    <div class="mailbox-single-footer">
+        <f:link.action 
+            action="showMailbox" 
+            controller="Message" 
+            class="mailbox-back-button">
+            ← Zurück zur Mailbox
+        </f:link.action>
+
+        <f:link.action
+        action="delete"
+        controller="Message"
+        arguments="{message: message}"
+        class="mailbox-delete-button"
+        onclick="return confirm('Möchten Sie diese Nachricht wirklich löschen?');">
+        🗑 Nachricht löschen
+    </f:link.action>
+    </div>
+
+</div>

@@ -1,0 +1,33 @@
+{
+    "name": "lanius/forumman",
+    "description": "Forum Description",
+    "type": "typo3-cms-extension",
+    "license": "GPL-2.0-or-later",
+    "version": "1.0.0",
+    "authors": [
+        {
+            "name": "Andre Lanius",
+            "email": "a-lanius@web.de"
+        }
+    ],
+    "require": {
+        "typo3/cms-core": "^13.4 || ^14.0 || ^14.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Lanius\\Forumman\\": "Classes/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "typo3/class-alias-loader": true,
+            "typo3/cms-composer-installers": true
+        },
+        "sort-packages": true
+    },
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "forumman"
+        }
+    }
+}

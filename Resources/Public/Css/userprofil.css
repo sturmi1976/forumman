@@ -1,0 +1,96 @@
+.user-profile {
+    max-width: 100%;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.user-info {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.user-info .avatar img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #007acc;
+}
+
+.user-info .details h2 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: #222;
+}
+
+.user-info .details p {
+    margin: 0.2rem 0;
+    color: #555;
+}
+
+.user-rank {
+    font-weight: bold;
+    color: #007acc;
+}
+
+.user-posts-list h3 {
+    margin-top: 2rem;
+    font-size: 1.5rem;
+    border-bottom: 2px solid #007acc;
+    padding-bottom: 0.5rem;
+}
+
+.user-posts-list ul {
+    list-style: none;
+    padding: 0;
+}
+
+.user-posts-list li {
+    margin: 0.5rem 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.user-posts-list a {
+    color: #007acc;
+    text-decoration: none;
+}
+
+.user-posts-list a:hover {
+    text-decoration: underline;
+}
+
+.post-date {
+    color: #999;
+    font-size: 0.9rem;
+}
+
+
+.status-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-left: 8px;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+/* Online: grüner Verlauf + Glow */
+.status-dot.online {
+    background: radial-gradient(circle at 30% 30%, #4cff4c, #00b300);
+    box-shadow: 
+        0 0 6px rgba(0, 255, 0, 0.8),
+        0 0 12px rgba(0, 255, 0, 0.5);
+}
+
+.status-dot.offline {
+    background: radial-gradient(circle at 30% 30%, #e0e0e0, #9e9e9e);
+    box-shadow: 
+        inset 0 0 2px rgba(0, 0, 0, 0.2);
+    opacity: 0.8;
+}

@@ -1,0 +1,17 @@
+{namespace fm=Lanius\Forumman\ViewHelpers}
+
+
+<f:if condition="{error}">
+    <div class="alert alert-danger text-center" role="alert">
+            {f:translate(key: 'register.confirmation_text_error', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
+    </div>
+</f:if>
+
+
+
+<f:if condition="{success}">
+    <div class="alert alert-success text-center" role="alert">
+             {f:translate(key: 'register.confirmation_text_success', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')} 
+    </div>
+</f:if>
+

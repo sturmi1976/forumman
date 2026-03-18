@@ -1,0 +1,60 @@
+
+
+<div class="forum"> 
+
+<f:for each="{categories}" as="category">
+
+<section class="forum-category">
+
+<header class="forum-category-header">
+    <h2 class="forum-category-title">{category.title}</h2>
+</header>
+
+<div class="forum-list">
+
+<f:for each="{category.forums}" as="forum">
+
+<article class="forum-card">
+
+    <div class="forum-main">
+
+        <h3 class="forum-title">
+            <f:link.action action="showThreads" arguments="{forumUid: forum.uid}">
+    {forum.title}
+</f:link.action>
+        </h3>
+
+        <p class="forum-description">
+            <f:format.raw>
+            {forum.description}
+            </f:format.raw>
+        </p>
+
+    </div>
+
+    <div class="forum-meta">
+
+        <div class="forum-stat">
+            <span class="forum-stat-number">{forum.threadCount}</span>
+            <span class="forum-stat-label">Threads</span>
+        </div>
+
+        <div class="forum-stat">
+            <span class="forum-stat-number">{forum.postCount}</span>
+            <span class="forum-stat-label">Posts</span>
+        </div>
+
+    </div>
+
+</article>
+
+</f:for>
+
+</div>
+
+</section>
+
+</f:for>
+
+</div>
+

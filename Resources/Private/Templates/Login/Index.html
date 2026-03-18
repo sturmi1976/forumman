@@ -1,0 +1,94 @@
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12">
+
+                <f:security.ifAuthenticated>
+                    <f:then>
+                        <div class="card shadow-sm border-0">
+                            <div class="card-body">
+                                <h3 class="card-title mb-4">
+                                    Konto
+                                </h3>
+
+                                <p class="mb-3" style="border-bottom:1px #bebcbc solid; padding-bottom:1rem;">
+                                    Eingeloggt als: 
+                                    
+                                        <f:format.htmlspecialchars>
+                        <f:format.case mode="capitalWords">
+                                    {username}
+                        </f:format.case>
+                        </f:format.htmlspecialchars>
+                                </p>
+
+                                    <ul class="account-menu mb-3" style="border-bottom:1px #bebcbc solid; padding-bottom:1rem;">
+                                        <li>
+                                            <core:icon identifier="actions-user" size="small" />
+                                            <f:link.action action="show" controller="User" arguments="{user: user}">Zum Profil</f:link.action>
+                                        </li>
+                                        <li>
+                                            <core:icon identifier="actions-envelope-open-text" size="small" />
+                                            <f:link.action action="showMailbox" controller="Message" arguments="{user: user}">Postfach</f:link.action>
+                                        </li>
+                                    </ul>
+
+                                <f:link.action action="logout" class="btn btn-danger"> 
+                                    Logout
+                                </f:link.action>
+                            </div>
+                        </div>
+                    </f:then>
+
+                    <f:else>
+                        <div class="card shadow-sm border-0">
+                            <div class="card-body">
+                                <h3 class="card-title mb-4">Login</h3>
+
+                                <f:form action="index" method="post" pageUid="{data.uid}" class="mb-4">
+                                
+                                    <div class="mb-3">
+                                        <label for="username" class="form-label">
+                                            Username
+                                        </label>
+                                        <f:form.textfield 
+                                            name="username" 
+                                            id="username" 
+                                            class="form-control" 
+                                            placeholder="Username"
+                                        />
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="password" class="form-label">
+                                            Passwort
+                                        </label>
+                                        <f:form.password 
+                                            name="password"
+                                            id="password" 
+                                            class="form-control"
+                                            placeholder="Passwort"
+                                        />
+                                    </div>
+
+                                    <div class="d-grid">
+                                        <f:form.submit 
+                                            value="Login" 
+                                            class="btn btn-primary btn-lg" 
+                                            name="submit"
+                                        />
+                                    </div>
+
+                                </f:form>
+
+                                <p style="font-style: italic; font-size:0.9rem;" class="now_register">
+                                    Noch nicht registriert? <f:link.page pageUid="{settings.registerUid}">&#10146; Jetzt registrieren</f:link.page>
+                                </p>
+
+                            </div>
+                        </div>
+                    </f:else>
+                </f:security.ifAuthenticated>
+
+            </div>
+        </div>
+    </div>

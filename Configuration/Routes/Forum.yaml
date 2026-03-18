@@ -1,0 +1,85 @@
+routeEnhancers:
+  ForumPlugin:
+    type: Extbase
+    extension: Forumman
+    plugin: ForumForumlist
+
+    routes:
+
+      # Startseite
+      - routePath: '/'
+        _controller: 'Forum::index'
+
+      # Forum (Threads Liste)
+      - routePath: '/{forum-slug}'
+        _controller: 'Forum::showThreads'
+        _arguments:
+          forum-slug: forumUid
+
+      # Forum Pagination
+      - routePath: '/{forum-slug}/seite-{currentPage}'
+        _controller: 'Forum::showThreads'
+        _arguments:
+          forum-slug: forumUid
+          currentPage: currentPage
+
+      # Post Detail (Thread + Antworten)
+      - routePath: '/{forum-slug}/{post-slug}'
+        _controller: 'Forum::show'
+        _arguments:
+          forum-slug: forum
+          post-slug: post
+
+      # Post Pagination (Replies)
+      - routePath: '/{forum-slug}/{post-slug}/seite-{currentPage}'
+        _controller: 'Forum::show'
+        _arguments:
+          forum-slug: forum
+          post-slug: post
+          currentPage: currentPage
+
+      # User Profil
+      - routePath: '/user/{user-slug}'
+        _controller: 'User::show'
+        _arguments:
+          user-slug: user
+
+      # Nachricht senden
+      - routePath: '/message/send'
+        _controller: 'Message::send'
+
+      # Mailbox
+      - routePath: '/message/mailbox/{user-slug}'
+        _controller: 'Message::showMailbox'
+        _arguments:
+          user-slug: user
+
+      # Einzelne Nachricht
+      - routePath: '/message/{message}'
+        _controller: 'Message::show'
+        _arguments:
+          message: message
+
+    defaultController: 'Forum::index'
+
+    aspects:
+
+      forum-slug:
+        type: PersistedAliasMapper
+        tableName: tx_forumman_domain_model_forums
+        routeFieldName: slug
+
+      post-slug:
+        type: PersistedAliasMapper
+        tableName: tx_forumman_domain_model_posts
+        routeFieldName: slug
+
+      user-slug:
+        type: PersistedAliasMapper
+        tableName: fe_users
+        routeFieldName: slug
+
+      currentPage:
+        type: StaticRangeMapper
+        start: '1'
+        end: '1000'

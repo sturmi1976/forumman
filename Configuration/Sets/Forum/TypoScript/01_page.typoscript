@@ -1,0 +1,18 @@
+page {
+    includeCSS {
+        forum = EXT:forumman/Resources/Public/Css/forum.css
+        userprofil = EXT:forumman/Resources/Public/Css/userprofil.css
+        messages = EXT:forumman/Resources/Public/Css/messages.css
+        prism = EXT:forumman/Resources/Public/prism/prism.css
+    }
+}
+
+[frontend.user.isLoggedIn]
+page.includeJSFooter {
+    tinymce = EXT:forumman/Resources/Public/Js/tinymce/tinymce.min.js
+    forum_editor = EXT:forumman/Resources/Public/Js/tinymce/forum-editor.js
+}
+[END]
+page.includeJSFooter {
+    prism = EXT:forumman/Resources/Public/prism/prism.js
+}
