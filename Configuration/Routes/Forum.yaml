@@ -23,6 +23,12 @@ routeEnhancers:
           forum-slug: forumUid
           currentPage: currentPage
 
+      # Neue Thread erstellen
+      - routePath: '/{forum-slug}/neu'
+        _controller: 'Forum::newThread'
+        _arguments:
+          forum-slug: forumUid
+
       # Post Detail (Thread + Antworten)
       - routePath: '/{forum-slug}/{post-slug}'
         _controller: 'Forum::show'
@@ -37,6 +43,13 @@ routeEnhancers:
           forum-slug: forum
           post-slug: post
           currentPage: currentPage
+
+      # Antwort schreiben
+      - routePath: '/{forum-slug}/{post-slug}/antworten'
+        _controller: 'Forum::replyWrite'
+        _arguments:
+          forum-slug: forum
+          post-slug: post
 
       # User Profil
       - routePath: '/user/{user-slug}'

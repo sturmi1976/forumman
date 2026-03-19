@@ -30,6 +30,9 @@
             <trans-unit id="success_message">
                 <source>Your message has been sent successfully.</source>
             </trans-unit>
+            <trans-unit id="replyWriteTitletag">
+                <source>Reply to post</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

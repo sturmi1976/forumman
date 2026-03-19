@@ -27,6 +27,7 @@ final class FrontendUser extends AbstractEntity
     protected int $isOnline = 0;
     protected int $nowonline = 0;
 
+
     public function getSignature(): string
     {
         return $this->signature;
@@ -79,7 +80,7 @@ final class FrontendUser extends AbstractEntity
             ->select('*')
             ->from('fe_users')
             ->where(
-                $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter(1))
+                $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($uid))
             )
             ->executeQuery()
             ->fetchAssociative();

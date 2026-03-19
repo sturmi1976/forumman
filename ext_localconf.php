@@ -13,11 +13,11 @@ ExtensionUtility::configurePlugin(
     'Forumman',
     'ForumForumlist',
     [
-        ForumController::class => 'index,showThreads,newThread,createThread,show',
+        ForumController::class => 'index,showThreads,newThread,createThread,show,replyWrite',
         UserController::class  => 'show',
     ],
     [
-        ForumController::class => 'createThread',
+        ForumController::class => 'createThread,replyWrite',
         UserController::class  => 'show',
     ],
     ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
@@ -51,7 +51,7 @@ ExtensionUtility::configurePlugin(
         MessageController::class => 'send,showMailbox,show,delete'
     ],
     [
-        MessageController::class => 'send,showMailbox,show,delete' 
+        MessageController::class => 'send,showMailbox,show,delete'
     ],
 );
 

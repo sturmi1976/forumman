@@ -418,3 +418,15 @@
     background: #007bff;
     color: #fff;
 }
+
+.tox-promotion, .tox-statusbar__branding {
+    display: none !important;
+}
+
+
+.tx-forumman-wrapper img {
+    max-width: 100%;    
+    height: auto;       
+    display: block;    
+    object-fit: contain;
+}

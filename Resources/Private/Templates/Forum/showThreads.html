@@ -1,7 +1,10 @@
 {namespace core = TYPO3\CMS\Core\ViewHelpers}
 
 
+<f:layout name="Default" />
 
+
+<f:section name="main">
 <h1 class="tx_forumman_forumtitle">{forum.title}</h1>
 
 <!-- Threads Liste -->
@@ -29,19 +32,15 @@
  </f:if>
 
 
-<f:for each="{threads}" as="thread">
-
+<f:for each="{threads}" as="thread" iteration="i">
+    
     <article class="thread-card">
         <h2 class="thread-title">
             <f:link.action action="show" arguments="{post: thread, forum: forum}">
                 {thread.title}
             </f:link.action>
         </h2>
-        <div class="thread-content">
-            <f:format.raw>
-            {thread.content -> f:format.crop(maxCharacters:200)}
-        </f:format.raw>
-        </div>
+
         <div class="thread-meta">
             <span class="thread-date">Erstellt am: {thread.createdAt -> f:format.date(format:'d.m.Y, H:i')}</span>
             <span class="thread-author">
@@ -113,3 +112,5 @@
 </ul>
 </div>
 </f:if>
+
+</f:section>

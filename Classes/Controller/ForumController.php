@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Lanius\Forumman\Controller;
 
+use Lanius\Forumman\Domain\Model\FrontendUser;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use Psr\Http\Message\ServerRequestInterface;
@@ -168,22 +169,53 @@ final class ForumController extends ActionController
             $this->recordTitleProvider->setTitle($postObject->getTitle());
         }
 
+        if ($postObject->getUser()) {
+            $online = $this->frontendUserRepository->isUserOnline($postObject->getUser()->getUid());
+        }
+
+        // Online Status für den Post-Autor
+        $postUserId = $postObject->getUser()->getUid();
+        $isOnline = $this->frontendUserRepository->isUserOnline($postUserId);
+
         // --- Pagination für Replies ---
         $allReplies = $this->postsRepository->findRepliesByParent($post);
 
         $currentPage = (int)($this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : 1);
-        $itemsPerPage = 1;
+        $itemsPerPage = 15;
         $maximumLinks = 5;
 
         $paginator = new QueryResultPaginator($allReplies, $currentPage, $itemsPerPage);
         $pagination = new SlidingWindowPagination($paginator, $maximumLinks);
         $paginatedReplies = $paginator->getPaginatedItems();
 
+        // Online-Status für jede Reply vorbereiten
+        $repliesWithStatus = [];
+
+        foreach ($paginatedReplies as $reply) {
+            $user = $reply->getUser();
+
+            // Prüfen, ob User existiert
+            if ($user instanceof FrontendUser) {
+                $userId = $user->getUid();
+                $isOnline2 = $userId ? $this->frontendUserRepository->isUserOnline($userId) : false;
+            } else {
+                $userId = null;
+                $isOnline2 = false;
+            }
+
+            $repliesWithStatus[] = [
+                'reply' => $reply,
+                'isOnline2' => $isOnline2
+            ];
+        }
+
         // --- Template Assign ---
         $this->view->assignMultiple([
             'post' => $postObject,
+            'isOnline' => $isOnline,
             'forum' => $forum,
-            'replies' => $paginatedReplies,
+            //'replies' => $paginatedReplies,
+            'replies' => $repliesWithStatus,
             'paginator' => $paginator,
             'pagination' => $pagination,
             'previousPage' => $pagination->getPreviousPageNumber(),
@@ -205,6 +237,93 @@ final class ForumController extends ActionController
     }
 
 
+
+    public function replyWriteAction(): ResponseInterface
+    {
+        $context = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
+        $userId = $context->getPropertyFromAspect('frontend.user', 'id');
+
+        if (!$context->getPropertyFromAspect('frontend.user', 'isLoggedIn')) {
+            return $this->redirect('showThreads', 'Forum', 'Forumman', [
+                'forumUid' => $this->request->getArgument('forum')
+            ]);
+        }
+
+        if ($this->request->hasArgument('submit')) {
+
+            $title   = trim($this->request->getArgument('title') ?? '');
+            $content = trim($this->request->getArgument('content') ?? '');
+            $parentUid = (int)$this->request->getArgument('parent');
+            $forumUid  = (int)$this->request->getArgument('forum');
+
+            if ($content === '') {
+                $this->view->assign('error', 'Bitte geben Sie einen Inhalt ein.');
+                return $this->htmlResponse();
+            }
+
+            $reply = new \Lanius\Forumman\Domain\Model\Posts();
+            $reply->setTitle($title);
+            $reply->setContent($content);
+            $reply->setCreatedAt(time());
+            $reply->setParent($parentUid); // nur UID
+
+            // Forum-Objekt setzen
+            $forumObject = $this->forumsRepository->findByUid($forumUid);
+            $reply->setForum($forumObject);
+
+            if ($userId) {
+                $user = $this->frontendUserRepository->findByUid($userId);
+                $reply->setUser($user);
+            }
+
+            $this->postsRepository->add($reply);
+            $this->persistenceManager->persistAll();
+
+            // Post-Zähler erhöhen
+            $forumObject->setPostCount($forumObject->getPostCount() + 1);
+            $this->forumsRepository->update($forumObject);
+
+            $this->addFlashMessage(
+                'Deine Antwort wurde erfolgreich gespeichert.',
+                'Erfolg',
+                \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK
+            );
+
+            // Redirect zurück zum Thread
+            /*
+            $uri = $this->uriBuilder
+                ->reset()
+                ->setCreateAbsoluteUri(true)
+                ->setArguments([
+                    'tx_forumman_forumforumlist' => [
+                        'controller' => 'Forum',
+                        'action' => 'show',
+                        'forum' => $forumObject,
+                        'post'  => $parentUid
+                    ]
+                ])
+                ->build();*/
+
+            $uri = $this->uriBuilder->uriFor('show', ['action' => 'show', 'controller' => 'Forum', 'forum' => $forumObject, 'post' => $parentUid]);
+
+            return $this->redirectToUri($uri . '#latest');
+        }
+
+        // Initiales Formular rendern
+        $postUid = (int)$this->request->getArgument('post');
+        $forumUid = (int)$this->request->getArgument('forum');
+
+        $post = $this->postsRepository->findByUid($postUid);
+        $forum = $this->forumsRepository->findByUid($forumUid);
+
+        $this->view->assignMultiple([
+            'forum' => $forum,
+            'post' => $post,
+            'userid' => $userId
+        ]);
+
+        return $this->htmlResponse();
+    }
 
 
 

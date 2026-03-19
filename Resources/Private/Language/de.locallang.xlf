@@ -30,6 +30,9 @@
             <trans-unit id="success_message">
                 <target>Deine Nachricht wurde erfolgreich versendet.</target>
             </trans-unit>
+            <trans-unit id="replyWriteTitletag">
+                <target>Auf Beitrag antworten</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

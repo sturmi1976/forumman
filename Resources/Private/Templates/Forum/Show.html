@@ -1,9 +1,23 @@
+<f:layout name="Default" />
+
+
+<f:section name="main">
 <!-- Zurück-Button ganz oben -->
-<div class="back-button">
-    <f:link.action action="showThreads" arguments="{forumUid: post.forum.uid}" class="btn btn-secondary">
-        &laquo; Zurück zum Forum
-    </f:link.action>
-</div>
+ <div class="button_tool_bar">
+    <div class="tool_bar_left">
+        <f:link.action action="showThreads" arguments="{forumUid: post.forum.uid}" class="btn back-link">
+            &laquo; Zurück zum Forum
+        </f:link.action>
+    </div>
+    <f:security.ifAuthenticated>
+        <div class="tool_bar_right">
+            <f:link.action action="replyWrite" arguments="{forum: post.forum, post: post}" class="btn btn-primary new-thread">
+                Auf Beitrag antworten
+            </f:link.action>
+        </div>
+    </f:security.ifAuthenticated>
+ </div>
+
 
 <!-- Haupt-Post -->
 <div class="post-wrapper">
@@ -22,9 +36,19 @@
             <h1>{post.title}</h1>
             <p>
                 <strong>Erstellt von:</strong>
-                <f:format.htmlspecialchars>
-                    <f:format.case mode="capitalWords">{post.user.username}</f:format.case>
-                </f:format.htmlspecialchars>
+                <f:link.action action="show" controller="User" arguments="{user: post.user}">
+                    <f:format.htmlspecialchars>
+                        <f:format.case mode="capitalWords">{post.user.username}</f:format.case>
+                    </f:format.htmlspecialchars>
+                </f:link.action>
+                <f:if condition="{isOnline}">
+                    <f:then>
+                        <span class="status-dot online" title="Online"></span>
+                    </f:then>
+                    <f:else>
+                        <span class="status-dot offline" title="Offline"></span>
+                    </f:else>
+                </f:if>
             </p>
             <p><strong>Erstellt am:</strong> {post.createdAt -> f:format.date(format:'d.m.Y, H:i')}</p>
         </div>
@@ -34,33 +58,74 @@
         <f:format.html>{post.content}</f:format.html>
         <f:if condition="{post.user.signature}">
             <hr />
-            <f:format.raw>{post.user.signature}</f:format.raw>
+            <div class="signature">
+                <f:format.html>{post.user.signature}</f:format.html>
+            </div>
         </f:if>
     </div>
 </div>
 
 <!-- Antworten -->
-<h3>Antworten</h3>
-<f:for each="{replies}" as="reply">
+ <f:if condition="{replies}">
+    <h3>Antworten</h3>
+ </f:if>
+
+<f:for each="{replies}" as="reply" iteration="i">
+    
+    <f:if condition="{i.isLast}">
+        <f:flashMessages as="flashMessages">
+            <div id="last" class="scroll-anchor"></div> 
+            <div id="flash-message-container" style="opacity:0; transform: translateY(-20px); transition: all 0.6s ease;">
+                <f:for each="{flashMessages}" as="flashMessage">
+                    <div class="flash-message {flashMessage.class}">
+                        {flashMessage.message}
+                    </div>
+                </f:for>
+            </div>
+        </f:flashMessages>
+    </f:if>
     <div class="reply-wrapper">
         <div class="reply-header">
             <div class="avatar">
-                <f:if condition="{reply.user.image}">
+                <f:if condition="{reply.reply.user.image}">
                     <f:then>
-                        <f:image image="{reply.user.image}" alt="Avatar von {reply.user.username}" width="60" height="60" />
+                        <f:image image="{reply.reply.user.image}" alt="Avatar von {reply.reply.user.username}" width="60" height="60" />
                     </f:then>
                     <f:else>
                         <f:image src="EXT:forumman/Resources/Public/Images/no_pic.png" width="60" height="60" alt="no image" />
                     </f:else>
                 </f:if>
             </div>
+
+    
+            
             <div class="reply-meta">
-                <strong>{reply.user.username}</strong>
-                <span class="reply-date">{reply.createdAt -> f:format.date(format:'d.m.Y, H:i')}</span>
+                <f:link.action action="show" controller="User" arguments="{user: reply.reply.user}">
+                    <f:format.htmlspecialchars>
+                            <f:format.case mode="capitalWords">
+                            {reply.reply.user.username}
+                            </f:format.case>
+                    </f:format.htmlspecialchars>
+                </f:link.action>
+                <f:if condition="{reply.isOnline2}">
+                    <f:then>
+                        <span class="status-dot online" title="Online"></span>
+                    </f:then>
+                    <f:else>
+                        <span class="status-dot offline" title="Offline"></span>
+                    </f:else>
+                </f:if>
+                <span class="reply-date">{reply.reply.createdAt -> f:format.date(format:'d.m.Y, H:i')}</span>
             </div>
         </div>
         <div class="reply-content">
-            <f:format.raw>{reply.content}</f:format.raw>
+            <f:format.raw>{reply.reply.content}</f:format.raw>
+            <f:if condition="{reply.reply.user.signature}">
+            <hr />
+            <div class="signature">
+                <f:format.html>{reply.reply.user.signature}</f:format.html>
+            </div>
+        </f:if>
         </div>
     </div>
 </f:for>
@@ -123,3 +188,73 @@
         </ul>
     </div>
 </f:if>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const hash = window.location.hash;
+
+    if (hash === '#latest') {
+        const target = document.getElementById('last');
+        const flash = document.getElementById('flash-message-container');
+
+        if (!target) return;
+
+        // Scroll-Funktion ähnlich zu deinem Klick-Beispiel
+        function scrollToAnchor() {
+            const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
+        }
+
+        // Scrollen starten
+        scrollToAnchor();
+
+        // Intersection Observer: FlashMessage erscheint, sobald sichtbar
+        if (flash) {
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        flash.style.opacity = 1;
+                        flash.style.transform = 'translateY(0)';
+                        obs.disconnect();
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            observer.observe(flash);
+        }
+    }
+});
+</script>
+
+
+<style>
+    #flash-message-container {
+    margin-bottom: 20px;
+}
+
+.flash-message {
+    padding: 15px 20px;
+    border-radius: 10px;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* Farben */
+.flash-ok {
+    background: linear-gradient(135deg, #4CAF50, #66BB6A);
+    color: #fff;
+}
+
+.flash-error {
+    background: linear-gradient(135deg, #f44336, #e57373);
+    color: #fff;
+}
+</style>
+
+</f:section>
