@@ -109,6 +109,8 @@ final class ForumController extends ActionController
             $this->recordTitleProvider->setTitle($forum->getTitle());
         }*/
 
+
+
         // Alle Threads (Posts ohne Parent) für dieses Forum
         $allThreads = $this->postsRepository->findThreadsByForum($forumUid);
 
