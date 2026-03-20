@@ -21,7 +21,7 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\PageTitle\RecordTitleProvider;
+//use TYPO3\CMS\Core\PageTitle\RecordTitleProvider;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use Lanius\Forumman\Domain\Model\FrontendUser;
 use Lanius\Forumman\Domain\Repository\FrontendUserRepository;
@@ -29,10 +29,11 @@ use Lanius\Forumman\Domain\Repository\FrontendUserRepository;
 
 final class UserController extends ActionController
 {
+    /*
     public function __construct(
         private readonly RecordTitleProvider $recordTitleProvider,
     ) {}
-
+    */
 
     protected FrontendUserRepository $frontendUserRepository;
 
@@ -84,7 +85,7 @@ final class UserController extends ActionController
         /** @var FrontendUserAuthentication $feUser */
         $feUser = $this->request->getAttribute('frontend.user');
 
-        $this->recordTitleProvider->setTitle($titletag);
+        //$this->recordTitleProvider->setTitle($titletag);
 
         if ($user->getBirthday()) {
             $birthday = \DateTime::createFromFormat('d-m-Y', $user->getBirthday());

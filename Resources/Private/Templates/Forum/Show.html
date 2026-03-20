@@ -1,4 +1,13 @@
+{namespace fm=Lanius\Forumman\ViewHelpers}
 <f:layout name="Default" />
+
+
+<f:section name="HeadMetaTags">
+    <fm:pageTitle title="
+    {f:translate(key: 'replyWriteTitletag', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}: 
+    {post.title}" 
+    />
+</f:section>
 
 
 <f:section name="main">

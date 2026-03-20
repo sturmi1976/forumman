@@ -16,7 +16,7 @@ use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Core\Utility\StringUtility;
 
 use TYPO3\CMS\Core\Context\Context;
-use TYPO3\CMS\Core\PageTitle\RecordTitleProvider;
+//use TYPO3\CMS\Core\PageTitle\RecordTitleProvider;
 
 use Lanius\Forumman\Domain\Repository\CategoriesRepository;
 use Lanius\Forumman\Domain\Repository\ForumsRepository;
@@ -28,9 +28,11 @@ use TYPO3\CMS\Core\Pagination\SlidingWindowPagination;
 
 final class ForumController extends ActionController
 {
+    /*
     public function __construct(
         private readonly RecordTitleProvider $recordTitleProvider,
     ) {}
+        */
 
     protected ?CategoriesRepository $categoriesRepository = null;
     protected ?ForumsRepository $forumsRepository = null;
@@ -101,10 +103,11 @@ final class ForumController extends ActionController
             throw new \RuntimeException('Forum not found', 404);
         }
 
-        // Title Tag
+        // Title 
+        /*
         if ($forum->getTitle()) {
             $this->recordTitleProvider->setTitle($forum->getTitle());
-        }
+        }*/
 
         // Alle Threads (Posts ohne Parent) für dieses Forum
         $allThreads = $this->postsRepository->findThreadsByForum($forumUid);
@@ -165,9 +168,10 @@ final class ForumController extends ActionController
         }
 
         // Title Tag
+        /*
         if ($postObject->getTitle()) {
             $this->recordTitleProvider->setTitle($postObject->getTitle());
-        }
+        }*/
 
         if ($postObject->getUser()) {
             $online = $this->frontendUserRepository->isUserOnline($postObject->getUser()->getUid());
