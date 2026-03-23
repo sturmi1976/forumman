@@ -44,7 +44,7 @@ Install the extension using Composer:
 
 - Create pages in the page tree where you want to display the forum and add the respective ForumMan plugins:
 
-Forum list
+-- Forum list
 
 Loginbox and settings
 
