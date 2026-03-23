@@ -1,6 +1,11 @@
 {namespace core = TYPO3\CMS\Core\ViewHelpers}
 {namespace fm=Lanius\Forumman\ViewHelpers}
 
+<f:comment>Title Tag</f:comment>
+<fm:pageTitle suffix=" - 
+{f:translate(key: 'forumIndexSuffix.titleTag', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
+" title="{f:format.case(value: user.username, mode: 'capital')}" />
+
 
 <f:security.ifAuthenticated>
 <f:if condition="{feUser.user.uid} !== {user.uid}">

@@ -2,11 +2,9 @@
 <f:layout name="Default" />
 
 
+
 <f:section name="HeadMetaTags">
-    <fm:pageTitle title="
-    {f:translate(key: 'replyWriteTitletag', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}: 
-    {post.title}" 
-    />
+    <fm:pageTitle title="{post.title}" suffix=" / {post.forum.title}" />
 </f:section>
 
 

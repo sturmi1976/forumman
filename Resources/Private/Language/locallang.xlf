@@ -33,6 +33,33 @@
             <trans-unit id="replyWriteTitletag">
                 <source>Reply to post</source>
             </trans-unit>
+            <trans-unit id="forumIndex.titleTag">
+                <source>TYPO3 Forum - </source>
+            </trans-unit>
+            <trans-unit id="forumIndexSuffix.titleTag">
+                <source>Company GmbH</source>
+            </trans-unit>
+            <trans-unit id="online.whoIsOnlineHeadline">
+                <source>Who is online</source>
+            </trans-unit>
+            <trans-unit id="online.noUserOnline">
+                <source>No user online</source>
+            </trans-unit>
+            <trans-unit id="loginbox.account">
+                <source>Account</source>
+            </trans-unit>
+            <trans-unit id="loginbox.username">
+                <source>Username</source>
+            </trans-unit>
+            <trans-unit id="loginbox.password">
+                <source>Password</source>
+            </trans-unit>
+            <trans-unit id="loginbox.no_register">
+                <source>Not registered yet?</source>
+            </trans-unit>
+            <trans-unit id="loginbox.now_register">
+                <source>Sign up now</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

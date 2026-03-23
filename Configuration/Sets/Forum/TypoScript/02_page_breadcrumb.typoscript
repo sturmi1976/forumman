@@ -1,0 +1,19 @@
+page = PAGE
+page { 
+
+    10 {
+        dataProcessing {
+            # Breadcrumb - Forum
+            455 = Lanius\Forumman\DataProcessing\AddRecordToMenuProcessor
+            455.addToMenus = breadcrumb
+
+            # Breadcrumb - Posts
+            456 = Lanius\Forumman\DataProcessing\AddRecordToMenuProcessor2
+            456.addToMenus = breadcrumb
+
+            # Breadcrumb - Userprofil
+            457 = Lanius\Forumman\DataProcessing\AddRecordToMenuProcessor3
+            457.addToMenus = breadcrumb
+        }
+    }
+}

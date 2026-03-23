@@ -11,3 +11,6 @@ plugin.tx_forumman_forumforumlist {
         storagePid = {$plugin.plugin.tx_forumman_forumforumlist.persistence.storagePid}
     }
 }
+
+
+

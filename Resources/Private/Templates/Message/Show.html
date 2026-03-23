@@ -1,4 +1,7 @@
 
+{namespace fm=Lanius\Forumman\ViewHelpers}
+<fm:pageTitle prefix="Mailbox: " title="{f:format.case(value: feUser.username, mode: 'capital')}" /> 
+
 
 <div class="mailbox-single-container">
 
@@ -6,7 +9,7 @@
         <h2>{message.subject}</h2>
         <div class="mailbox-single-meta">
             Von: <strong>{message.sender.username}</strong>  
-            • <f:format.date format="d.m.Y H:i">{message.sentAt}</f:format.date>
+            • <f:format.date format="d.m.Y, H:i">{date}</f:format.date> 
         </div>
     </div>
 
@@ -18,6 +21,7 @@
         <f:link.action 
             action="showMailbox" 
             controller="Message" 
+            arguments="{user: feUser.user.uid}"
             class="mailbox-back-button">
             ← Zurück zur Mailbox
         </f:link.action>
@@ -26,10 +30,92 @@
         action="delete"
         controller="Message"
         arguments="{message: message}"
-        class="mailbox-delete-button"
-        onclick="return confirm('Möchten Sie diese Nachricht wirklich löschen?');">
+        class="mailbox-delete-button">
         🗑 Nachricht löschen
     </f:link.action>
+
+    <!-- Modal -->
+<div id="deleteModal" class="modal">
+    <div class="modal-content">
+        <h3>Nachricht löschen?</h3>
+        <p>Möchten Sie diese Nachricht wirklich löschen?</p>
+        <div class="modal-buttons">
+            <button id="cancelBtn" class="btn btn-secondary">Abbrechen</button>
+            <button id="confirmBtn" class="btn btn-danger">Löschen</button>
+        </div>
+    </div>
+</div>
+
+
     </div>
 
 </div>
+
+
+
+<style>
+    .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 20px 30px;
+    border-radius: 8px;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.modal-buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+</style>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const modal = document.getElementById('deleteModal');
+    const cancelBtn = document.getElementById('cancelBtn');
+    const confirmBtn = document.getElementById('confirmBtn');
+    let deleteUrl = null;
+
+    document.querySelectorAll('.mailbox-delete-button').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            deleteUrl = btn.getAttribute('href'); // TYPO3 Link
+            modal.style.display = 'flex';
+        });
+    });
+
+    cancelBtn.addEventListener('click', function() {
+        modal.style.display = 'none';
+        deleteUrl = null;
+    });
+
+    confirmBtn.addEventListener('click', function() {
+        if (deleteUrl) {
+            window.location.href = deleteUrl;
+        }
+    });
+
+    // Modal schließen, wenn Klick außerhalb
+    window.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+            deleteUrl = null;
+        }
+    });
+});
+</script>

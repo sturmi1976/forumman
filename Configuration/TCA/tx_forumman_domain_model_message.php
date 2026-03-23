@@ -18,10 +18,10 @@ return [
         'iconfile' => 'EXT:forumman/Resources/Public/Icons/message.svg',
     ],
     'interface' => [
-        'showRecordFieldList' => 'sender, receiver, subject, content, is_read',
+        'showRecordFieldList' => 'sender, receiver, subject, content, is_read, send_at',
     ],
     'types' => [
-        '1' => ['showitem' => 'sender, receiver, subject, content, is_read'],
+        '1' => ['showitem' => 'sender, receiver, subject, content, is_read, send_at'],
     ],
     'columns' => [
         'sender' => [
@@ -60,6 +60,14 @@ return [
                 'type' => 'text',
                 'cols' => 40,
                 'rows' => 5,
+            ],
+        ],
+        'send_at' => [
+            'label' => 'Sent at',
+            'config' => [
+                'type' => 'input',
+                'eval' => 'int',
+                'default' => 0,
             ],
         ],
         'is_read' => [

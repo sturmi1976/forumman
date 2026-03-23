@@ -27,6 +27,29 @@ final class FrontendUser extends AbstractEntity
     protected int $isOnline = 0;
     protected int $nowonline = 0;
 
+    /**
+     * Timestamp of last activity
+     *
+     * @var int
+     */
+    protected int $txForummanLastActivity = 0;
+
+    /**
+     * @return int
+     */
+    public function getTxForummanLastActivity(): int
+    {
+        return $this->txForummanLastActivity;
+    }
+
+    /**
+     * @param int $timestamp
+     */
+    public function setTxForummanLastActivity(int $timestamp): void
+    {
+        $this->txForummanLastActivity = $timestamp;
+    }
+
 
     public function getSignature(): string
     {

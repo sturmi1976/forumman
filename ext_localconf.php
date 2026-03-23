@@ -8,17 +8,18 @@ use Lanius\Forumman\Controller\UserController;
 use Lanius\Forumman\Controller\RegisterController;
 use Lanius\Forumman\Controller\MessageController;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
+use Lanius\Forumman\Controller\WhoIsOnlineController;
 
 ExtensionUtility::configurePlugin(
     'Forumman',
     'ForumForumlist',
     [
         ForumController::class => 'index,showThreads,newThread,createThread,show,replyWrite',
-        UserController::class  => 'show',
+        UserController::class  => 'show,settings,updateProfileImage',
     ],
     [
         ForumController::class => 'createThread,replyWrite',
-        UserController::class  => 'show',
+        UserController::class  => 'show,settings,updateProfileImage',
     ],
     ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
 );
@@ -54,9 +55,19 @@ ExtensionUtility::configurePlugin(
         MessageController::class => 'send,showMailbox,show,delete'
     ],
 );
+ExtensionUtility::configurePlugin(
+    'Forumman',
+    'ForumForumWhoIsOnline',
+    [
+        WhoIsOnlineController::class => 'index,ajax'
+    ],
+    [
+        WhoIsOnlineController::class => 'ajax'
+    ],
+);
 
 
 
 // Mail Templates for Fluid Mail
-$GLOBALS['TYPO3_CONF_VARS']['MAIL']['templateRootPaths'][700] = 'EXT:forumman/Resources/Private/Templates/Email';
-$GLOBALS['TYPO3_CONF_VARS']['MAIL']['layoutRootPaths'][700] = 'EXT:forumman/Resources/Private/Layouts/Email';
+$GLOBALS['TYPO3_CONF_VARS']['MAIL']['templateRootPaths'][800] = 'EXT:forumman/Resources/Private/Templates/Email';
+$GLOBALS['TYPO3_CONF_VARS']['MAIL']['layoutRootPaths'][800] = 'EXT:forumman/Resources/Private/Layouts/Email';

@@ -17,7 +17,7 @@ final class MessageRepository extends Repository
         $query->matching(
             $query->equals('receiver', $receiverUid)
         );
-        $query->setOrderings(['sentAt' => 'DESC']);
+        $query->setOrderings(['send_at' => 'DESC']);
         return $query->execute();
     }
 }

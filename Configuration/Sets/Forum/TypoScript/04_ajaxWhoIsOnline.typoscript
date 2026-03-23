@@ -1,0 +1,25 @@
+ajaxWhoIsOnline = PAGE
+ajaxWhoIsOnline {
+    typeNum = 446
+    config {
+        disableAllHeaderCode = 1
+        no_cache = 1
+        xhtml_cleaning = 0
+        admPanel = 0
+    }
+
+    10 = USER
+    10 {
+        userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+        extensionName = Forumman
+        pluginName = ForumForumWhoIsOnline
+        vendorName = Lanius
+        controller = WhoIsOnline
+        action = ajax
+        switchableControllerActions {
+            WhoIsOnline {
+                1 = ajax
+            }
+        }
+    }
+}

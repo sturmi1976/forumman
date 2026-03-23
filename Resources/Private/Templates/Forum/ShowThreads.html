@@ -1,10 +1,19 @@
 {namespace core = TYPO3\CMS\Core\ViewHelpers}
+{namespace fm=Lanius\Forumman\ViewHelpers}
+
 
 
 <f:layout name="Default" />
 
+<f:section name="HeadMetaTags">
+    <fm:pageTitle suffix=" - 
+{f:translate(key: 'forumIndexSuffix.titleTag', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
+" title="{forum.title}" />
+</f:section>
 
 <f:section name="main">
+
+
 <h1 class="tx_forumman_forumtitle">{forum.title}</h1>
 
 <!-- Threads Liste -->

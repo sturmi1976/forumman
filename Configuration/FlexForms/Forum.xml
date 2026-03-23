@@ -1,0 +1,27 @@
+<T3DataStructure>
+    <sheets>
+        <!-- Tab 1 -->
+        <sDEF>
+            <ROOT>
+                <sheetTitle>Allgemeine Einstellungen</sheetTitle>
+                <type>array</type>
+                <el>
+                    <settings.storageUid>
+                        <label>Storage</label>
+                        <description>Select the file storage used for profile images.</description>
+                        <config>
+                            <type>select</type>
+                            <renderType>selectSingle</renderType>
+                            <foreign_table>sys_file_storage</foreign_table>
+                            <foreign_table_where>ORDER BY name</foreign_table_where>
+                            <size>1</size>
+                            <minitems>1</minitems>
+                            <maxitems>1</maxitems>
+                        </config>
+                    </settings.storageUid>
+                </el>
+            </ROOT>
+        </sDEF>
+
+    </sheets>
+</T3DataStructure>

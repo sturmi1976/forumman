@@ -10,6 +10,9 @@ return [
                 'fieldName' => 'uid',
                 'foreign_table' => 'tx_forumman_domain_model_posts',
                 'foreign_field' => 'user'
+            ],
+            'txForummanLastActivity' => [
+                'fieldName' => 'tx_forumman_last_activity'
             ]
         ]
     ],
@@ -25,9 +28,9 @@ return [
                 'mapOnProperty' => 'usergroup',
                 'lazy' => true,
             ],
+            'txForummanLastActivity' => [
+                'fieldName' => 'tx_forumman_last_activity'
+            ]
         ]
-    ],
-    \Lanius\Forumman\Domain\Model\Group::class => [
-        'tableName' => 'fe_groups'
     ],
 ];

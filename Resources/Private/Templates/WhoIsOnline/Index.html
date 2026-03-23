@@ -1,0 +1,33 @@
+{namespace fm=Lanius\Forumman\ViewHelpers}
+
+<f:asset.css identifier="whoisonline-css" href="EXT:forumman/Resources/Public/Css/whoisonline.css" />
+<f:asset.script identifier="whoisonline-js" src="EXT:forumman/Resources/Public/Js/whoisonline.js" />
+
+
+<div class="who-is-online-box" id="who-is-online-box">
+    <h3>
+        {f:translate(key: 'online.whoIsOnlineHeadline', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
+    </h3>
+    <div class="online-users-wrapper">
+        <f:if condition="{onlineUsers}">
+            <f:then>
+                <ul class="online-users">
+            <f:for each="{onlineUsers}" as="user">
+                <li>
+                    <f:link.action action="show" controller="User" arguments="{user: user}">
+                        <span class="status-dot online"></span>
+                        <span class="username">{user.username}</span>
+                    </f:link.action>
+                </li>
+            </f:for>
+        </ul>
+            </f:then>
+            <f:else>
+                <em>
+                    [ {f:translate(key: 'online.noUserOnline', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')} ]
+                </em>
+            </f:else>
+        </f:if>
+    </div>
+</div>
+

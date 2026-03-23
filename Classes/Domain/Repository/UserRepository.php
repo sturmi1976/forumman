@@ -22,12 +22,25 @@ use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 final class UserRepository extends Repository
 {
 
+    /**
+     * @var ConnectionPool
+     */
+    protected ConnectionPool $connectionPool;
+
+    /**
+     * @param ConnectionPool $connectionPool
+     */
+    public function injectConnectionPool(ConnectionPool $connectionPool): void
+    {
+        $this->connectionPool = $connectionPool;
+    }
+
     public function insertUser(array $insertArray): int
     {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
             ->getQueryBuilderForTable('fe_users');
 
-        // Passwort hashen!
+        // Password hash!
         $hashedPassword = password_hash($insertArray['password1'], PASSWORD_DEFAULT);
 
         $queryBuilder
@@ -40,7 +53,7 @@ final class UserRepository extends Repository
                 'slug' => $insertArray['slug'],
                 'password' => $hashedPassword,
                 'email' => $insertArray['email'],
-                'usergroup' => 1,
+                'usergroup' => $insertArray['group'],
                 'disable' => 1,
                 'md5_hash' => $insertArray['md5_hash']
             ])
@@ -56,14 +69,19 @@ final class UserRepository extends Repository
      */
     public function setUserOffline(int $userId): void
     {
-        $connection = GeneralUtility::makeInstance(ConnectionPool::class)
-            ->getConnectionForTable('fe_users');
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('fe_users');
 
-        $connection->update(
-            'fe_users',
-            ['is_online' => 0], // neues Timestamp setzen
-            ['uid' => $userId]       // WHERE uid = $userId
-        );
+        $queryBuilder
+            ->update('fe_users')
+            ->where(
+                $queryBuilder->expr()->eq(
+                    'uid',
+                    $queryBuilder->createNamedParameter($userId)
+                )
+            )
+            ->set('tx_forumman_last_activity', 0)
+            ->set('is_online', 0)
+            ->executeStatement();
     }
 
 
@@ -296,8 +314,6 @@ final class UserRepository extends Repository
             $i++;
         }
 
-
-        //\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($result);
 
         return $result;
     }

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="100" viewBox="0 0 120 100">
+
+    <!-- Benutzerkopf -->
+    <circle cx="60" cy="35" r="12" stroke="currentColor" stroke-width="2" fill="none"/>
+
+    <!-- Benutzerkörper -->
+    <path d="M48 60c0-6 24-6 24 0v10H48V60z" stroke="currentColor" stroke-width="2" fill="none"/>
+
+    <!-- Loginbox Rechteck (Tür) -->
+    <rect x="45" y="72" width="30" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2" fill="none"/>
+    <circle cx="70" cy="81" r="1.5" fill="currentColor"/> <!-- Türknauf -->
+
+    <!-- Text darunter -->
+    <text x="60" y="98" text-anchor="middle" font-size="12" fill="currentColor">
+        Loginbox
+    </text>
+
+</svg>

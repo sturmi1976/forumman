@@ -1,3 +1,4 @@
+{namespace fm=Lanius\Forumman\ViewHelpers}
 
     <div class="container">
         <div class="row justify-content-center">
@@ -8,7 +9,7 @@
                         <div class="card shadow-sm border-0">
                             <div class="card-body">
                                 <h3 class="card-title mb-4">
-                                    Konto
+                                    {f:translate(key: 'loginbox.account', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
                                 </h3>
 
                                 <p class="mb-3" style="border-bottom:1px #bebcbc solid; padding-bottom:1rem;">
@@ -30,9 +31,13 @@
                                             <core:icon identifier="actions-envelope-open-text" size="small" />
                                             <f:link.action action="showMailbox" controller="Message" arguments="{user: user}">Postfach</f:link.action>
                                         </li>
+                                        <li>
+                                            <core:icon identifier="actions-system-extension-configure" size="small" />
+                                            <f:link.action action="settings" controller="User" arguments="{user: user}">Einstellungen</f:link.action>
+                                        </li>
                                     </ul>
 
-                                <f:link.action action="logout" class="btn btn-danger"> 
+                                <f:link.action action="logout" class="btn btn-danger">  
                                     Logout
                                 </f:link.action>
                             </div>
@@ -48,25 +53,25 @@
                                 
                                     <div class="mb-3">
                                         <label for="username" class="form-label">
-                                            Username
+                                            {f:translate(key: 'loginbox.username', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
                                         </label>
                                         <f:form.textfield 
                                             name="username" 
                                             id="username" 
                                             class="form-control" 
-                                            placeholder="Username"
+                                            placeholder="{f:translate(key: 'loginbox.username', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}"
                                         />
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="password" class="form-label">
-                                            Passwort
+                                            {f:translate(key: 'loginbox.password', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
                                         </label>
                                         <f:form.password 
                                             name="password"
                                             id="password" 
                                             class="form-control"
-                                            placeholder="Passwort"
+                                            placeholder="{f:translate(key: 'loginbox.password', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}"
                                         />
                                     </div>
 
@@ -81,7 +86,10 @@
                                 </f:form>
 
                                 <p style="font-style: italic; font-size:0.9rem;" class="now_register">
-                                    Noch nicht registriert? <f:link.page pageUid="{settings.registerUid}">&#10146; Jetzt registrieren</f:link.page>
+                                    {f:translate(key: 'loginbox.no_register', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')} 
+                                    <f:link.page pageUid="{settings.registerUid}">&#10146; 
+                                        {f:translate(key: 'loginbox.now_register', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
+                                    </f:link.page>
                                 </p>
 
                             </div>

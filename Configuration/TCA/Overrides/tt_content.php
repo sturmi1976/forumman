@@ -8,23 +8,33 @@ ExtensionUtility::registerPlugin(
     'Forumman',
     'ForumForumlist',
     'Forum: Forumlist',
-    'ext-forumman-plugin',
+    'apps-pagetree-page-backend-users-root',
     'Forum',
     'Zur Darstellung der Foren',
+    'FILE:EXT:forumman/Configuration/FlexForms/Forum.xml'
 );
 ExtensionUtility::registerPlugin(
     'Forumman',
     'ForumForumlogin',
-    'Forum: Login form',
-    'ext-forumman-plugin',
+    'Login Box / Settings',
+    'mimetypes-x-content-login',
     'Forum',
-    'Login Formular',
+    'Login Formular und Logout Box inkl. Einstellungsmöglichkeiten für den User.',
 );
 ExtensionUtility::registerPlugin(
     'Forumman',
     'ForumForumregister',
     'Forum: Register form',
-    'ext-forumman-plugin',
+    'content-webhook',
     'Forum',
     'Registrierungs Formular',
+    'FILE:EXT:forumman/Configuration/FlexForms/Register.xml'
+);
+ExtensionUtility::registerPlugin(
+    'Forumman',
+    'ForumForumWhoIsOnline',
+    'Forum: Who is online?',
+    'apps-pagetree-folder-contains-fe_users',
+    'Forum',
+    'Anzeigebox wer gerade online ist',
 );

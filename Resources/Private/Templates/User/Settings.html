@@ -1,0 +1,31 @@
+{namespace f=TYPO3\CMS\Fluid\ViewHelpers}
+{namespace core = TYPO3\CMS\Core\ViewHelpers}
+{namespace fm=Lanius\Forumman\ViewHelpers}
+
+<f:comment>Title Tag</f:comment>
+<fm:pageTitle title="Einstellungen: {f:format.case(value: user.username, mode: 'capital')}" />
+
+
+
+<h2>Profile Settings</h2>
+
+<f:flashMessages />
+
+<f:form action="updateProfileImage" name="imageUpload" enctype="multipart/form-data" method="post">
+
+    <div class="mb-3">
+        <label for="image" class="form-label">Profilbild</label>
+
+        <!-- Uploadfeld -->
+        <f:form.upload property="image" id="image" class="form-control" />
+
+        <!-- Aktuelles Bild anzeigen -->
+        <f:if condition="{user.image}">
+            <f:then>
+                <img src="{f:uri.image(image: user.image)}" alt="Profilbild" width="100" class="mt-2" />
+            </f:then>
+        </f:if>
+    </div>
+
+    <f:form.submit value="Speichern" class="btn btn-primary" />
+</f:form>

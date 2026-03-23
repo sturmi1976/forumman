@@ -19,6 +19,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Symfony\Component\Mime\Address;
 use TYPO3\CMS\Core\Mail\FluidEmail;
 use TYPO3\CMS\Core\Mail\MailerInterface;
+use TYPO3\CMS\Extbase\Http\ForwardResponse;
 
 
 class RegisterController extends ActionController
@@ -138,11 +139,22 @@ class RegisterController extends ActionController
         // -----------------------------------------------------
         // User anlegen
         // -----------------------------------------------------
-        $pid = (int)$this->settings['userStorageFolder'];
+        /*
+        if (isset($this->settings['userStorageFolder'])) {
+            $pid = (int)$this->settings['userStorageFolder'];
+        } else {
+            $pid = (int)$this->settings['userPid'];
+        }*/
+
+
+        $pid = (int)$this->settings['userPid'];
+
+
         $md5 = md5($username);
 
         $uid = $this->userRepository->insertUser([
             'username'  => $username,
+            'group' => $this->settings['userGroup'],
             'slug' => $this->generateSlug($username),
             'email'     => $email,
             'password1' => $pass1,
@@ -180,6 +192,7 @@ class RegisterController extends ActionController
         }
 
         $this->userRepository->activateUser((int)$user['uid']);
+
 
         $this->view->assign('success', 'Account erfolgreich aktiviert.');
         return $this->htmlResponse();

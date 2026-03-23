@@ -1,3 +1,10 @@
+{namespace fm=Lanius\Forumman\ViewHelpers}
+<f:comment>Title Tag</f:comment>
+<fm:pageTitle suffix="
+{f:translate(key: 'forumIndexSuffix.titleTag', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
+" title="
+{f:translate(key: 'forumIndex.titleTag', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}" />
+
 
 
 <div class="forum"> 

@@ -98,7 +98,7 @@ final class MessageController extends ActionController
         $message->setReceiver($receiverUser);
         $message->setSubject($subject);
         $message->setContent($content);
-        $message->setSentAt(new \DateTime());
+        $message->setSendAt(time());
 
         $this->messageRepository->add($message);
         $this->persistenceManager->persistAll();
@@ -120,9 +120,12 @@ final class MessageController extends ActionController
 
     public function showMailboxAction(): ResponseInterface
     {
+        $queryParams = $this->request->getQueryParams()['tx_forumman_forumforumlist'];
+
         /** @var FrontendUserAuthentication $feUser */
         $feUser = $this->request->getAttribute('frontend.user');
-        if (!isset($feUser->user['uid'])) {
+
+        if (!isset($feUser->user['uid']) || $queryParams['user'] != $feUser->user['uid']) {
             return $this->redirectToUri(
                 $this->uriBuilder
                     ->reset()
@@ -145,7 +148,19 @@ final class MessageController extends ActionController
 
     public function showAction(\Lanius\Forumman\Domain\Model\Message $message): ResponseInterface
     {
+        /** @var FrontendUserAuthentication $feUser */
+        $feUser = $this->request->getAttribute('frontend.user');
+
+        if (!$message->isRead()) {
+            $message->setIsRead(true);
+
+            $this->messageRepository->update($message);
+            $this->persistenceManager->persistAll();
+        }
+
         $this->view->assign('message', $message);
+        $this->view->assign('date', $message->getSendAt());
+        $this->view->assign('feUser', $feUser);
         return $this->htmlResponse();
     }
 
@@ -170,6 +185,6 @@ final class MessageController extends ActionController
 
         $this->addFlashMessage('Die Nachricht wurde erfolgreich gelöscht.', '');
 
-        return $this->redirect('showMailbox');
+        return $this->redirect('showMailbox', 'Message', 'forumman', ['user' => $currentUserId]);
     }
 }

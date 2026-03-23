@@ -39,8 +39,8 @@ $newColumns = [
         'label' => 'Administrator',
         'config' => [
             'type' => 'check',
-            'renderType' => 'checkboxToggle', // optional, für hübsche Toggle-UI
-            'default' => 0,                  // Standardwert = nicht aktiviert
+            'renderType' => 'checkboxToggle',
+            'default' => 0,
         ],
     ],
     'description' => [
@@ -73,6 +73,17 @@ $newColumns = [
             'rows' => 8,
         ],
     ],
+    'tx_forumman_last_activity' => [
+        'exclude' => true,
+        'label' => 'Last Activity (Forum)',
+        'config' => [
+            'type' => 'input',
+            'renderType' => 'inputDateTime',
+            'eval' => 'datetime,int',
+            'default' => 0,
+            'readOnly' => true,
+        ],
+    ],
 ];
 
 ExtensionManagementUtility::addTCAcolumns('fe_users', $newColumns);
@@ -87,13 +98,13 @@ ExtensionManagementUtility::addToAllTCAtypes(
     'fe_users',
     'profilbeschreibung,signature',
     '0',
-    'after:email' // oder after:www / after:name
+    'after:email'
 );
 
-// 1️⃣ Füge das Feld zur TCA hinzu
+
 ExtensionManagementUtility::addTCAcolumns('fe_users', $tmp_slugField);
 
-// 2️⃣ Füge das Feld direkt nach "username" im Backend hinzu
+
 ExtensionManagementUtility::addToAllTCAtypes(
     'fe_users',
     'slug',

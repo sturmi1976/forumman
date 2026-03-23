@@ -12,7 +12,3 @@ CREATE TABLE fe_groups (
     group_color VARCHAR(7) DEFAULT '' NOT NULL
 );
 
-
-CREATE TABLE tx_forumman_domain_model_message (
-    sent_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
-);

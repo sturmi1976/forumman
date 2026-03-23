@@ -1,0 +1,36 @@
+<T3DataStructure>
+    <sheets>
+        <!-- Tab 1 -->
+        <sDEF>
+            <ROOT>
+                <sheetTitle>Allgemeine Einstellungen</sheetTitle>
+                <type>array</type>
+                <el>
+                    <settings.userPid>
+                            <label>User Storage Folder</label>
+                            <description>Select the page ID (PID) where frontend users are stored.</description>
+                            <config>
+                                <type>input</type>
+                                <size>30</size>
+                                <eval>required,int</eval>
+                            </config>
+                    </settings.userPid>
+                    <settings.userGroup>
+                        <label>Default User Group for New Registrations</label>
+                        <description>Select the user group that will be automatically assigned to newly registered users.</description>
+                        <config>
+                            <type>select</type>
+                            <renderType>selectSingle</renderType>
+                            <foreign_table>fe_groups</foreign_table>
+                            <foreign_table_where>ORDER BY fe_groups.title</foreign_table_where>
+                            <size>1</size>
+                            <minitems>1</minitems>
+                            <maxitems>1</maxitems>
+                        </config>
+                    </settings.userGroup>
+                </el>
+            </ROOT>
+        </sDEF>
+
+    </sheets>
+</T3DataStructure>

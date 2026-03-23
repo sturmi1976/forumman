@@ -15,6 +15,21 @@ final class Message extends AbstractEntity
     protected ?FrontendUser $sender = null;
     protected ?FrontendUser $receiver = null;
 
+    /**
+     * @var int
+     */
+    protected int $sendAt = 0;
+
+    public function getSendAt(): int
+    {
+        return $this->sendAt;
+    }
+
+    public function setSendAt(int $sendAt): void
+    {
+        $this->sendAt = $sendAt;
+    }
+
     public function getSender(): ?FrontendUser
     {
         return $this->sender;
@@ -36,28 +51,28 @@ final class Message extends AbstractEntity
         $this->receiver = $receiver;
     }
 
-    
+
     /**
- * @var \DateTime|null
- */
-protected ?\DateTime $sentAt = null;
+     * @var \DateTime|null
+     */
+    protected ?\DateTime $sentAt = null;
 
-public function getSentAt(): ?\DateTime
-{
-    return $this->sentAt;
-}
+    public function getSentAt(): ?\DateTime
+    {
+        return $this->sentAt;
+    }
 
-public function setSentAt(\DateTime $sentAt): void
-{
-    $this->sentAt = $sentAt;
-}
+    public function setSentAt(\DateTime $sentAt): void
+    {
+        $this->sentAt = $sentAt;
+    }
 
     public function getSubject(): string
     {
         return $this->subject;
     }
 
-    public function setSubject(string $subject): void 
+    public function setSubject(string $subject): void
     {
         $this->subject = $subject;
     }
