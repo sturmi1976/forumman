@@ -43,13 +43,9 @@ Install the extension using Composer:
 - Go to Site Settings and add a site set for ForumMan (optional, for plugin configuration).
 
 - Create pages in the page tree where you want to display the forum and add the respective ForumMan plugins:
-
--- Forum list
-
+Forum list
 Loginbox and settings
-
 Register form
-
 Who is online
 
 - Configure each plugin via the Flexform settings to select the storage folder, templates, and display options.
