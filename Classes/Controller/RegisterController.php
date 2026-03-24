@@ -20,6 +20,9 @@ use Symfony\Component\Mime\Address;
 use TYPO3\CMS\Core\Mail\FluidEmail;
 use TYPO3\CMS\Core\Mail\MailerInterface;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
+use TYPO3\CMS\Core\Cache\CacheTag;
+use \TYPO3\CMS\Core\Cache\CacheManager;
+use Psr\Http\Message\ServerRequestInterface;
 
 
 class RegisterController extends ActionController
@@ -192,6 +195,10 @@ class RegisterController extends ActionController
         }
 
         $this->userRepository->activateUser((int)$user['uid']);
+
+
+        $cacheManager = GeneralUtility::makeInstance(CacheManager::class);
+        $cacheManager->flushCachesByTag('lastUsersCacheTag');
 
 
         $this->view->assign('success', 'Account erfolgreich aktiviert.');

@@ -96,6 +96,8 @@ final class UserController extends ActionController
             }
         }
 
+        $user->getUserGroup();
+
         $user->setIsOnline();
 
         $online = $this->frontendUserRepository->isUserOnline($user->getUid());

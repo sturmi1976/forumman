@@ -38,3 +38,19 @@ ExtensionUtility::registerPlugin(
     'Forum',
     'Anzeigebox wer gerade online ist',
 );
+ExtensionUtility::registerPlugin(
+    'Forumman',
+    'ForumForumLastUsersOnline',
+    'Forum: Last user online',
+    'apps-pagetree-folder-contains-fe_users',
+    'Forum',
+    'Anzeigebox wer zuletzt online war',
+);
+ExtensionUtility::registerPlugin(
+    'Forumman',
+    'ForumForumNewUser',
+    'Forum: New Users',
+    'apps-pagetree-folder-contains-fe_users',
+    'Forum',
+    'Anzeigebox der 3 neuesten Users',
+);

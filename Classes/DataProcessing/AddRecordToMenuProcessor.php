@@ -99,9 +99,8 @@ class AddRecordToMenuProcessor implements DataProcessorInterface
         }
 
         // PID der Seite, auf der das Forum-Plugin liegt
-        $targetPageUid = 10;
+        $targetPageUid = $this->processorConfiguration['forummanUid'];
 
-        // Parameter für das Forum-Plugin: Zeigt die Thread-Liste des Forums an
         $parameters = [
             'tx_forumman_forumforumlist' => [
                 'controller' => 'Forum',
@@ -110,7 +109,7 @@ class AddRecordToMenuProcessor implements DataProcessorInterface
             ]
         ];
 
-        // URL generieren über cObj->typoLink
+        // URL generated with cObj->typoLink
         $link = $this->cObj->typoLink_URL([
             'parameter' => $targetPageUid,
             'additionalParams' => '&' . http_build_query($parameters),
@@ -119,15 +118,12 @@ class AddRecordToMenuProcessor implements DataProcessorInterface
         ]);
 
 
-
-        \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($link);
-
         $menu[] = [
             'data' => $record,
             'title' => $record['title'],
             'active' => 1,
             'current' => 1,
-            'link' => $link // <-- Hier zeigt der Link korrekt auf das Forum
+            'link' => $link
         ];
     }
 
@@ -146,12 +142,12 @@ class AddRecordToMenuProcessor implements DataProcessorInterface
             return [];
         }
 
-    // 🔥 Aktuellen LanguageAspect holen (TYPO3 12-14)
+
         /** @var LanguageAspect $languageAspect */
         $languageAspect = GeneralUtility::makeInstance(Context::class)
             ->getAspect('language');
 
-        // Datensatz laden
+
         $connection = GeneralUtility::makeInstance(ConnectionPool::class)
             ->getConnectionForTable($recordTable);
 
@@ -168,7 +164,7 @@ class AddRecordToMenuProcessor implements DataProcessorInterface
         /** @var PageRepository $pageRepository */
         $pageRepository = GeneralUtility::makeInstance(PageRepository::class);
 
-        // 🔥 TYPO3 12-14 Overlay (PUBLIC API + LanguageAspect)
+
         $overlay = $pageRepository->getLanguageOverlay(
             $recordTable,
             $row,

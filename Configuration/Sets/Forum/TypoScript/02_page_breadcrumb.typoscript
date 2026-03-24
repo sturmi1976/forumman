@@ -6,14 +6,17 @@ page {
             # Breadcrumb - Forum
             455 = Lanius\Forumman\DataProcessing\AddRecordToMenuProcessor
             455.addToMenus = breadcrumb
+            455.forummanUid = {$forumman.uid}
 
             # Breadcrumb - Posts
             456 = Lanius\Forumman\DataProcessing\AddRecordToMenuProcessor2
             456.addToMenus = breadcrumb
+            456.forummanUid = {$forumman.uid}
 
             # Breadcrumb - Userprofil
             457 = Lanius\Forumman\DataProcessing\AddRecordToMenuProcessor3
             457.addToMenus = breadcrumb
+            457.forummanUid = {$forumman.uid}
         }
     }
 }

@@ -19,6 +19,9 @@ use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Lanius\Forumman\Domain\Repository\FrontendUserRepository;
+use TYPO3\CMS\Core\Cache\CacheTag;
+use \TYPO3\CMS\Core\Cache\CacheManager;
+use Psr\Http\Message\ServerRequestInterface;
 
 
 class LoginController extends ActionController
@@ -99,6 +102,9 @@ class LoginController extends ActionController
 
             if (!empty($session)) {
                 $referer = $this->request->getServerParams()['HTTP_REFERER'] ?? null;
+
+                $cacheManager = GeneralUtility::makeInstance(CacheManager::class);
+                $cacheManager->flushCachesByTag('lastUsersCacheTag');
 
                 if ($referer) {
                     return $this->redirectToUri($referer);

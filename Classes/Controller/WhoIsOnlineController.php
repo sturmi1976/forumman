@@ -38,7 +38,7 @@ class WhoIsOnlineController extends ActionController
 
         $this->view->assign('onlineUsers', $onlineUsers);
 
-        // Plain HTML-Output für Ajax
+        // Plain HTML-Output for Ajax
         $content = $this->view->render();
 
         return $this->htmlResponse($content);
@@ -48,9 +48,9 @@ class WhoIsOnlineController extends ActionController
     public function ajaxAction(): ResponseInterface
     {
         $onlineUsers = $this->frontendUserRepository->findOnlineUsers(10);
-        \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($onlineUsers);
+
         $this->view->assign('onlineUsers', $onlineUsers);
 
-        return $this->htmlResponse(); // lädt WhoIsOnline.html
+        return $this->htmlResponse(); // 
     }
 }

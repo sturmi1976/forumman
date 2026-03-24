@@ -101,7 +101,7 @@ class AddRecordToMenuProcessor3 implements DataProcessorInterface
 
         $menu[] = [
             'data' => $record,
-            'title' => 'Profil: ' . ucfirst($record['username']),
+            'title' => 'User: ' . ucfirst($record['username']),
             'active' => 1,
             'current' => 1,
             'link' => $uri2

@@ -34,6 +34,19 @@ $newColumns = [
             'placeholder' => 'TT-MM-YYYY',
         ],
     ],
+    /*
+    'usergroup' => [
+        'config' => [
+            'type' => 'select',
+            'renderType' => 'selectMultipleSideBySide',
+            'foreign_table' => 'fe_groups',
+            'MM' => 'fe_users_usergroup_mm',
+            'size' => 10,
+            'autoSizeMax' => 30,
+            'maxitems' => 9999,
+            'multiple' => 0,
+        ],
+    ],*/
     'admin' => [
         'exclude' => true,
         'label' => 'Administrator',

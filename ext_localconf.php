@@ -9,6 +9,8 @@ use Lanius\Forumman\Controller\RegisterController;
 use Lanius\Forumman\Controller\MessageController;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 use Lanius\Forumman\Controller\WhoIsOnlineController;
+use Lanius\Forumman\Controller\LastLoggedInController;
+use Lanius\Forumman\Controller\NewUserController;
 
 ExtensionUtility::configurePlugin(
     'Forumman',
@@ -65,7 +67,26 @@ ExtensionUtility::configurePlugin(
         WhoIsOnlineController::class => 'ajax'
     ],
 );
-
+ExtensionUtility::configurePlugin(
+    'Forumman',
+    'ForumForumLastUsersOnline',
+    [
+        LastLoggedInController::class => 'index'
+    ],
+    [
+        LastLoggedInController::class => ''
+    ],
+);
+ExtensionUtility::configurePlugin(
+    'Forumman',
+    'ForumForumNewUser',
+    [
+        NewUserController::class => 'index'
+    ],
+    [
+        NewUserController::class => ''
+    ],
+);
 
 
 // Mail Templates for Fluid Mail

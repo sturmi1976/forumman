@@ -47,14 +47,9 @@
 
         <div class="details">
             <p class="user-rank">Rang: 
-                <f:if condition="{user.userGroup.groupColor}">
-                    <f:then>
-                        <span style="color:{user.userGroup.groupColor}">{user.userGroup.title}</span>
-                    </f:then>
-                    <f:else>
-                        <span>{user.userGroup.title}</span> 
-                    </f:else>
-                </f:if>
+                <f:for each="{user.usergroup}" as="group" iteration="i">
+                    <span style="color:{group.groupColor};">{group.title}</span><f:if condition="!{i.isLast}">, </f:if>
+                </f:for>
             </p>
             <f:if condition="{user.age}">
                 <p class="user-age">Alter: {user.age}</p>
@@ -64,10 +59,6 @@
 
             <f:if condition="{user.name}">
                 <p class="user-name">Name: {user.name}</p>
-            </f:if>
-
-            <f:if condition="{user.email}">
-                <p class="user-email">E-Mail: {user.email}</p>
             </f:if>
 
             <f:if condition="{user.company}">

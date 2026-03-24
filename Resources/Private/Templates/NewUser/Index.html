@@ -1,0 +1,42 @@
+{namespace fm=Lanius\Forumman\ViewHelpers}
+
+<f:asset.css identifier="newUsers" href="EXT:forumman/Resources/Public/Css/lastUsers.css" />
+
+<div class="lastUsersOnline">
+    <h3>Neue User</h3>
+<f:for each="{newUsers}" as="user">
+    <div class="user-item">
+        <div class="user-image">
+            <f:if condition="{user.image}">
+                <f:then>
+                <f:image 
+                    image="{user.image}" 
+                    width="80c" 
+                    height="80c" 
+                    alt="{user.username}"  
+                    class="user-thumb img-fluid"
+                />
+                </f:then>
+                <f:else>
+                    <f:image src="EXT:forumman/Resources/Public/Images/no_pic.png" width="80c" height="80c" alt="no image" />
+                </f:else>
+            </f:if>
+        </div>
+  
+        <div class="user-information">
+            <div class="username">
+                <f:link.action action="show" controller="User" arguments="{user: user}" pageUid="{settings.forumPagePid}">
+                    {user.username} <f:if condition="{user.age2}"><span class="user-age">({user.age2})</span></f:if>
+                </f:link.action>
+            </div>
+
+            <div class="user-groups">
+                <f:for each="{user.usergroup}" as="group" iteration="i">
+                    <span style="color:{group.groupColor};">{group.title}</span><f:if condition="!{i.isLast}">, </f:if>
+                </f:for>
+            </div>
+        </div>
+
+    </div>
+</f:for>
+</div>

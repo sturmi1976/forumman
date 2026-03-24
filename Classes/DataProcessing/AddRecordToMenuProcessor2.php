@@ -123,12 +123,12 @@ class AddRecordToMenuProcessor2 implements DataProcessorInterface
             return [];
         }
 
-    // 🔥 Aktuellen LanguageAspect holen (TYPO3 12-14)
+
         /** @var LanguageAspect $languageAspect */
         $languageAspect = GeneralUtility::makeInstance(Context::class)
             ->getAspect('language');
 
-        // Datensatz laden
+
         $connection = GeneralUtility::makeInstance(ConnectionPool::class)
             ->getConnectionForTable($recordTable);
 
@@ -145,7 +145,7 @@ class AddRecordToMenuProcessor2 implements DataProcessorInterface
         /** @var PageRepository $pageRepository */
         $pageRepository = GeneralUtility::makeInstance(PageRepository::class);
 
-        // 🔥 TYPO3 12-14 Overlay (PUBLIC API + LanguageAspect)
+
         $overlay = $pageRepository->getLanguageOverlay(
             $recordTable,
             $row,

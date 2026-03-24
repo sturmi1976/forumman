@@ -7,7 +7,11 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use \TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
+use Lanius\Forumman\Domain\Model\FrontendUser;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
+use TYPO3\CMS\Extbase\Domain\Model\FileReference as ExtbaseFileReference;
+use TYPO3\CMS\Core\Resource\FileRepository;
 
 final class FrontendUserRepository extends Repository
 {
@@ -79,5 +83,148 @@ final class FrontendUserRepository extends Repository
             ->fetchAllAssociative();
 
         return $rows;
+    }
+
+
+    public function findLastLoggedInUsersObjects(int $limit = 3): array
+    {
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('fe_users');
+
+        $rows = $queryBuilder
+            ->select('*')
+            ->from('fe_users')
+            ->where(
+                $queryBuilder->expr()->gt('lastlogin', 0)
+            )
+            ->orderBy('lastlogin', 'DESC')
+            ->setMaxResults($limit)
+            ->fetchAllAssociative();
+
+        $users = [];
+        /** @var GroupRepository $groupRepository */
+        $groupRepository = GeneralUtility::makeInstance(GroupRepository::class);
+
+        foreach ($rows as $row) {
+            /** @var FrontendUser $user */
+            $user = GeneralUtility::makeInstance(FrontendUser::class);
+            $user->_setProperty('uid', (int)$row['uid']);
+            $user->_setProperty('username', ucfirst($row['username']));
+            $user->_setProperty('birthday', $row['birthday']);
+            $user->_setProperty('slug', $row['slug']);
+            $user->_setProperty('lastlogin', (int)$row['lastlogin']);
+
+            if (!empty($row['birthday'])) {
+                $birthDate = new \DateTime($row['birthday']);
+                $today = new \DateTime('today');
+                $age = $birthDate->diff($today)->y;
+                $user->_setProperty('age2', $age);
+            }
+
+
+            // --- Gruppen auflösen ---
+            $usergroupStorage = new ObjectStorage();
+            if (!empty($row['usergroup']) && is_string($row['usergroup'])) {
+                $uids = GeneralUtility::intExplode(',', $row['usergroup'], true);
+                foreach ($uids as $uid) {
+                    $group = $groupRepository->findByUid($uid);
+                    if ($group !== null) {
+                        $usergroupStorage->attach($group);
+                    }
+                }
+            }
+            $user->_setProperty('usergroup', $usergroupStorage);
+
+            // --- FAL-Bild laden ---
+            /** @var FileRepository $fileRepository */
+            $fileRepository = GeneralUtility::makeInstance(FileRepository::class);
+
+            $files = $fileRepository->findByRelation('fe_users', 'image', (int)$row['uid']);
+
+            if (!empty($files)) {
+                /** @var \TYPO3\CMS\Core\Resource\FileReference $file */
+                $file = reset($files); // erstes Bild
+                $extbaseFile = GeneralUtility::makeInstance(ExtbaseFileReference::class);
+                $extbaseFile->_setProperty('originalResource', $file);
+                $user->_setProperty('image', $extbaseFile);
+            }
+
+            $users[] = $user;
+        }
+
+        return $users;
+    }
+
+
+
+
+
+
+    public function findNewUsersObjects(int $limit = 3): array
+    {
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('fe_users');
+
+        $rows = $queryBuilder
+            ->select('*')
+            ->from('fe_users')
+            ->where(
+                $queryBuilder->expr()->gt('uid', 0)
+            )
+            ->orderBy('uid', 'DESC')
+            ->setMaxResults($limit)
+            ->fetchAllAssociative();
+
+
+        $users = [];
+        /** @var GroupRepository $groupRepository */
+        $groupRepository = GeneralUtility::makeInstance(GroupRepository::class);
+
+        foreach ($rows as $row) {
+            /** @var FrontendUser $user */
+            $user = GeneralUtility::makeInstance(FrontendUser::class);
+            $user->_setProperty('uid', (int)$row['uid']);
+            $user->_setProperty('username', ucfirst($row['username']));
+            $user->_setProperty('birthday', $row['birthday']);
+            $user->_setProperty('slug', $row['slug']);
+            $user->_setProperty('lastlogin', (int)$row['lastlogin']);
+
+            if (!empty($row['birthday'])) {
+                $birthDate = new \DateTime($row['birthday']);
+                $today = new \DateTime('today');
+                $age = $birthDate->diff($today)->y;
+                $user->_setProperty('age2', $age);
+            }
+
+
+
+            $usergroupStorage = new ObjectStorage();
+            if (!empty($row['usergroup']) && is_string($row['usergroup'])) {
+                $uids = GeneralUtility::intExplode(',', $row['usergroup'], true);
+                foreach ($uids as $uid) {
+                    $group = $groupRepository->findByUid($uid);
+                    if ($group !== null) {
+                        $usergroupStorage->attach($group);
+                    }
+                }
+            }
+            $user->_setProperty('usergroup', $usergroupStorage);
+
+            // --- FAL-Image load ---
+            /** @var FileRepository $fileRepository */
+            $fileRepository = GeneralUtility::makeInstance(FileRepository::class);
+
+            $files = $fileRepository->findByRelation('fe_users', 'image', (int)$row['uid']);
+
+            if (!empty($files)) {
+                /** @var \TYPO3\CMS\Core\Resource\FileReference $file */
+                $file = reset($files); // erstes Bild
+                $extbaseFile = GeneralUtility::makeInstance(ExtbaseFileReference::class);
+                $extbaseFile->_setProperty('originalResource', $file);
+                $user->_setProperty('image', $extbaseFile);
+            }
+
+            $users[] = $user;
+        }
+
+        return $users;
     }
 }

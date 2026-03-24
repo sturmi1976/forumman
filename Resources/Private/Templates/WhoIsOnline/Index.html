@@ -3,29 +3,34 @@
 <f:asset.css identifier="whoisonline-css" href="EXT:forumman/Resources/Public/Css/whoisonline.css" />
 <f:asset.script identifier="whoisonline-js" src="EXT:forumman/Resources/Public/Js/whoisonline.js" />
 
-
 <div class="who-is-online-box" id="who-is-online-box">
     <h3>
         {f:translate(key: 'online.whoIsOnlineHeadline', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
     </h3>
-    <div class="online-users-wrapper">
+    <div class="online-users-wrapper" data-text="[ {f:translate(key: 'online.noUserOnline', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')} ]">
         <f:if condition="{onlineUsers}">
             <f:then>
                 <ul class="online-users">
             <f:for each="{onlineUsers}" as="user">
                 <li>
-                    <f:link.action action="show" controller="User" arguments="{user: user}">
+                    <f:link.action action="show" controller="User" arguments="{user: user.uid}" pageUid="{settings.forumPagePid}">
                         <span class="status-dot online"></span>
-                        <span class="username">{user.username}</span>
+                        <span class="username">
+                            <f:format.htmlspecialchars>
+                            <f:format.case mode="capitalWords">
+                            {user.username}
+                            </f:format.case>
+                            </f:format.htmlspecialchars>
+                        </span>
                     </f:link.action>
                 </li>
             </f:for>
         </ul>
             </f:then>
             <f:else>
-                <em>
+                <div class="no-users">
                     [ {f:translate(key: 'online.noUserOnline', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')} ]
-                </em>
+                </div>
             </f:else>
         </f:if>
     </div>

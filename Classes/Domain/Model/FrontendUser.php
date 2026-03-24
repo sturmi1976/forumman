@@ -11,9 +11,18 @@ use Lanius\Forumman\Domain\Repository\GroupRepository;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use Lanius\Forumman\Domain\Repository\FrontendUserRepository;
+use Lanius\Forumman\Domain\Model\Group;
+
 
 final class FrontendUser extends AbstractEntity
 {
+    protected ObjectStorage $usergroup;
+
+    public function __construct()
+    {
+        $this->usergroup = new ObjectStorage();
+    }
+
     protected string $username = '';
     protected string $name = '';
     protected string $email = '';
@@ -26,28 +35,16 @@ final class FrontendUser extends AbstractEntity
     protected ?int $age = 0;
     protected int $isOnline = 0;
     protected int $nowonline = 0;
+    protected int $age2 = 0;
 
-    /**
-     * Timestamp of last activity
-     *
-     * @var int
-     */
-    protected int $txForummanLastActivity = 0;
-
-    /**
-     * @return int
-     */
-    public function getTxForummanLastActivity(): int
+    public function getAge2(): int
     {
-        return $this->txForummanLastActivity;
+        return $this->age2;
     }
 
-    /**
-     * @param int $timestamp
-     */
-    public function setTxForummanLastActivity(int $timestamp): void
+    public function setAge2(int $age2): void
     {
-        $this->txForummanLastActivity = $timestamp;
+        $this->age2 = $age2;
     }
 
 
@@ -132,34 +129,20 @@ final class FrontendUser extends AbstractEntity
         $this->image = $image;
     }
 
-    /**
-     * CSV der Usergroup-UIDs
-     */
-    protected ?string $usergroup = null;
 
+
+    /*
     public function setUsergroup(?string $usergroup): void
     {
         $this->usergroup = $usergroup;
-    }
+    }*/
 
-    public function getUserGroup(): ?Group
+    /**
+     * @return ObjectStorage<Group>
+     */
+    public function getUsergroup(): ObjectStorage
     {
-        if (empty($this->usergroup)) {
-            return null;
-        }
-
-        // Hier muss $this->usergroup (string) genutzt werden, nicht $this->userGroup (Objekt)
-        $groupUids = \TYPO3\CMS\Core\Utility\GeneralUtility::intExplode(',', $this->usergroup, true);
-        if (count($groupUids) === 0) {
-            return null;
-        }
-
-        $groupUid = $groupUids[0];
-
-        /** @var \Lanius\Forumman\Domain\Repository\GroupRepository $groupRepository */
-        $groupRepository = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\Lanius\Forumman\Domain\Repository\GroupRepository::class);
-
-        return $groupRepository->findByUid($groupUid);
+        return $this->usergroup;
     }
 
 
