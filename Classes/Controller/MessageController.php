@@ -13,6 +13,10 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Http\JsonResponse;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
+use TYPO3\CMS\Core\Mail\FluidEmail;
+use TYPO3\CMS\Core\Mail\MailerInterface;
+use Symfony\Component\Mime\Address;
+
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 use TYPO3\CMS\Core\Context\Context;
 use Lanius\Forumman\Domain\Repository\FrontendUserRepository;
@@ -58,6 +62,8 @@ final class MessageController extends ActionController
         $senderUser = $this->frontendUserRepository->findByUid((int)$feUser->user['uid']);
         $receiverUser = $this->frontendUserRepository->findByUid((int)$receiver);
 
+
+
         if (!$receiver) {
             $receiver_error = LocalizationUtility::translate(
                 'receiver_error',
@@ -102,6 +108,39 @@ final class MessageController extends ActionController
 
         $this->messageRepository->add($message);
         $this->persistenceManager->persistAll();
+
+        $linkToForum = $this->uriBuilder
+            ->reset()
+            ->setCreateAbsoluteUri(true)
+            ->setArguments([
+                'tx_forumman_forumforumlist' => [
+                    'controller' => 'Forum',
+                    'action'     => 'index',
+                ],
+            ])
+            ->build();
+
+        $subject = LocalizationUtility::translate(
+            'subject_new_message',
+            'Forumman',
+            [],
+            $languageKey
+        );
+
+
+        $mailing = new FluidEmail();
+        $mailing
+            ->to($receiverUser->getEmail())
+            ->from(new Address('info@administrator.de', 'Admin Name'))
+            ->subject($subject)
+            ->format(FluidEmail::FORMAT_HTML)
+            ->setTemplate('Message/NewMessage')
+            ->assignMultiple([
+                'username' => ucfirst($receiverUser->getUsername()),
+                'link' => $linkToForum,
+                'languageKey' => $languageKey,
+            ]);
+        GeneralUtility::makeInstance(MailerInterface::class)->send($mailing);
 
 
         $success = LocalizationUtility::translate(

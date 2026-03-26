@@ -13,7 +13,7 @@
                                 </h3>
 
                                 <p class="mb-3" style="border-bottom:1px #bebcbc solid; padding-bottom:1rem;">
-                                    Eingeloggt als: 
+                                    {f:translate(key: 'loggedInAs', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}  
                                     
                                         <f:format.htmlspecialchars>
                         <f:format.case mode="capitalWords">
@@ -25,15 +25,21 @@
                                     <ul class="account-menu mb-3" style="border-bottom:1px #bebcbc solid; padding-bottom:1rem;">
                                         <li>
                                             <core:icon identifier="actions-user" size="small" />
-                                            <f:link.action action="show" controller="User" arguments="{user: user}">Zum Profil</f:link.action>
+                                            <f:link.action action="show" controller="User" arguments="{user: user}">
+                                                {f:translate(key: 'profilLinkText', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')} 
+                                            </f:link.action>
                                         </li>
                                         <li>
                                             <core:icon identifier="actions-envelope-open-text" size="small" />
-                                            <f:link.action action="showMailbox" controller="Message" arguments="{user: user}">Postfach</f:link.action>
+                                            <f:link.action action="showMailbox" controller="Message" arguments="{user: user}">
+                                                {f:translate(key: 'mailboxLinkText', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
+                                            </f:link.action>
                                         </li>
                                         <li>
                                             <core:icon identifier="actions-system-extension-configure" size="small" />
-                                            <f:link.action action="settings" controller="User" arguments="{user: user}">Einstellungen</f:link.action>
+                                            <f:link.action action="settings" controller="User" arguments="{user: user}">
+                                                {f:translate(key: 'settingsLinkText', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
+                                            </f:link.action>
                                         </li>
                                     </ul>
 
@@ -94,7 +100,7 @@
                                     </f:link.page>
                                 </p>
 
-                            </div>
+                            </div> 
                         </div>
                     </f:else>
                 </f:security.ifAuthenticated>

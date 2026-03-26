@@ -29,6 +29,22 @@ final class Posts extends AbstractEntity
         }
     }
 
+    /**
+     * @var int
+     * @TYPO3\CMS\Extbase\Annotation\ORM\Column(name="sys_language_uid", type="integer")
+     */
+    protected int $sysLanguageUid = 0;
+
+    public function getSysLanguageUid(): int
+    {
+        return $this->sysLanguageUid;
+    }
+
+    public function setSysLanguageUid(int $sysLanguageUid): void
+    {
+        $this->sysLanguageUid = $sysLanguageUid;
+    }
+
     protected ?string $slug = null;
 
     public function getSlug(): ?string

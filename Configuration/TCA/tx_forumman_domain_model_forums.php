@@ -108,5 +108,32 @@ return [
                 //'readOnly' => true,
             ],
         ],
+        'sys_language_uid' => [
+            'config' => [
+                'type' => 'language',
+            ],
+        ],
+
+        'l10n_parent' => [
+            'displayCond' => 'FIELD:sys_language_uid:>:0',
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'items' => [
+                    ['', 0],
+                ],
+                'foreign_table' => 'tx_forumman_domain_model_forums',
+                'foreign_table_where' =>
+                'AND {#tx_forumman_domain_model_forums}.{#pid}=###CURRENT_PID### ' .
+                    'AND {#tx_forumman_domain_model_forums}.{#sys_language_uid} IN (-1,0)',
+                'default' => 0,
+            ],
+        ],
+
+        'l10n_diffsource' => [
+            'config' => [
+                'type' => 'passthrough',
+            ],
+        ],
     ],
 ];

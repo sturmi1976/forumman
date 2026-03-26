@@ -13,10 +13,14 @@ return [
         ],
         'searchFields' => 'title,content',
         'iconfile' => 'EXT:forumman/Resources/Public/Icons/post.svg',
+        'languageField' => 'sys_language_uid',
+        'transOrigPointerField' => 'l10n_parent',
+        'transOrigDiffSourceField' => 'l10n_diffsource',
     ],
     'types' => [
         '1' => ['showitem' => '
-            title, slug, content, forum, parent, user, hidden, created_at
+            title, slug, content, forum, parent, user, hidden, created_at,
+            --div--;Language, sys_language_uid, l10n_parent
         '],
     ],
     'columns' => [
@@ -109,6 +113,35 @@ return [
             'label' => 'Hidden',
             'config' => [
                 'type' => 'check',
+            ],
+        ],
+        'sys_language_uid' => [
+            'exclude' => 1,
+            'label' => 'Language',
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'special' => 'languages',
+                'default' => 0,
+            ],
+        ],
+        'l10n_parent' => [
+            'displayCond' => 'FIELD:sys_language_uid:>:0',
+            'exclude' => true,
+            'label' => 'Parent Post',
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'items' => [
+                    ['', 0]
+                ],
+                'foreign_table' => 'tx_forumman_domain_model_posts',
+                'foreign_table_where' => 'AND tx_forumman_domain_model_posts.pid=###CURRENT_PID### AND tx_forumman_domain_model_posts.sys_language_uid IN (-1,0)',
+            ],
+        ],
+        'l10n_diffsource' => [
+            'config' => [
+                'type' => 'passthrough',
             ],
         ],
     ],

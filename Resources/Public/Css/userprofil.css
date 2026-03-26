@@ -80,7 +80,7 @@
     vertical-align: middle;
 }
 
-/* Online: grüner Verlauf + Glow */
+
 .status-dot.online {
     background: radial-gradient(circle at 30% 30%, #4cff4c, #00b300);
     box-shadow: 

@@ -78,5 +78,25 @@ return [
                 ],
             ],
         ],
+        'l10n_diffsource' => [
+            'config' => [
+                'type' => 'passthrough',
+            ],
+        ],
+        'l10n_parent' => [
+            'displayCond' => 'FIELD:sys_language_uid:>:0',
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'items' => [
+                    ['', 0],
+                ],
+                'foreign_table' => 'tx_forumman_domain_model_categories',
+                'foreign_table_where' =>
+                'AND {#tx_forumman_domain_model_categories}.{#pid}=###CURRENT_PID### ' .
+                    'AND {#tx_forumman_domain_model_categories}.{#sys_language_uid} IN (-1,0)',
+                'default' => 0,
+            ],
+        ],
     ],
 ];

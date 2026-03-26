@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Lanius\Forumman\Domain\Repository;
 
 use TYPO3\CMS\Extbase\Persistence\Repository;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 
 final class PostsRepository extends Repository
 {
@@ -30,19 +32,21 @@ final class PostsRepository extends Repository
     }
 
 
-    public function findThreadsByForum(int $forumUid)
+    public function findThreadsByForum(int $forumUid, int $languageId)
     {
         $query = $this->createQuery();
 
         // Einzelne Constraints erstellen
         $constraintForum = $query->equals('forum', $forumUid);
         $constraintParent = $query->equals('parent', 0);
+        $languageId = $query->equals('sys_language_uid', $languageId);
 
         // logicalAnd mit Spread-Operator (funktioniert seit TYPO3 v12+)
         $query->matching(
             $query->logicalAnd(
                 $constraintForum,
-                $constraintParent
+                $constraintParent,
+                $languageId
             )
         );
 
@@ -92,5 +96,22 @@ final class PostsRepository extends Repository
         );
 
         return $query->execute()->count();
+    }
+
+
+    public function setLanguageUidForPost(int $postId, int $languageId): void
+    {
+        if ($postId <= 0) {
+            return; // Absicherung: ungültige Post-ID
+        }
+
+        $connection = GeneralUtility::makeInstance(ConnectionPool::class)
+            ->getConnectionForTable('tx_forumman_domain_model_posts');
+
+        $connection->update(
+            'tx_forumman_domain_model_posts',
+            ['sys_language_uid' => $languageId],
+            ['uid' => $postId]
+        );
     }
 }

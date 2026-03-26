@@ -23,5 +23,83 @@
             </ROOT>
         </sDEF>
 
+        <!-- Tab 2 -->
+        <sDEF2>
+            <ROOT>
+                <sheetTitle>SEO</sheetTitle>
+                <type>array</type>
+                <el>
+                    <settings.titleTag>
+                        <label>Title Tag</label>
+                        <description>Title Tag for the forum start page.</description>
+                        <config>
+                                <type>input</type>
+                                <size>30</size>
+                                <eval>trim</eval>
+                            </config>
+                    </settings.titleTag>
+
+                    <settings.metaDescription>
+                        <label>Meta Description</label>
+                        <description>Meta Description for the forum start page.</description>
+                        <config>
+                                <type>text</type>
+                                <size>30</size>
+                                <eval>trim</eval>
+                            </config>
+                    </settings.metaDescription>
+                    <settings.ogImage>
+                        <label>OG Image</label>
+                        <config>
+                            <type>inline</type>
+                            <foreign_table>sys_file_reference</foreign_table>
+                            <foreign_field>uid_foreign</foreign_field>
+                            <foreign_sortby>sorting_foreign</foreign_sortby>
+                            <foreign_table_field>tablenames</foreign_table_field>
+                            <foreign_match_fields>
+                                <fieldname>og_image</fieldname>
+                                <tablenames>tt_content</tablenames>
+                            </foreign_match_fields>
+                            <maxitems>1</maxitems>
+                            <appearance>
+                                <collapseAll>1</collapseAll>
+                            </appearance>
+                        </config>
+                    </settings.ogImage>
+                </el>
+            </ROOT>
+        </sDEF2>
+
+        <!-- Tab 3 -->
+        <sDEF3>
+        <ROOT>
+                <sheetTitle>Pagination</sheetTitle>
+                <type>array</type>
+                <el>
+            <settings.itemsPerPage>
+                        <label>Items per page in list view</label>
+                        <description>Items per page.</description>
+                        <config>
+                                <type>input</type>
+                                <size>30</size>
+                                <eval>trim</eval>
+                                <default>20</default>
+                            </config>
+                    </settings.itemsPerPage>
+
+            <settings.itemsPerPage2>
+                        <label>Items per page in detail view</label>
+                        <description>Items per page in detail/show view.</description>
+                        <config>
+                                <type>input</type>
+                                <size>30</size>
+                                <eval>trim</eval>
+                                <default>10</default>
+                            </config>
+                    </settings.itemsPerPage2>
+        </el>
+        </ROOT>
+        </sDEF3>
+
     </sheets>
 </T3DataStructure>

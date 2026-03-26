@@ -14,9 +14,10 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Core\Utility\StringUtility;
+use TYPO3\CMS\Core\Resource\ResourceFactory;
+use TYPO3\CMS\Core\Resource\FileRepository;
 
 use TYPO3\CMS\Core\Context\Context;
-//use TYPO3\CMS\Core\PageTitle\RecordTitleProvider;
 
 use Lanius\Forumman\Domain\Repository\CategoriesRepository;
 use Lanius\Forumman\Domain\Repository\ForumsRepository;
@@ -25,14 +26,10 @@ use Lanius\Forumman\Domain\Repository\FrontendUserRepository;
 
 use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 use TYPO3\CMS\Core\Pagination\SlidingWindowPagination;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 final class ForumController extends ActionController
 {
-    /*
-    public function __construct(
-        private readonly RecordTitleProvider $recordTitleProvider,
-    ) {}
-        */
 
     protected ?CategoriesRepository $categoriesRepository = null;
     protected ?ForumsRepository $forumsRepository = null;
@@ -85,7 +82,33 @@ final class ForumController extends ActionController
     public function indexAction(): ResponseInterface
     {
         $categories = $this->categoriesRepository->findAllCategoriesAndForums();
-        $this->view->assign('categories', $categories);
+
+
+        if (!empty($this->settings['ogImage'])) {
+
+            /** @var FileRepository $fileRepository */
+            $fileRepository = GeneralUtility::makeInstance(FileRepository::class);
+
+            // UID des aktuellen Content Elements
+            $contentUid = (int)$this->request->getAttribute('currentContentObject')->data['uid'];
+
+            // WICHTIG: fieldname muss exakt wie im FlexForm sein!
+            $files = $fileRepository->findByRelation(
+                'tt_content',
+                'og_image',
+                $contentUid
+            );
+
+            if (!empty($files)) {
+                $fileReference = reset($files);
+                $this->view->assign('ogImageObject', $fileReference);
+            }
+        }
+
+
+        $this->view->assignMultiple([
+            'categories' => $categories,
+        ]);
 
         return $this->htmlResponse();
     }
@@ -97,26 +120,29 @@ final class ForumController extends ActionController
      */
     public function showThreadsAction(int $forumUid): ResponseInterface
     {
+        /** @var \TYPO3\CMS\Extbase\Mvc\RequestInterface $request */
+        $request = $this->request;
+
+        $language = $this->request->getAttribute('language');
+        $languageId = $language->getLanguageId();
+
+
+        // GET-Parameter für *dieses Plugin / Controller*
+        $arguments = $request->getArguments();
+        //DebuggerUtility::var_dump($arguments);
 
         $forum = $this->forumsRepository->findByUid($forumUid);
         if (!$forum) {
             throw new \RuntimeException('Forum not found', 404);
         }
 
-        // Title 
-        /*
-        if ($forum->getTitle()) {
-            $this->recordTitleProvider->setTitle($forum->getTitle());
-        }*/
-
-
 
         // Alle Threads (Posts ohne Parent) für dieses Forum
-        $allThreads = $this->postsRepository->findThreadsByForum($forumUid);
+        $allThreads = $this->postsRepository->findThreadsByForum($forumUid, $languageId);
 
         // Pagination Parameter
         $currentPage = (int)($this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : 1);
-        $itemsPerPage = 10;
+        $itemsPerPage = (int)($this->settings['itemsPerPage'] ?? 10);
         $maximumLinks = 5;
 
         // Extbase Paginator
@@ -145,6 +171,7 @@ final class ForumController extends ActionController
 
 
 
+
         $this->view->assignMultiple([
             'forum' => $forum,
             'paginator' => $paginator,
@@ -152,6 +179,7 @@ final class ForumController extends ActionController
             'threads' => $paginatedThreads,
             'previousPage' => $pagination->getPreviousPageNumber(),
             'nextPage' => $pagination->getNextPageNumber(),
+            'currentPage' => $currentPage,
         ]);
 
         return $this->htmlResponse();
@@ -169,12 +197,6 @@ final class ForumController extends ActionController
             throw new \RuntimeException('Post not found', 404);
         }
 
-        // Title Tag
-        /*
-        if ($postObject->getTitle()) {
-            $this->recordTitleProvider->setTitle($postObject->getTitle());
-        }*/
-
         if ($postObject->getUser()) {
             $online = $this->frontendUserRepository->isUserOnline($postObject->getUser()->getUid());
         }
@@ -187,7 +209,7 @@ final class ForumController extends ActionController
         $allReplies = $this->postsRepository->findRepliesByParent($post);
 
         $currentPage = (int)($this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : 1);
-        $itemsPerPage = 15;
+        $itemsPerPage = (int)($this->settings['itemsPerPage2'] ?? 10);
         $maximumLinks = 5;
 
         $paginator = new QueryResultPaginator($allReplies, $currentPage, $itemsPerPage);
@@ -226,6 +248,7 @@ final class ForumController extends ActionController
             'pagination' => $pagination,
             'previousPage' => $pagination->getPreviousPageNumber(),
             'nextPage' => $pagination->getNextPageNumber(),
+            'currentPage' => $currentPage,
         ]);
 
         return $this->htmlResponse();
@@ -295,20 +318,7 @@ final class ForumController extends ActionController
                 \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK
             );
 
-            // Redirect zurück zum Thread
-            /*
-            $uri = $this->uriBuilder
-                ->reset()
-                ->setCreateAbsoluteUri(true)
-                ->setArguments([
-                    'tx_forumman_forumforumlist' => [
-                        'controller' => 'Forum',
-                        'action' => 'show',
-                        'forum' => $forumObject,
-                        'post'  => $parentUid
-                    ]
-                ])
-                ->build();*/
+
 
             $uri = $this->uriBuilder->uriFor('show', ['action' => 'show', 'controller' => 'Forum', 'forum' => $forumObject, 'post' => $parentUid]);
 
@@ -336,8 +346,14 @@ final class ForumController extends ActionController
     public function createThreadAction(\Lanius\Forumman\Domain\Model\Posts $post): ResponseInterface
     {
 
+
         $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
         $userId = $context->getPropertyFromAspect('frontend.user', 'id');
+
+        $language = $this->request->getAttribute('language');
+        $languageId = $language->getLanguageId();
+
+        //\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($languageId);
 
         $cacheManager = GeneralUtility::makeInstance(CacheManager::class);
         $cacheManager->flushCachesByTag('user_' . $userId);
@@ -357,6 +373,8 @@ final class ForumController extends ActionController
             $post->setUser($user);
         }
 
+        //$post->setSysLanguageUid((int)$languageId);
+
         $post->setCreatedAt(time());
 
         $post->setSlug($this->generateUniqueSlug($post->getTitle()));
@@ -375,6 +393,8 @@ final class ForumController extends ActionController
         $this->forumsRepository->update($forum);
 
         $this->persistenceManager->persistAll();
+
+        $this->postsRepository->setLanguageUidForPost($post->getUid(), $languageId);
 
         // Redirect auf Einzelansicht des neuen Posts
         return $this->redirect(

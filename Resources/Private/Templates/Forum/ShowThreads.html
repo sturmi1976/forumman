@@ -6,27 +6,25 @@
 <f:layout name="Default" />
 
 <f:section name="HeadMetaTags">
-    <fm:pageTitle suffix=" - 
-{f:translate(key: 'forumIndexSuffix.titleTag', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
-" title="{forum.title}" />
+    <fm:pageTitle title="{forum.title} - {f:translate(key: 'page_number_label', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')} {currentPage}" prefix="{forum.category.title}: " />
 </f:section>
 
 <f:section name="main">
 
 
-<h1 class="tx_forumman_forumtitle">{forum.title}</h1>
+<h1 class="tx_forumman_forumtitle">{forum.category.title}: {forum.title}</h1>
 
-<!-- Threads Liste -->
+<!-- Threads List -->
 <div class="button_tool_bar">
     <div class="tool_bar_left">
     <f:link.page pageUid="{settings.forumPagePid}" class="btn back-link">
-    Zurück zur Forenübersicht
+    {f:translate(key: 'backToForumOverview', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
 </f:link.page>
 </div>
 <div class="tool_bar_right">
     <f:security.ifAuthenticated>
         <f:link.action action="newThread" arguments="{forumUid: forum.uid}" class="btn btn-primary new-thread">
-        Beitrag erstellen
+        {f:translate(key: 'newPostText', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
     </f:link.action>
     </f:security.ifAuthenticated>
     </div>
@@ -35,7 +33,7 @@
  <f:if condition="!{threads}">
     <div class="no_threads_found">
         <div class="alert alert-secondary text-center" role="alert">
-            Keine Beiträge vorhanden!
+            {f:translate(key: 'noThreads', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
         </div>
     </div>
  </f:if>
@@ -51,9 +49,24 @@
         </h2>
 
         <div class="thread-meta">
-            <span class="thread-date">Erstellt am: {thread.createdAt -> f:format.date(format:'d.m.Y, H:i')}</span>
+            <span class="thread-date">
+                {f:translate(key: 'createdAt', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}: 
+                <f:if condition="{fm:languageKey()} == 'de'">
+                    <f:then>
+                        {thread.createdAt -> f:format.date(format:'d.m.Y, H:i')}
+                    </f:then>
+                    <f:else if="{fm:languageKey()} == 'en'">
+                        {thread.createdAt -> f:format.date(format:'d M Y, H:i', locale:'en_US')}
+                    </f:else>
+                    <f:else>
+                        {thread.createdAt -> f:format.date(format:'d.m.Y - H:i')}
+                    </f:else>
+                </f:if>
+        
+            
+            </span>
             <span class="thread-author">
-                Verfasser:<br />
+                {f:translate(key: 'autorLabel', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}:<br />
                 
                 <f:link.action action="show" controller="User" arguments="{user: thread.user}" class="userlink">
                     <f:format.htmlspecialchars>
@@ -76,8 +89,8 @@
     <f:if condition="{previousPage}">
     <li class="page-item">
         <f:link.action action="showThreads" arguments="{forumUid: forum.uid, currentPage: previousPage}" class="page-link">
-            &laquo; Zurück
-        </f:link.action>
+            &laquo; {f:translate(key: 'backLinkText', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
+        </f:link.action> 
     </li>
 </f:if>
 
@@ -87,16 +100,13 @@
 </a>
 </f:if>
 
+
     <!-- Seitenzahlen im Sliding Window -->
     <f:for each="{pagination.allPageNumbers}" as="page">
+        
         <li class="page-item">
-        <f:link.action action="showThreads" arguments="{forumUid: forum.uid, currentPage: page}" class="page-link {f:if(condition:'{currentPageNumber}=={page}',then:'active')}">
-            <f:if condition="{page} == {pagination.currentPage}">
-                <strong>{page}</strong>
-            <f:else>
-                {page}
-            </f:else>
-            </f:if>
+        <f:link.action action="showThreads" arguments="{forumUid: forum.uid, currentPage: page}" class="page-link {f:if(condition:'{currentPage}=={page}',then:'active')} ">
+            {page}
         </f:link.action>
     </li>
     </f:for>
@@ -113,7 +123,7 @@
     <f:if condition="{nextPage}">
     <li class="page-item">
         <f:link.action action="showThreads" arguments="{forumUid: forum.uid, currentPage: nextPage}" class="page-link">
-            Weiter &raquo;
+            {f:translate(key: 'nextLinkText', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')} &raquo;
         </f:link.action>
     </li>
 </f:if>

@@ -1,9 +1,19 @@
 {namespace fm=Lanius\Forumman\ViewHelpers}
 <f:comment>Title Tag</f:comment>
-<fm:pageTitle suffix="
-{f:translate(key: 'forumIndexSuffix.titleTag', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
-" title="
-{f:translate(key: 'forumIndex.titleTag', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}" />
+<f:if condition="{settings.titleTag}">
+        <fm:pageTitle title="{settings.titleTag}" />
+        <fm:metaTag property="og:title" content="{settings.titleTag}" />
+</f:if>
+<f:if condition="{settings.metaDescription}">
+    <fm:metaTag property="og:description" content="{settings.metaDescription}" />
+    <fm:metaTag name="description" content="{settings.metaDescription}" />
+</f:if>
+
+<fm:metaTag name="robots" content="index,follow" />
+
+<f:if condition="{ogImageObject}">
+    <fm:metaTag property="og:image" content="{f:uri.image(image: ogImageObject, absolute: 1)}" />
+</f:if>
 
 
 

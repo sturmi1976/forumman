@@ -60,6 +60,61 @@
             <trans-unit id="loginbox.now_register">
                 <target>Jetzt registrieren</target>
             </trans-unit>
+            <trans-unit id="page_number_label">
+                <target>Seite</target>
+            </trans-unit>
+            <trans-unit id="loggedInAs">
+                <target>Eingeloggt als:</target>
+            </trans-unit>
+            <trans-unit id="profilLinkText">
+                <target>Zum Profil</target>
+            </trans-unit> 
+            <trans-unit id="mailboxLinkText">
+                <target>Postfach</target>
+            </trans-unit>
+            <trans-unit id="settingsLinkText">
+                <target>Einstellungen</target>
+            </trans-unit>
+            <trans-unit id="backToForumOverview">
+                <target>Zurück zur Forenübersicht</target>
+            </trans-unit>
+            <trans-unit id="newPostText">
+                <target>Beitrag erstellen</target>
+            </trans-unit>
+            <trans-unit id="noThreads">
+                <target>Keine Beiträge vorhanden!</target>
+            </trans-unit>
+            <trans-unit id="createdAt">
+                <target>Erstellt am</target>
+            </trans-unit>
+            <trans-unit id="autorLabel">
+                <target>Verfasser</target> 
+            </trans-unit>
+            <trans-unit id="backLinkText">
+                <target>Zurück</target>
+            </trans-unit>
+            <trans-unit id="nextLinkText">
+                <target>Weiter</target>
+            </trans-unit>
+            <trans-unit id="subject_new_message">
+                <target>Neue Nachricht in deinem Postfach</target>
+            </trans-unit>
+            <trans-unit id="mail.newMessage">
+        <target><![CDATA[
+Hallo %s,<br /><br />
+<p>
+    Du hast eine neue Nachricht in deinem Postfach erhalten.<br />
+    Um die Nachricht zu lesen und zu antworten, logge dich bitte in dein Benutzerkonto ein.<br /><br />
+    Klicke auf den folgenden Link, um direkt zu deinem Postfach zu gelangen:<br />
+    <a href="%s">%s</a><br /><br />
+    Bitte antworte zeitnah, falls die Nachricht eine Rückmeldung von dir erfordert.
+</p>
+<p>
+    Vielen Dank und viel Spaß beim Austausch!<br />
+    Dein Forum-Team
+</p>
+        ]]></target>
+      </trans-unit>
         </body>
     </file>
 </xliff>

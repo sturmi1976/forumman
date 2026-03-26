@@ -60,6 +60,61 @@
             <trans-unit id="loginbox.now_register">
                 <source>Sign up now</source>
             </trans-unit>
+            <trans-unit id="page_number_label">
+                <source>Page</source>
+            </trans-unit>
+            <trans-unit id="loggedInAs">
+                <source>Logged in as:</source>
+            </trans-unit>
+            <trans-unit id="profilLinkText">
+                <source>View Profile</source>
+            </trans-unit>
+            <trans-unit id="mailboxLinkText">
+                <source>Mailbox</source>
+            </trans-unit>
+            <trans-unit id="settingsLinkText">
+                <source>Settings</source>
+            </trans-unit>
+            <trans-unit id="backToForumOverview">
+                <source>Back to overview</source>
+            </trans-unit>
+            <trans-unit id="newPostText">
+                <source>Create post</source>
+            </trans-unit>
+            <trans-unit id="noThreads">
+                <source>No posts available!</source>
+            </trans-unit>
+            <trans-unit id="createdAt">
+                <source>Created at</source>
+            </trans-unit>
+            <trans-unit id="autorLabel">
+                <source>Autor</source>
+            </trans-unit>
+            <trans-unit id="backLinkText">
+                <source>Previous</source>
+            </trans-unit>
+            <trans-unit id="nextLinkText">
+                <source>Next</source>
+            </trans-unit>
+            <trans-unit id="subject_new_message">
+                <source>New Message</source>
+            </trans-unit>
+            <trans-unit id="mail.newMessage">
+        <source><![CDATA[
+Hello %s,<br /><br />
+<p>
+    You have received a new message in your inbox.<br />
+    To read the message and reply, please log in to your account.<br /><br />
+    Click the link below to go directly to your inbox:<br />
+    <a href="%s">%s</a><br /><br />
+    Please respond promptly if the message requires your attention.
+</p>
+<p>
+    Thank you and enjoy the conversation!<br />
+    Your Forum Team
+</p>
+        ]]></source>
+      </trans-unit>
         </body>
     </file>
 </xliff>
