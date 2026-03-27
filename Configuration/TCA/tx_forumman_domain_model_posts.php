@@ -11,6 +11,7 @@ return [
         'enablecolumns' => [
             'disabled' => 'hidden',
         ],
+        'hideTable' => true,
         'searchFields' => 'title,content',
         'iconfile' => 'EXT:forumman/Resources/Public/Icons/post.svg',
         'languageField' => 'sys_language_uid',

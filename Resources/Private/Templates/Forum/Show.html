@@ -1,14 +1,13 @@
 {namespace fm=Lanius\Forumman\ViewHelpers}
 <f:layout name="Default" />
 
-
-
 <f:section name="HeadMetaTags">
     <fm:pageTitle title="{post.title}" suffix=" / {post.forum.title}" />
 </f:section>
 
 
 <f:section name="main">
+   
 <!-- Zurück-Button ganz oben -->
  <div class="button_tool_bar">
     <div class="tool_bar_left">
@@ -81,19 +80,16 @@
  </f:if>
 
 <f:for each="{replies}" as="reply" iteration="i">
-    
-    <f:if condition="{i.isLast}">
-        <f:flashMessages as="flashMessages">
+
+        <f:if condition="{i.isLast} && {arguments.reply} == 1">
             <div id="last" class="scroll-anchor"></div> 
-            <div id="flash-message-container" style="opacity:0; transform: translateY(-20px); transition: all 0.6s ease;">
-                <f:for each="{flashMessages}" as="flashMessage">
-                    <div class="flash-message {flashMessage.class}">
-                        {flashMessage.message}
+            <div id="flash-message-container">
+                    <div class="flash-message">
+                        Deine Antwort wurde erfolgreich gespeichert.
                     </div>
-                </f:for>
             </div>
-        </f:flashMessages>
-    </f:if>
+        </f:if>
+
     <div class="reply-wrapper">
         <div class="reply-header">
             <div class="avatar">

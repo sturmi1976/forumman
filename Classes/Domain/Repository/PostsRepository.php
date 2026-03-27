@@ -6,12 +6,13 @@ namespace Lanius\Forumman\Domain\Repository;
 
 use TYPO3\CMS\Extbase\Persistence\Repository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use Lanius\Forumman\Domain\Model\Posts;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 
 final class PostsRepository extends Repository
 {
 
-
+    /*
     public function findRepliesByParent(int $parentUid)
     {
         $query = $this->createQuery();
@@ -19,7 +20,28 @@ final class PostsRepository extends Repository
             ->matching($query->equals('parent', $parentUid))
             ->setOrderings(['createdAt' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING])
             ->execute();
+    }*/
+
+
+    public function findRepliesByParent(int $parentUid, int $languageUid)
+    {
+
+        $query = $this->createQuery();
+
+        return $query
+            ->matching(
+                $query->logicalAnd(
+                    $query->equals('parent', $parentUid),
+                    $query->equals('sys_language_uid', $languageUid)
+                )
+            )
+            ->setOrderings([
+                'createdAt' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING
+            ])
+            ->execute();
     }
+
+
 
     public function findReplies(int $parentUid)
     {

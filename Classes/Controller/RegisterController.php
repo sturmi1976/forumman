@@ -281,6 +281,10 @@ class RegisterController extends ActionController
 
     private function sendConfirmationMail(string $username, string $email, string $md5): void
     {
+        $language = $this->request->getAttribute('language');
+        $locale = $language->getLocale();
+        $languageKey = $locale->getLanguageCode();
+
         $confirmationUrl = $this->uriBuilder
             ->reset()
             ->setCreateAbsoluteUri(true)
@@ -293,7 +297,23 @@ class RegisterController extends ActionController
             ])
             ->build();
 
-        $subject = 'Freischaltung im Forum';
+        $subject = LocalizationUtility::translate(
+            'mail_registration_subject',
+            'Forumman',
+            [],
+            $languageKey
+        );
+
+        $text = LocalizationUtility::translate(
+            'mail_registration_text',
+            'Forumman',
+            [
+                $username, // %s
+                $confirmationUrl,            // %s (href)
+                $confirmationUrl             // %s (link text)
+            ],
+            $languageKey
+        );
 
         $mailing = new FluidEmail();
         $mailing
@@ -303,7 +323,8 @@ class RegisterController extends ActionController
             ->format(FluidEmail::FORMAT_HTML)
             ->setTemplate('Register/Confirmation')
             ->assign('username', ucfirst($username))
-            ->assign('confirmation_link', $confirmationUrl);
+            ->assign('confirmation_link', $confirmationUrl)
+            ->assign('text', $text);
         GeneralUtility::makeInstance(MailerInterface::class)->send($mailing);
     }
 

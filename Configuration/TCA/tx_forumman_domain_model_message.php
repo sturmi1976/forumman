@@ -13,6 +13,7 @@ return [
         'enablecolumns' => [
             'disabled' => 'hidden',
         ],
+        'hideTable' => true,
         'rootLevel' => 0,
         'searchFields' => 'subject,content',
         'iconfile' => 'EXT:forumman/Resources/Public/Icons/message.svg',

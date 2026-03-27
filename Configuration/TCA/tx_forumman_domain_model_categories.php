@@ -2,7 +2,7 @@
 
 return [
     'ctrl' => [
-        'title' => 'Forum: Category',
+        'title' => 'Forum: Category and forums',
         'label' => 'title',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
@@ -19,7 +19,7 @@ return [
             'endtime' => 'endtime',
         ],
         'typeicon_classes' => [
-            'default' => 'actions-brand-typo3',
+            'default' => 'ext-forumman-plugin',
         ],
     ],
     'types' => [

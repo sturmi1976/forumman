@@ -16,7 +16,7 @@ use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Core\Utility\StringUtility;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Resource\FileRepository;
-
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Core\Context\Context;
 
 use Lanius\Forumman\Domain\Repository\CategoriesRepository;
@@ -188,6 +188,19 @@ final class ForumController extends ActionController
 
     public function showAction(int $post): ResponseInterface
     {
+        /** @var \TYPO3\CMS\Extbase\Mvc\RequestInterface $request */
+        $request = $this->request;
+        // GET-Parameter für *dieses Plugin / Controller*
+        $arguments = $request->getArguments();
+
+        // Language
+        $language = $this->request->getAttribute('language');
+        $locale = $language->getLocale();
+        $languageKey = $locale->getLanguageCode();
+
+        $language = $this->request->getAttribute('language');
+        $languageId = $language->getLanguageId();
+
         // Post laden
         $postObject = $this->postsRepository->findByUid($post);
 
@@ -205,8 +218,9 @@ final class ForumController extends ActionController
         $postUserId = $postObject->getUser()->getUid();
         $isOnline = $this->frontendUserRepository->isUserOnline($postUserId);
 
+        // \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($languageId);
         // --- Pagination für Replies ---
-        $allReplies = $this->postsRepository->findRepliesByParent($post);
+        $allReplies = $this->postsRepository->findRepliesByParent($post, $languageId);
 
         $currentPage = (int)($this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : 1);
         $itemsPerPage = (int)($this->settings['itemsPerPage2'] ?? 10);
@@ -237,6 +251,17 @@ final class ForumController extends ActionController
             ];
         }
 
+        // --- Cache-Tags set ---
+        /** @var ServerRequestInterface $request */
+        $request = $GLOBALS['TYPO3_REQUEST'];
+        $collector = $request->getAttribute('frontend.cache.collector');
+
+        $collector->addCacheTags(
+            new CacheTag('post_' . $postObject->getUid()), // global
+            new CacheTag('post_' . $postObject->getUid() . '_page' . $currentPage),
+        );
+
+
         // --- Template Assign ---
         $this->view->assignMultiple([
             'post' => $postObject,
@@ -249,6 +274,7 @@ final class ForumController extends ActionController
             'previousPage' => $pagination->getPreviousPageNumber(),
             'nextPage' => $pagination->getNextPageNumber(),
             'currentPage' => $currentPage,
+            'arguments' => $arguments,
         ]);
 
         return $this->htmlResponse();
@@ -269,6 +295,16 @@ final class ForumController extends ActionController
 
     public function replyWriteAction(): ResponseInterface
     {
+
+        // Language
+        $language = $this->request->getAttribute('language');
+        $locale = $language->getLocale();
+        $languageKey = $locale->getLanguageCode();
+
+        $language = $this->request->getAttribute('language');
+        $languageId = $language->getLanguageId();
+
+
         $context = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
         $userId = $context->getPropertyFromAspect('frontend.user', 'id');
 
@@ -285,6 +321,7 @@ final class ForumController extends ActionController
             $parentUid = (int)$this->request->getArgument('parent');
             $forumUid  = (int)$this->request->getArgument('forum');
 
+
             if ($content === '') {
                 $this->view->assign('error', 'Bitte geben Sie einen Inhalt ein.');
                 return $this->htmlResponse();
@@ -294,10 +331,11 @@ final class ForumController extends ActionController
             $reply->setTitle($title);
             $reply->setContent($content);
             $reply->setCreatedAt(time());
-            $reply->setParent($parentUid); // nur UID
-
-            // Forum-Objekt setzen
+            $reply->setParent($parentUid);
+            // Forum-Object
             $forumObject = $this->forumsRepository->findByUid($forumUid);
+
+
             $reply->setForum($forumObject);
 
             if ($userId) {
@@ -308,19 +346,25 @@ final class ForumController extends ActionController
             $this->postsRepository->add($reply);
             $this->persistenceManager->persistAll();
 
-            // Post-Zähler erhöhen
+            $this->postsRepository->setLanguageUidForPost($reply->getUid(), $languageId);
+
+            // Post count ++
             $forumObject->setPostCount($forumObject->getPostCount() + 1);
             $this->forumsRepository->update($forumObject);
 
+            /*
             $this->addFlashMessage(
                 'Deine Antwort wurde erfolgreich gespeichert.',
                 'Erfolg',
                 \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK
-            );
+            );*/
+
+            $cacheManager = GeneralUtility::makeInstance(CacheManager::class);
+            $cacheManager->flushCachesByTag('user_' . $userId);
+            $cacheManager->flushCachesByTag('post_' . $parentUid);
 
 
-
-            $uri = $this->uriBuilder->uriFor('show', ['action' => 'show', 'controller' => 'Forum', 'forum' => $forumObject, 'post' => $parentUid]);
+            $uri = $this->uriBuilder->uriFor('show', ['action' => 'show', 'controller' => 'Forum', 'forum' => $forumObject, 'post' => $parentUid, 'reply' => 1]);
 
             return $this->redirectToUri($uri . '#latest');
         }
@@ -329,8 +373,12 @@ final class ForumController extends ActionController
         $postUid = (int)$this->request->getArgument('post');
         $forumUid = (int)$this->request->getArgument('forum');
 
+        $forumObject = $this->forumsRepository->findByUid($forumUid);
+
         $post = $this->postsRepository->findByUid($postUid);
-        $forum = $this->forumsRepository->findByUid($forumUid);
+        $forum = $this->forumsRepository->findByUid((int)$this->request->getArgument('forum'));
+        //$forum = $this->forumsRepository->findByUidAndLanguage($forumUid, $languageId);
+
 
         $this->view->assignMultiple([
             'forum' => $forum,
@@ -345,6 +393,10 @@ final class ForumController extends ActionController
 
     public function createThreadAction(\Lanius\Forumman\Domain\Model\Posts $post): ResponseInterface
     {
+        // Language
+        $language = $this->request->getAttribute('language');
+        $locale = $language->getLocale();
+        $languageKey = $locale->getLanguageCode();
 
 
         $context = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class);
@@ -353,7 +405,6 @@ final class ForumController extends ActionController
         $language = $this->request->getAttribute('language');
         $languageId = $language->getLanguageId();
 
-        //\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($languageId);
 
         $cacheManager = GeneralUtility::makeInstance(CacheManager::class);
         $cacheManager->flushCachesByTag('user_' . $userId);
@@ -395,6 +446,25 @@ final class ForumController extends ActionController
         $this->persistenceManager->persistAll();
 
         $this->postsRepository->setLanguageUidForPost($post->getUid(), $languageId);
+
+
+        $flashContent = LocalizationUtility::translate(
+            'flashContentThread',
+            'Forumman',
+            [],
+            $languageKey
+        );
+        $flashHeadline = LocalizationUtility::translate(
+            'flashContentHeadline',
+            'Forumman',
+            [],
+            $languageKey
+        );
+        $this->addFlashMessage(
+            $flashContent,
+            $flashHeadline,
+            \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK
+        );
 
         // Redirect auf Einzelansicht des neuen Posts
         return $this->redirect(

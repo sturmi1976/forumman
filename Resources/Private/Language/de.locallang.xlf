@@ -115,6 +115,57 @@ Hallo %s,<br /><br />
 </p>
         ]]></target>
       </trans-unit>
+      <trans-unit id="flashContentThread">
+                <target>Dein Beitrag wurde erfolgreich gespeichert.</target>
+            </trans-unit>
+        <trans-unit id="flashContentHeadline">
+                <target>Vielen Dank!</target>
+            </trans-unit>
+        <trans-unit id="new_user_headline">
+            <target>Neue Benutzer</target>
+        </trans-unit>
+        <trans-unit id="last_online_headline">
+            <target>Last online</target>
+        </trans-unit>
+        <trans-unit id="no_online_user">
+            <target>Bisher noch keine Users</target>
+        </trans-unit>
+        <trans-unit id="no_user_registered">
+            <target>Noch keine Users vorhanden</target>
+        </trans-unit>
+        <trans-unit id="register.email">
+            <target>E-Mail</target>
+        </trans-unit>
+        <trans-unit id="register.username">
+            <target>Benutzername</target>
+        </trans-unit>
+        <trans-unit id="register.password">
+            <target>Passwort</target>
+        </trans-unit>
+        <trans-unit id="register.password_repeat">
+            <target>Password wiederholen</target>
+        </trans-unit>
+        <trans-unit id="register.captcha_label">
+            <target>Bitte löse das Captcha.</target>
+        </trans-unit>
+        <trans-unit id="register.submit">
+            <target>Jetzt registrieren</target>
+        </trans-unit>
+        <trans-unit id="mail_registration_text">
+            <target>
+            <![CDATA[
+            Hallo %s,<br /><br />
+
+            vielen Dank für die Registrierung in unserem Forum.<br />
+            Damit du dich einloggen kannst, klicke auf den folgenden Link, um dein Konto freizuschalten:<br /><br />
+
+            <a href="%s">%s</a>
+            ]]>
+            </target>
+        </trans-unit>
+        <trans-unit id="mail_registration_subject">
+            <target>Freischaltung im Forum</target>
+        </trans-unit>
         </body>
     </file>
 </xliff>

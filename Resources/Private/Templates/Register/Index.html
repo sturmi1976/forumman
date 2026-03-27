@@ -37,32 +37,32 @@
 <f:form action="index" method="post" class="form">
 
     <div class="mb-3">
-        <label for="username" class="form-label">Username</label>
+        <label for="username" class="form-label">{f:translate(key: 'register.username', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}</label>
         <f:form.textfield property="username" value="{username}" id="username" name="username" class="form-control" required="required" />
     </div>
 
     <div class="mb-3">
-        <label for="email" class="form-label">E-Mail</label>
+        <label for="email" class="form-label">{f:translate(key: 'register.email', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}</label>
         <f:form.textfield property="email" value="{email}" id="email" name="email" class="form-control" required="required" />
     </div>
 
     <div class="mb-3">
-        <label for="password" class="form-label">Passwort</label>
+        <label for="password" class="form-label">{f:translate(key: 'register.password', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}</label>
         <f:form.password property="password1" id="password1" value="{password1}" name="password1" class="form-control" required="required" />
     </div>
 
     <div class="mb-3">
-        <label for="password_repeat" class="form-label">Passwort wiederholen</label>
+        <label for="password_repeat" class="form-label">{f:translate(key: 'register.password_repeat', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}</label>
         <f:form.password property="password2" id="password2" value="{password2}" name="password2" class="form-control" required="required" />
     </div>
 
     <div class="mb-3">
-    <label class="form-label">Bitte löse das Captcha</label>
+    <label class="form-label">{f:translate(key: 'register.captcha_label', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}</label>
     <img src="{captchaImage}" alt="Captcha" class="mb-2" />
     <f:form.textfield property="captcha" name="captcha" class="form-control" required="required" />
 </div>
 
 
-    <f:form.submit value="Jetzt registrieren" class="btn btn-primary" name="submit" />
+    <f:form.submit value="{f:translate(key: 'register.submit', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}" class="btn btn-primary" name="submit" />
 
 </f:form>

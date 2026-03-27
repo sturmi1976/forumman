@@ -115,6 +115,57 @@ Hello %s,<br /><br />
 </p>
         ]]></source>
       </trans-unit>
+      <trans-unit id="flashContentThread">
+                <source>Your post has been saved successfully.</source>
+            </trans-unit>
+        <trans-unit id="flashContentHeadline">
+                <source>Success</source>
+            </trans-unit>
+        <trans-unit id="new_user_headline">
+            <source>New Users</source>
+        </trans-unit>
+        <trans-unit id="last_online_headline">
+            <source>Last online</source>
+        </trans-unit>
+        <trans-unit id="no_online_user">
+            <source>No users</source>
+        </trans-unit>
+        <trans-unit id="no_user_registered">
+            <source>No users</source>
+        </trans-unit>
+        <trans-unit id="register.email">
+            <source>Email</source>
+        </trans-unit>
+        <trans-unit id="register.username">
+            <source>Username</source>
+        </trans-unit>
+        <trans-unit id="register.password">
+            <source>Password</source>
+        </trans-unit>
+        <trans-unit id="register.password_repeat">
+            <source>Password repeat</source>
+        </trans-unit>
+        <trans-unit id="register.captcha_label">
+            <source>Please solve the captcha.</source>
+        </trans-unit>
+        <trans-unit id="register.submit">
+            <source>Register now</source>
+        </trans-unit>
+        <trans-unit id="mail_registration_text">
+            <source>
+            <![CDATA[
+            Hello %s,<br /><br />
+
+            thank you for registering in our forum.<br />
+            To log in, please click the following link to activate your account:<br /><br />
+
+            <a href="%s">%s</a>
+            ]]>
+            </source>
+        </trans-unit>
+        <trans-unit id="mail_registration_subject">
+            <source>Activation in the forum</source>
+        </trans-unit>
         </body>
     </file>
 </xliff>
