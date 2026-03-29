@@ -11,6 +11,7 @@ page {
 page.includeJSFooter {
     tinymce = EXT:forumman/Resources/Public/Js/tinymce/tinymce.min.js
     forum_editor = EXT:forumman/Resources/Public/Js/tinymce/forum-editor.js
+    settings_editors = EXT:forumman/Resources/Public/Js/tinymce/settings-editor.js 
 }
 [END]
 page.includeJSFooter {

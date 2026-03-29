@@ -112,6 +112,7 @@ final class FrontendUserRepository extends Repository
             $user->_setProperty('birthday', $row['birthday']);
             $user->_setProperty('slug', $row['slug']);
             $user->_setProperty('lastlogin', (int)$row['lastlogin']);
+            $user->_setProperty('showAge', (int)$row['show_age']);
 
             if (!empty($row['birthday'])) {
                 $birthDate = new \DateTime($row['birthday']);
@@ -186,6 +187,7 @@ final class FrontendUserRepository extends Repository
             $user->_setProperty('birthday', $row['birthday']);
             $user->_setProperty('slug', $row['slug']);
             $user->_setProperty('lastlogin', (int)$row['lastlogin']);
+            $user->_setProperty('showAge', (int)$row['show_age']);
 
             if (!empty($row['birthday'])) {
                 $birthDate = new \DateTime($row['birthday']);

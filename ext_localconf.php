@@ -17,11 +17,11 @@ ExtensionUtility::configurePlugin(
     'ForumForumlist',
     [
         ForumController::class => 'index,showThreads,newThread,createThread,show,replyWrite',
-        UserController::class  => 'show,settings,updateProfileImage',
+        UserController::class  => 'show,settings,updateProfileImage,saveSettings',
     ],
     [
         ForumController::class => 'createThread,replyWrite',
-        UserController::class  => 'show,settings,updateProfileImage',
+        UserController::class  => 'show,settings,updateProfileImage,saveSettings',
     ],
     ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
 );

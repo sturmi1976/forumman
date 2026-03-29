@@ -166,6 +166,60 @@ Hello %s,<br /><br />
         <trans-unit id="mail_registration_subject">
             <source>Activation in the forum</source>
         </trans-unit>
+        <trans-unit id="back_to_forum">
+            <source>Back to the forum</source>
+        </trans-unit>
+        <trans-unit id="reply_write_linktext">
+            <source>Reply to post</source>
+        </trans-unit>
+        <trans-unit id="created_by">
+            <source>Created by</source>
+        </trans-unit>
+        <trans-unit id="answers_headline">
+            <source>Answer</source>
+        </trans-unit>
+        <trans-unit id="answers_successfully">
+            <source>Your answer has been successfully saved.</source>
+        </trans-unit>
+        <trans-unit id="settings.headline">
+            <source>Settings</source>
+        </trans-unit>
+        <trans-unit id="settings.imageLabel">
+            <source>Profile picture</source>
+        </trans-unit>
+        <trans-unit id="settings.selectImage">
+            <source>Select image</source>
+        </trans-unit>
+        <trans-unit id="settings.generalHeadline">
+            <source>General settings</source>
+        </trans-unit>
+        <trans-unit id="settings.companyLabel">
+            <source>Company</source>
+        </trans-unit>
+        <trans-unit id="settings.companyText">
+            <source>If you own a business, you can enter the name here.</source>
+        </trans-unit>
+        <trans-unit id="settings.yourName">
+            <source>Your name</source>
+        </trans-unit>
+        <trans-unit id="settings.city">
+            <source>City</source>
+        </trans-unit>
+        <trans-unit id="settings.country">
+            <source>Country</source>
+        </trans-unit>
+        <trans-unit id="settings.website">
+            <source>Website</source>
+        </trans-unit>
+        <trans-unit id="settings.aboutMe">
+            <source>About me</source>
+        </trans-unit>
+        <trans-unit id="settings.signature">
+            <source>Signature</source>
+        </trans-unit>
+        <trans-unit id="settings.signatureText">
+            <source>Shown below every post you publish.</source>
+        </trans-unit>
         </body>
     </file>
 </xliff>

@@ -13,7 +13,10 @@ return [
             ],
             'txForummanLastActivity' => [
                 'fieldName' => 'tx_forumman_last_activity'
-            ]
+            ],
+            'showAge' => [
+            'fieldName' => 'show_age'
+        ],
         ]
     ],
     'Lanius\Forumman\Domain\Model\User' => [

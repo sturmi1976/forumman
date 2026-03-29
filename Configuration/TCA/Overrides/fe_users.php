@@ -97,12 +97,21 @@ $newColumns = [
             'readOnly' => true,
         ],
     ],
+    'show_age' => [
+    'exclude' => true,
+    'label' => 'Show Age',
+    'config' => [
+        'type' => 'check',
+        'renderType' => 'checkboxToggle', 
+        'default' => 0,
+    ],
+],
 ];
 
 ExtensionManagementUtility::addTCAcolumns('fe_users', $newColumns);
 ExtensionManagementUtility::addToAllTCAtypes(
     'fe_users',
-    'birthday,admin',
+    'birthday,admin,show_age',
     '',
     'after:name'
 );

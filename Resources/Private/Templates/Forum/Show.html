@@ -12,13 +12,13 @@
  <div class="button_tool_bar">
     <div class="tool_bar_left">
         <f:link.action action="showThreads" arguments="{forumUid: post.forum.uid}" class="btn back-link">
-            &laquo; Zurück zum Forum
+            &laquo; {f:translate(key: 'back_to_forum', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
         </f:link.action>
     </div>
     <f:security.ifAuthenticated>
         <div class="tool_bar_right">
             <f:link.action action="replyWrite" arguments="{forum: post.forum, post: post}" class="btn btn-primary new-thread">
-                Auf Beitrag antworten
+                {f:translate(key: 'reply_write_linktext', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
             </f:link.action>
         </div>
     </f:security.ifAuthenticated>
@@ -42,7 +42,7 @@
         <div class="post-meta">
             <h1>{post.title}</h1>
             <p>
-                <strong>Erstellt von:</strong>
+                <strong>{f:translate(key: 'created_by', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}:</strong>
                 <f:link.action action="show" controller="User" arguments="{user: post.user}">
                     <f:format.htmlspecialchars>
                         <f:format.case mode="capitalWords">{post.user.username}</f:format.case>
@@ -57,7 +57,7 @@
                     </f:else>
                 </f:if>
             </p>
-            <p><strong>Erstellt am:</strong> {post.createdAt -> f:format.date(format:'d.m.Y, H:i')}</p>
+            <p><strong>{f:translate(key: 'createdAt', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}:</strong> {post.createdAt -> f:format.date(format:'d.m.Y, H:i')}</p>
         </div>
     </div>
 
@@ -76,26 +76,30 @@
 
 <!-- Antworten -->
  <f:if condition="{replies}">
-    <h3>Antworten</h3>
+    <h3>
+        {f:translate(key: 'answers_headline', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
+    </h3>
  </f:if>
 
 <f:for each="{replies}" as="reply" iteration="i">
 
+<f:security.ifAuthenticated>
         <f:if condition="{i.isLast} && {arguments.reply} == 1">
             <div id="last" class="scroll-anchor"></div> 
             <div id="flash-message-container">
                     <div class="flash-message">
-                        Deine Antwort wurde erfolgreich gespeichert.
+                        {f:translate(key: 'answers_successfully', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
                     </div>
             </div>
         </f:if>
+    </f:security.ifAuthenticated>
 
     <div class="reply-wrapper">
         <div class="reply-header">
             <div class="avatar">
                 <f:if condition="{reply.reply.user.image}">
                     <f:then>
-                        <f:image image="{reply.reply.user.image}" alt="Avatar von {reply.reply.user.username}" width="60" height="60" />
+                        <f:image image="{reply.reply.user.image}" alt="{reply.reply.user.username}" width="60" height="60" />
                     </f:then>
                     <f:else>
                         <f:image src="EXT:forumman/Resources/Public/Images/no_pic.png" width="60" height="60" alt="no image" />
@@ -146,12 +150,12 @@
                     <f:if condition="{previousPage} == 1">
                         <f:then>
                             <f:link.action action="show" arguments="{post: post, forum: post.forum}" class="page-link">
-                                &laquo; Zurück
+                                &laquo; {f:translate(key: 'backLinkText', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
                             </f:link.action>
                         </f:then>
                         <f:else>
                             <f:link.action action="show" arguments="{post: post, forum: post.forum, currentPage: previousPage}" class="page-link">
-                                &laquo; Zurück
+                                &laquo; {f:translate(key: 'backLinkText', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
                             </f:link.action>
                         </f:else>
                     </f:if>
@@ -166,12 +170,12 @@
                 <li class="page-item">
                     <f:if condition="{page} == 1">
                         <f:then>
-                            <f:link.action action="show" arguments="{post: post, forum: post.forum}" class="page-link {f:if(condition:'{pagination.currentPage}=={page}',then:'active')}">
+                            <f:link.action action="show" arguments="{post: post, forum: post.forum}" class="page-link {f:if(condition:'{currentPage}=={page}',then:'active')}">
                                 <f:if condition="{pagination.currentPage} == 1"><strong>{page}</strong><f:else>{page}</f:else></f:if>
                             </f:link.action>
                         </f:then>
                         <f:else>
-                            <f:link.action action="show" arguments="{post: post, forum: post.forum, currentPage: page}" class="page-link {f:if(condition:'{pagination.currentPage}=={page}',then:'active')}">
+                            <f:link.action action="show" arguments="{post: post, forum: post.forum, currentPage: page}" class="page-link {f:if(condition:'{currentPage}=={page}',then:'active')}">
                                 <f:if condition="{pagination.currentPage} == {page}"><strong>{page}</strong><f:else>{page}</f:else></f:if>
                             </f:link.action>
                         </f:else>
@@ -186,7 +190,7 @@
             <f:if condition="{nextPage}">
                 <li class="page-item">
                     <f:link.action action="show" arguments="{post: post, forum: post.forum, currentPage: nextPage}" class="page-link">
-                        Weiter &raquo;
+                        {f:translate(key: 'nextLinkText', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')} &raquo;
                     </f:link.action>
                 </li>
             </f:if>
@@ -198,7 +202,7 @@
 
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function () { 
 
     const hash = window.location.hash;
 
@@ -236,6 +240,23 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 });
+
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const container = document.getElementById('flash-message-container');
+
+    if (container) {
+        setTimeout(() => {
+    container.classList.add('hide');
+
+    setTimeout(() => {
+        container.remove();
+    }, 600);
+}, 3000);
+    }
+
+});
 </script>
 
 
@@ -260,6 +281,17 @@ document.addEventListener('DOMContentLoaded', function () {
 .flash-error {
     background: linear-gradient(135deg, #f44336, #e57373);
     color: #fff;
+}
+
+#flash-message-container {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.6s ease;
+}
+
+#flash-message-container.hide {
+    opacity: 0 !important;
+    transform: translateY(-20px) !important;
 }
 </style>
 

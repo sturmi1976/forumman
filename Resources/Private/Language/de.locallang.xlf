@@ -166,6 +166,60 @@ Hallo %s,<br /><br />
         <trans-unit id="mail_registration_subject">
             <target>Freischaltung im Forum</target>
         </trans-unit>
+        <trans-unit id="back_to_forum">
+            <target>Zurück zum Forum</target>
+        </trans-unit>
+        <trans-unit id="reply_write_linktext">
+            <target>Auf Beitrag antworten</target>
+        </trans-unit>
+        <trans-unit id="created_by">
+            <target>Erstellt von</target>
+        </trans-unit>
+        <trans-unit id="answers_headline">
+            <target>Antworten</target>
+        </trans-unit>
+        <trans-unit id="answers_successfully">
+            <target>Deine Antwort wurde erfolgreich gespeichert.</target>
+        </trans-unit>
+        <trans-unit id="settings.headline">
+            <target>Einstellungen</target>
+        </trans-unit>
+        <trans-unit id="settings.imageLabel">
+            <target>Profilbild</target>
+        </trans-unit>
+        <trans-unit id="settings.selectImage">
+            <target>Bild auswählen</target>
+        </trans-unit>
+        <trans-unit id="settings.generalHeadline">
+            <target>Allgemeine Einstellungen</target>
+        </trans-unit>
+        <trans-unit id="settings.companyLabel">
+            <target>Firma / Unternehmen</target>
+        </trans-unit>
+        <trans-unit id="settings.companyText">
+            <target>Falls du ein Unternehmen hast, kannst du hier den Namen eintragen.</target>
+        </trans-unit>
+        <trans-unit id="settings.yourName">
+            <target>Dein Name</target>
+        </trans-unit>
+        <trans-unit id="settings.city">
+            <target>Stadt</target>
+        </trans-unit>
+        <trans-unit id="settings.country">
+            <target>Land</target>
+        </trans-unit>
+        <trans-unit id="settings.website">
+            <target>Webseite</target>
+        </trans-unit>
+        <trans-unit id="settings.aboutMe">
+            <target>Über mich / Profilbeschreibung</target>
+        </trans-unit>
+        <trans-unit id="settings.signature">
+            <target>Signatur</target>
+        </trans-unit>
+        <trans-unit id="settings.signatureText">
+            <target>Wird unter jedem Beitrag von dir angezeigt.</target>
+        </trans-unit>
         </body>
     </file>
 </xliff>

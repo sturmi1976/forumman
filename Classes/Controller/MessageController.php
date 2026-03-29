@@ -208,7 +208,6 @@ final class MessageController extends ActionController
 
     public function deleteAction(\Lanius\Forumman\Domain\Model\Message $message)
     {
-    // Optional: nur den eingeloggten User als Receiver zulassen
         /** @var \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication $feUser */
         $feUser = $this->request->getAttribute('frontend.user');
         $currentUserId = (int)($feUser->user['uid'] ?? 0);

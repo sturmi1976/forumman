@@ -352,20 +352,35 @@ final class ForumController extends ActionController
             $forumObject->setPostCount($forumObject->getPostCount() + 1);
             $this->forumsRepository->update($forumObject);
 
-            /*
-            $this->addFlashMessage(
-                'Deine Antwort wurde erfolgreich gespeichert.',
-                'Erfolg',
-                \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK
-            );*/
-
             $cacheManager = GeneralUtility::makeInstance(CacheManager::class);
             $cacheManager->flushCachesByTag('user_' . $userId);
             $cacheManager->flushCachesByTag('post_' . $parentUid);
 
+            // Anzahl aller Replies (inkl. neuer)
+            $totalReplies = $this->postsRepository->countRepliesByParent($parentUid, $languageId);
 
-            $uri = $this->uriBuilder->uriFor('show', ['action' => 'show', 'controller' => 'Forum', 'forum' => $forumObject, 'post' => $parentUid, 'reply' => 1]);
+            // Items pro Seite (gleich wie in showAction!)
+            $itemsPerPage = (int)($this->settings['itemsPerPage2'] ?? 10);
 
+            // Zielseite berechnen
+            $targetPage = (int)ceil($totalReplies / $itemsPerPage);
+
+
+            //$uri = $this->uriBuilder->uriFor('show', ['action' => 'show', 'controller' => 'Forum', 'forum' => $forumObject, 'post' => $parentUid, 'reply' => 1]);
+
+            $uri = $this->uriBuilder
+    ->reset()
+    ->uriFor(
+        'show',
+        [
+            'forum' => $forumObject,
+            'post' => $parentUid,
+            'currentPage' => $targetPage,
+            'reply' => 1
+        ],
+        'Forum',
+        'Forumman'
+    );
             return $this->redirectToUri($uri . '#latest');
         }
 

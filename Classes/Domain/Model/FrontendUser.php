@@ -27,6 +27,8 @@ final class FrontendUser extends AbstractEntity
     protected string $name = '';
     protected string $email = '';
     protected string $company = '';
+    protected string $city = '';
+    protected string $country = '';
     protected string $www = '';
     protected string $profilbeschreibung = '';
     protected string $signature = '';
@@ -36,6 +38,19 @@ final class FrontendUser extends AbstractEntity
     protected int $isOnline = 0;
     protected int $nowonline = 0;
     protected int $age2 = 0;
+
+    protected int $showAge = 0;
+
+    public function getShowAge(): int
+{
+    return $this->showAge;
+}
+
+public function setShowAge($showAge): void
+{
+    $this->showAge = (int)$showAge;
+}
+
 
     public function getAge2(): int
     {
@@ -231,6 +246,28 @@ final class FrontendUser extends AbstractEntity
     public function setEmail(string $email): void
     {
         $this->email = $email;
+    }
+
+
+
+    public function getCountry(): string
+    {
+        return $this->country;
+    }
+
+    public function setCountry(string $country): void
+    {
+        $this->country = $country;
+    }
+
+    public function getCity(): string
+    {
+        return $this->city;
+    }
+
+    public function setCity(string $city): void
+    {
+        $this->city = $city;
     }
 
 

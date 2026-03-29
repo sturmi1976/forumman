@@ -30,7 +30,12 @@
                     <div class="user-information">
                         <div class="username">
                             <f:link.action action="show" controller="User" arguments="{user: user}" pageUid="{settings.forumPagePid}">
-                                {user.username} <f:if condition="{user.age2}"><span class="user-age">({user.age2})</span></f:if>
+                                {user.username} 
+                                <f:if condition="{user.showAge}">
+                                    <f:if condition="{user.age2}">
+                                        <span class="user-age">({user.age2})</span>
+                                    </f:if>
+                                </f:if>
                             </f:link.action>
                         </div>
 

@@ -3,23 +3,58 @@
 {namespace fm=Lanius\Forumman\ViewHelpers}
 
 <f:comment>Title Tag</f:comment>
-<fm:pageTitle title="Einstellungen: {f:format.case(value: user.username, mode: 'capital')}" />
+<fm:pageTitle title="{f:translate(key: 'settings.headline', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}: {f:format.case(value: user.username, mode: 'capital')}" />
+
+<div class="flash-container">
+    <f:flashMessages />
+</div>
 
 
+<f:security.ifAuthenticated>
+<h2>
+    {f:translate(key: 'settings.headline', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
+</h2>
 
-<h2>Profile Settings</h2>
-
-<f:flashMessages />
 
 <f:form action="updateProfileImage" name="imageUpload" enctype="multipart/form-data" method="post">
 
     <div class="mb-3">
-        <label for="image" class="form-label">Profilbild</label>
+        <label for="image" class="form-label">
+            {f:translate(key: 'settings.imageLabel', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
+        </label>
 
-        <!-- Uploadfeld -->
+        <f:comment>
         <f:form.upload property="image" id="image" class="form-control" />
+    </f:comment>
 
-        <!-- Aktuelles Bild anzeigen -->
+
+    <div class="file-upload-wrapper">
+    
+    <label for="image" class="file-upload-box">
+        <div class="file-upload-content">
+            <span class="file-upload-icon">📁</span>
+            <span class="file-upload-text">
+                {f:translate(key: 'settings.selectImage', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
+            </span>
+            <span class="file-upload-hint">
+                PNG, JPG oder GIF
+            </span>
+        </div>
+    </label>
+
+    <f:form.upload property="image" id="image" class="file-input-hidden" />
+
+    <div id="file-name" class="file-name">
+        <!--
+        Keine Datei gewählt
+        -->
+    </div>
+
+    <img id="image-preview" class="image-preview" style="display:none;" />
+
+</div>
+
+
         <f:if condition="{user.image}">
             <f:then>
                 <img src="{f:uri.image(image: user.image)}" alt="Profilbild" width="100" class="mt-2" />
@@ -29,3 +64,292 @@
 
     <f:form.submit value="Speichern" class="btn btn-primary" />
 </f:form>
+
+<hr />
+
+<h3>
+{f:translate(key: 'settings.generalHeadline', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
+</h3>
+
+<f:form action="saveSettings" object="{user}" name="user" method="post">
+
+<div class="settings-form-item">
+    <div class="form-group switch-group">
+        <div class="switch-text">
+            <strong>{f:translate(key: 'settings.companyLabel', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}</strong><br>
+            <small>{f:translate(key: 'settings.companyText', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}</small>
+        </div>
+        <label class="switch">
+            <f:form.textfield property="company" class="form-lg-control" />
+        </label>
+    </div>
+</div>
+
+<div class="settings-form-item">
+    <div class="form-group switch-group">
+        <div class="switch-text">
+            <strong>{f:translate(key: 'settings.yourName', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}</strong><br>
+        </div>
+        <label class="switch">
+            <f:form.textfield property="name" class="form-lg-control" />
+        </label>
+    </div>
+</div>
+
+<div class="settings-form-item">
+    <div class="form-group switch-group">
+        <div class="switch-text">
+            <strong>{f:translate(key: 'settings.yourName', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}</strong><br>
+        </div>
+        <label class="switch">
+            <f:form.textfield property="city" class="form-lg-control" />
+        </label>
+    </div>
+</div>
+
+<div class="settings-form-item">
+    <div class="form-group switch-group">
+        <div class="switch-text">
+            <strong>{f:translate(key: 'settings.country', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}</strong><br>
+        </div>
+        <label class="switch">
+            <f:form.textfield property="country" class="form-lg-control" />
+        </label>
+    </div>
+</div>
+
+<div class="settings-form-item">
+    <div class="form-group switch-group">
+        <div class="switch-text">
+            <strong>{f:translate(key: 'settings.website', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}</strong><br>
+        </div>
+        <label class="switch">
+            <f:form.textfield property="www" placeholder="https://www.company.com" class="form-lg-control" />
+        </label>
+    </div>
+</div>
+
+
+<div class="settings-form-item">
+    <div class="form-group switch-group">
+        <div class="switch-text">
+            <strong>{f:translate(key: 'settings.aboutMe', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}</strong><br>
+        </div>
+        <div class="editor-container editor-container_classic-editor">
+            <div class="editor-container__editor">
+                <f:form.textarea property="profilbeschreibung" id="profilbeschreibung" class="form-control" rows="6" />
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="settings-form-item">
+    <div class="form-group switch-group">
+        <div class="switch-text">
+            <strong>{f:translate(key: 'settings.signature', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}</strong><br>
+            <small>{f:translate(key: 'settings.signatureText', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}</small>
+        </div>
+        <div class="editor-container editor-container_classic-editor">
+            <div class="editor-container__editor">
+                <f:form.textarea property="signature" id="signature" class="form-control" rows="6" />
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+<div class="settings-form-item">
+    <div class="form-group switch-group">
+        <div class="switch-text">
+            <strong>Alter anzeigen</strong><br>
+            <small>Wird nur angezeigt, wenn ein Geburtsdatum angegeben wurde.</small>
+        </div>
+        <label class="switch">
+            <f:form.checkbox property="showAge" value="1" class="switch-input" />
+            <span class="slider"></span>
+        </label>
+    </div>
+</div>
+
+<div class="settings-form-item">
+    <div class="form-group switch-group">
+        <div class="switch-text">
+            <strong>Geburtsdatum</strong><br>
+        </div>
+        <label class="switch">
+            <f:form.textfield property="birthday" placeholder="dd-mm-yyyy" class="form-lg-control" />
+        </label>
+    </div>
+</div>
+
+    <f:form.submit value="Speichern" class="btn btn-primary" />
+</f:form>
+
+
+</f:security.ifAuthenticated>
+
+<style>
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 26px;
+}
+
+/* Checkbox verstecken */
+.switch-input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* Hintergrund */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 34px;
+}
+
+/* Kreis */
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+/* Aktiv Zustand */
+.switch-input:checked + .slider {
+    background-color: #4caf50;
+}
+
+.switch-input:checked + .slider:before {
+    transform: translateX(24px);
+}
+
+.ck-editor__editable {
+  min-height: 500px;
+  width:100%;
+}
+.editor-container_classic-editor .editor-container__editor {
+    min-width: 100%;
+    max-width: 100%;
+}
+
+
+
+.file-upload-wrapper {
+    max-width: 400px;
+}
+
+/* Hidden Input */
+.file-input-hidden {
+    display: none;
+}
+
+/* Upload Box */
+.file-upload-box {
+    display: block;
+    border: 2px dashed #ccc;
+    border-radius: 12px;
+    padding: 25px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    background: #fafafa;
+}
+
+/* Hover Effekt */
+.file-upload-box:hover {
+    border-color: #007bff;
+    background: #f0f7ff;
+    transform: translateY(-2px);
+}
+
+/* Inhalt */
+.file-upload-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Icon */
+.file-upload-icon {
+    font-size: 28px;
+}
+
+/* Haupttext */
+.file-upload-text {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+/* Hint */
+.file-upload-hint {
+    font-size: 12px;
+    color: #777;
+}
+
+/* Dateiname */
+.file-name {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #444;
+}
+
+/* Preview */
+.image-preview {
+    margin-top: 15px;
+    max-width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+</style>
+
+
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const input = document.getElementById('image');
+    const fileName = document.getElementById('file-name');
+    const preview = document.getElementById('image-preview');
+
+    input.addEventListener('change', function () {
+
+        const file = this.files[0];
+
+        if (!file) return;
+
+        // Dateiname anzeigen
+        fileName.textContent = file.name;
+
+        // Bild Vorschau
+        if (file.type.startsWith('image/')) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            };
+
+            reader.readAsDataURL(file);
+        }
+
+    });
+
+});
+</script>

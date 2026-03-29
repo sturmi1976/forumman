@@ -14,6 +14,7 @@ namespace Lanius\Forumman\Controller;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Cache\CacheTag;
 use \TYPO3\CMS\Core\Cache\CacheManager;
+
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use Lanius\Forumman\Domain\Repository\UserRepository;
@@ -112,16 +113,37 @@ final class UserController extends ActionController
 
     public function settingsAction(): ResponseInterface
     {
+        /** @var \TYPO3\CMS\Extbase\Mvc\RequestInterface $request */
+        $request = $this->request;
+        // GET-Parameter für *dieses Plugin / Controller*
+        $arguments = $request->getArguments();
+
         $context = GeneralUtility::makeInstance(Context::class);
         $userId = $context->getPropertyFromAspect('frontend.user', 'id');
 
         $user = $this->frontendUserRepository->findByUid($userId);
 
         $this->view->assign('user', $user);
+        $this->view->assign('arguments', $arguments);
 
 
         return $this->htmlResponse();
     }
+
+
+
+    public function saveSettingsAction(\Lanius\Forumman\Domain\Model\FrontendUser $user): ResponseInterface
+{
+    $this->frontendUserRepository->update($user);
+
+    $this->addFlashMessage(
+        'Einstellungen gespeichert',
+        '',
+        \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK
+    );
+
+    return $this->redirect('settings');
+}
 
 
 

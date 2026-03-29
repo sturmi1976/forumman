@@ -136,4 +136,19 @@ final class PostsRepository extends Repository
             ['uid' => $postId]
         );
     }
+
+
+    public function countRepliesByParent(int $parentUid, int $languageUid): int
+    {
+        $query = $this->createQuery();
+
+        return $query
+            ->matching(
+                $query->logicalAnd(
+                    $query->equals('parent', $parentUid),
+                    $query->equals('sys_language_uid', $languageUid)
+                )
+            )
+            ->count();
+    }
 }

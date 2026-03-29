@@ -37,6 +37,7 @@ class LastLoggedInController extends ActionController
         $lastUsers = $this->frontendUserRepository->findLastLoggedInUsersObjects(3);
         foreach ($lastUsers as $user) {
             $user->getAge();
+            //$user->getShowAge();
         }
 
         // --- Cache-Tags set ---
