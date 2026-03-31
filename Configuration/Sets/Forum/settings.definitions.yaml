@@ -1,23 +1,26 @@
 categories:
   Forumman:
-    label: 'Forum Manager'           # Hauptkategorie
+    label: 'Forum Manager'           
   Forumman.templates:
-    label: 'Templates'                     # Unterkategorie Templates
+    label: 'Templates'                    
     parent: Forumman
   Forumman.pages:
-    label: 'Pages'                         # Unterkategorie Pages
+    label: 'Pages'                         
     parent: Forumman
   Forumman.uids:
     label: 'Page Uids and folder'
     parent: Forumman
+  Forumman.emails:
+    label: 'Email settings'
+    parent: Forumman
 
 settings:
   forumman.templateRootPath:
-    label: 'Templates'                     # Label für das Feld
-    category: Forumman.templates             # Kategorie zuordnen
-    description: 'Path to template root'   # Beschreibung
-    type: string                           # Datentyp
-    default: 'EXT:forumman/Resources/Private/Templates/'  # Standardwert
+    label: 'Templates'                     
+    category: Forumman.templates            
+    description: 'Path to template root'   
+    type: string                          
+    default: 'EXT:forumman/Resources/Private/Templates/'  
 
   forumman.partialRootPath:
     label: 'Partials'
@@ -60,3 +63,17 @@ settings:
     description: 'The uid of User Storage Folder'
     type: string
     default: '0'
+
+  forumman.emailName:
+    label: 'Email sender name'
+    category: Forumman.emails
+    description: 'Name displayed as the sender in system emails (e.g. "Forum Team").'
+    type: string
+    default: 'Forum Team'
+
+  forumman.emailFromAddress:
+    label: 'Email sender address'
+    category: Forumman.emails
+    description: 'Email address used as the sender for system emails (e.g. no-reply@yourdomain.com).'
+    type: string
+    default: 'no-reply@yourdomain.com'

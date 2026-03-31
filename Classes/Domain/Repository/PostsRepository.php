@@ -151,4 +151,15 @@ final class PostsRepository extends Repository
             )
             ->count();
     }
+
+
+public function countPostsByForum(int $forumUid): int
+{
+    $query = $this->createQuery();
+
+    return $query->matching(
+        $query->equals('forum', $forumUid)
+    )->count();
+}
+
 }

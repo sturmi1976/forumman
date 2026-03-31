@@ -17,3 +17,11 @@ page.includeJSFooter {
 page.includeJSFooter {
     prism = EXT:forumman/Resources/Public/prism/prism.js
 }
+
+
+config {
+    compressJs = 0
+    compressCss = 0
+    concatenateJs = 0
+    concatenateCss = 0 
+}

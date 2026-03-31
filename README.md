@@ -52,6 +52,8 @@ Install the extension using Composer:
     
     Who is online
 
+    and more
+
 - Configure each plugin via the Flexform settings to select the storage folder, templates, and display options.
 
 - Optionally, configure the FAL storage for user avatars in the plugin settings.

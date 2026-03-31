@@ -34,4 +34,5 @@ final class CategoriesRepository extends Repository
         ]);
         return $query->execute();
     }
+
 }

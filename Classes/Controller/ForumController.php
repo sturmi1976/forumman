@@ -77,11 +77,22 @@ final class ForumController extends ActionController
     }
 
     /**
-     * Übersicht: Alle Kategorien + zugehörige Foren
+     * Forum overview
      */
     public function indexAction(): ResponseInterface
     {
         $categories = $this->categoriesRepository->findAllCategoriesAndForums();
+
+        foreach ($categories as $category) {
+    foreach ($category->getForums() as $forum) {
+
+        $threadCount = $this->postsRepository->countThreadsByForum($forum->getUid());
+        $postCount   = $this->postsRepository->countPostsByForum($forum->getUid());
+
+        $forum->_setProperty('threadCountDynamic', $threadCount);
+        $forum->_setProperty('postCountDynamic', $postCount);
+    }
+}
 
 
         if (!empty($this->settings['ogImage'])) {
@@ -89,10 +100,8 @@ final class ForumController extends ActionController
             /** @var FileRepository $fileRepository */
             $fileRepository = GeneralUtility::makeInstance(FileRepository::class);
 
-            // UID des aktuellen Content Elements
             $contentUid = (int)$this->request->getAttribute('currentContentObject')->data['uid'];
 
-            // WICHTIG: fieldname muss exakt wie im FlexForm sein!
             $files = $fileRepository->findByRelation(
                 'tt_content',
                 'og_image',
@@ -104,6 +113,19 @@ final class ForumController extends ActionController
                 $this->view->assign('ogImageObject', $fileReference);
             }
         }
+
+
+        /** @var \TYPO3\CMS\Extbase\Mvc\RequestInterface $request */
+        $request = $this->request;
+
+         // --- Cache-Tags set ---
+        /** @var ServerRequestInterface $request */
+        $request = $GLOBALS['TYPO3_REQUEST'];
+        $collector = $request->getAttribute('frontend.cache.collector');
+
+        $collector->addCacheTags(
+            new CacheTag('forum_overview'),
+        );
 
 
         $this->view->assignMultiple([
@@ -129,7 +151,6 @@ final class ForumController extends ActionController
 
         // GET-Parameter für *dieses Plugin / Controller*
         $arguments = $request->getArguments();
-        //DebuggerUtility::var_dump($arguments);
 
         $forum = $this->forumsRepository->findByUid($forumUid);
         if (!$forum) {

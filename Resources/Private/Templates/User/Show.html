@@ -2,7 +2,7 @@
 {namespace fm=Lanius\Forumman\ViewHelpers}
 
 <f:comment>Title Tag</f:comment>
-<fm:pageTitle suffix="{f:if(condition: '{user.company}', then: ' - {user.company}', else: '')}" title="{f:format.case(value: user.username, mode: 'capital')}" />
+<fm:pageTitle suffix="{f:if(condition: '{user.company}', then: ' - {user.company}', else: '')}" title="User: {f:format.case(value: user.username, mode: 'capital')}" />
 
 
 <f:security.ifAuthenticated>

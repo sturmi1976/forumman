@@ -17,6 +17,8 @@ use TYPO3\CMS\Core\Mail\FluidEmail;
 use TYPO3\CMS\Core\Mail\MailerInterface;
 use Symfony\Component\Mime\Address;
 
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 use TYPO3\CMS\Core\Context\Context;
 use Lanius\Forumman\Domain\Repository\FrontendUserRepository;
@@ -51,6 +53,8 @@ final class MessageController extends ActionController
         $locale = $language->getLocale();
         $languageKey = $locale->getLanguageCode();
 
+        //DebuggerUtility::var_dump($this->settings['emailName']);
+        //exit();
 
         $receiver = $this->request->getArgument('receiver') ?? null;
         $subject  = $this->request->getArgument('subject') ?? '';
@@ -127,20 +131,28 @@ final class MessageController extends ActionController
             $languageKey
         );
 
+       
 
         $mailing = new FluidEmail();
-        $mailing
-            ->to($receiverUser->getEmail())
-            ->from(new Address('info@administrator.de', 'Admin Name'))
-            ->subject($subject)
-            ->format(FluidEmail::FORMAT_HTML)
-            ->setTemplate('Message/NewMessage')
-            ->assignMultiple([
-                'username' => ucfirst($receiverUser->getUsername()),
-                'link' => $linkToForum,
-                'languageKey' => $languageKey,
-            ]);
-        GeneralUtility::makeInstance(MailerInterface::class)->send($mailing);
+
+$mailing
+    ->to($receiverUser->getEmail())
+    ->from(
+        new Address(
+            $this->settings['emailFromAddress']?? 'noreply@domain.de',
+            $this->settings['emailName']?? 'Forum'
+        )
+    )
+    ->subject($subject)
+    ->format(FluidEmail::FORMAT_HTML)
+    ->setTemplate('Message/NewMessage')
+    ->assignMultiple([
+        'username' => ucfirst($receiverUser->getUsername()),
+        'link' => $linkToForum,
+        'languageKey' => $languageKey,
+    ]);
+
+GeneralUtility::makeInstance(MailerInterface::class)->send($mailing);
 
 
         $success = LocalizationUtility::translate(

@@ -1,11 +1,16 @@
+
+
+
 ajaxJson = PAGE
 ajaxJson {
     typeNum = 445
+
     config {
         disableAllHeaderCode = 1
         additionalHeaders = Content-Type:application/json
         no_cache = 1
     }
+
     10 = USER
     10 {
         userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
@@ -14,10 +19,12 @@ ajaxJson {
         vendorName = Lanius
         controller = Message
         action = send
+
         switchableControllerActions {
             Message {
                 1 = send
             }
         }
+        settings < plugin.tx_forumman.settings
     }
 }

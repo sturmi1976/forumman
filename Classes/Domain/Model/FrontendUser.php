@@ -127,11 +127,6 @@ public function setShowAge($showAge): void
 
 
 
-
-    /**
-     * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference|null
-     * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
-     */
     protected ?FileReference $image = null;
 
     public function getImage(): ?FileReference

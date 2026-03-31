@@ -6,6 +6,26 @@
                 <sheetTitle>Allgemeine Einstellungen</sheetTitle>
                 <type>array</type>
                 <el>
+                    <settings.emailName>
+                        <label>Email sender name</label>
+                        <description>Name displayed as the sender in system emails (e.g. "Forum Team").</description>
+                        <config>
+                                <type>input</type>
+                                <size>30</size>
+                                <eval>trim,required</eval>
+                            </config>
+                    </settings.emailName>
+
+                    <settings.emailFromAddress>
+                        <label>Email sender address</label>
+                        <description>Email address used as the sender for system emails (e.g. no-reply@yourdomain.com).</description>
+                        <config>
+                            <type>input</type>
+                            <size>30</size>
+                            <eval>trim,required,email</eval>
+                        </config>
+                    </settings.emailFromAddress>
+
                     <settings.storageUid>
                         <label>Storage</label>
                         <description>Select the file storage used for profile images.</description>

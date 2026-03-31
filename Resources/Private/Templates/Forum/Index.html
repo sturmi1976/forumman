@@ -16,8 +16,8 @@
 </f:if>
 
 
-
 <div class="forum"> 
+
 
 <f:for each="{categories}" as="category">
 
@@ -52,15 +52,19 @@
     <div class="forum-meta">
 
         <div class="forum-stat">
-            <span class="forum-stat-number">{forum.threadCount}</span>
+            <span class="forum-stat-number">{forum.threadCountDynamic}</span>
             <span class="forum-stat-label">Threads</span>
         </div>
 
         <div class="forum-stat">
-            <span class="forum-stat-number">{forum.postCount}</span>
+            <span class="forum-stat-number">{forum.postCountDynamic}</span>
             <span class="forum-stat-label">Posts</span>
         </div>
 
+    </div>
+
+    <div>
+    
     </div>
 
 </article>

@@ -220,6 +220,9 @@ Hello %s,<br /><br />
         <trans-unit id="settings.signatureText">
             <source>Shown below every post you publish.</source>
         </trans-unit>
+        <trans-unit id="settings.imageUpload">
+            <source>Image upload</source>
+        </trans-unit>
         </body>
     </file>
 </xliff>

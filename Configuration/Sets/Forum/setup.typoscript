@@ -1,7 +1,5 @@
 @import 'EXT:forumman/Configuration/Sets/Forum/TypoScript/*.typoscript'
 
-
-
 plugin.tx_forumman {
     view {
         templateRootPaths.0 = EXT:forumman/Resources/Private/Templates/
@@ -19,6 +17,8 @@ plugin.tx_forumman {
       forumPagePid = {$forumman.uid}
       registerUid = {$forumman.register_uid}
       userStorageFolder = {$forumman.user_uid}
+      emailName = {$forumman.emailName}
+      emailFromAddress = {$forumman.emailFromAddress}
     }
 }
 

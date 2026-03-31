@@ -27,6 +27,30 @@ final class Forums extends AbstractEntity
 protected int $postCount = 0;
 
 
+protected int $threadCountDynamic = 0;
+protected int $postCountDynamic = 0;
+
+public function getThreadCountDynamic(): int
+{
+    return $this->threadCountDynamic;
+}
+
+public function setThreadCountDynamic(int $count): void
+{
+    $this->threadCountDynamic = $count;
+}
+
+public function getPostCountDynamic(): int
+{
+    return $this->postCountDynamic;
+}
+
+public function setPostCountDynamic(int $count): void
+{
+    $this->postCountDynamic = $count;
+}
+
+
 public function getThreadCount(): int
 {
     return $this->threadCount;

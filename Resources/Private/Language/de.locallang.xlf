@@ -125,7 +125,7 @@ Hallo %s,<br /><br />
             <target>Neue Benutzer</target>
         </trans-unit>
         <trans-unit id="last_online_headline">
-            <target>Last online</target>
+            <target>Zuletzt online</target>
         </trans-unit>
         <trans-unit id="no_online_user">
             <target>Bisher noch keine Users</target>
@@ -219,6 +219,9 @@ Hallo %s,<br /><br />
         </trans-unit>
         <trans-unit id="settings.signatureText">
             <target>Wird unter jedem Beitrag von dir angezeigt.</target>
+        </trans-unit>
+        <trans-unit id="settings.imageUpload">
+            <target>Profilbild hochladen</target>
         </trans-unit>
         </body>
     </file>
