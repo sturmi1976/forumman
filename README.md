@@ -63,3 +63,7 @@ Install the extension using Composer:
 Make sure to add the corresponding site set (see screenshot) to your Site Sets configuration.
 
 ![Screenshot](docs/site-sets2.png)
+
+Afterwards, fill in all fields in the site configuration. Before doing so, create the required pages and folders in the page tree as described below.
+
+![Screenshot](docs/site-config.png)
