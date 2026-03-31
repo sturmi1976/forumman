@@ -74,7 +74,7 @@ Create the pages in the page tree as shown in the screenshot (or similar). On th
 
 ## SEO
 
-Add the following configuration to your `config.yaml` file:
+Add the following configuration to the end of your `config.yaml` file:
 
 ```yaml
 imports:
