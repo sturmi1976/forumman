@@ -23,7 +23,6 @@ plugin.tx_forumman {
 }
 
 
-
 config {
   pageTitleProviders {
     forum {
@@ -33,3 +32,12 @@ config {
   }
 }
 
+#[traverse(page, "uid") == {$forumman.uid}]
+[frontend.user.isLoggedIn]
+config {
+    compressJs = 0
+    compressCss = 0
+    concatenateJs = 0
+    concatenateCss = 0 
+}
+[END] 
