@@ -81,3 +81,5 @@ imports:
   -
     resource: 'EXT:forumman/Configuration/Routes/Forum.yaml'
 ```
+
+This enables search engine friendly URLs for your forum.
