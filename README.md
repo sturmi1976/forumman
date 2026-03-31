@@ -67,3 +67,7 @@ Make sure to add the corresponding site set (see screenshot) to your Site Sets c
 Afterwards, fill in all fields in the site configuration. Before doing so, create the required pages and folders in the page tree as described below.
 
 ![Screenshot](docs/site-config.png)
+
+Create the pages in the page tree as shown in the screenshot (or similar). On the "Forum" page, add the Forum List plugin. If a sidebar is available, you can place additional plugins there, such as the login form, "Who is online", and others.
+
+![Screenshot](docs/tree.png)
