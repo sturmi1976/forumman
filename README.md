@@ -71,3 +71,13 @@ Afterwards, fill in all fields in the site configuration. Before doing so, creat
 Create the pages in the page tree as shown in the screenshot (or similar). On the "Forum" page, add the Forum List plugin. If a sidebar is available, you can place additional plugins there, such as the login form, "Who is online", and others.
 
 ![Screenshot](docs/tree.png)
+
+## SEO
+
+Add the following configuration to your `config.yaml` file:
+
+```yaml
+imports:
+  -
+    resource: 'EXT:forumman/Configuration/Routes/Forum.yaml'
+```
