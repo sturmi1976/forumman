@@ -59,3 +59,7 @@ Install the extension using Composer:
 - Optionally, configure the FAL storage for user avatars in the plugin settings.
 
 ![Screenshot](docs/plugins-backend.png)
+
+Make sure to add the corresponding site set (see screenshot) to your Site Sets configuration.
+
+![Screenshot](docs/site-sets2.png)
