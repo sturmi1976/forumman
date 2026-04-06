@@ -1,0 +1,22 @@
+<f:form action="search" method="post">
+    <input type="text" name="query" value="{query}" placeholder="Search posts..." />
+    <button type="submit">Search</button>
+</f:form>
+
+<f:if condition="{results}">
+    <p>{total} results found</p>
+
+    <f:for each="{results}" as="result">
+        <div class="search-result">
+            <h3>{result.title}</h3>
+
+            <p>
+                {result.content}
+            </p>
+
+            <small>
+                User: {result.username} | Score: {result._score}
+            </small>
+        </div>
+    </f:for>
+</f:if>

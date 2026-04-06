@@ -26,6 +26,8 @@ use Lanius\Forumman\Domain\Repository\FrontendUserRepository;
 
 use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 use TYPO3\CMS\Core\Pagination\SlidingWindowPagination;
+use Lanius\Forumman\Service\ElasticsearchService;
+
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 final class ForumController extends ActionController
@@ -34,6 +36,8 @@ final class ForumController extends ActionController
     protected ?CategoriesRepository $categoriesRepository = null;
     protected ?ForumsRepository $forumsRepository = null;
     protected ?PostsRepository $postsRepository = null;
+
+    protected ElasticsearchService $elasticsearchService;
 
     /**
      * @var PersistenceManagerInterface
@@ -84,15 +88,15 @@ final class ForumController extends ActionController
         $categories = $this->categoriesRepository->findAllCategoriesAndForums();
 
         foreach ($categories as $category) {
-    foreach ($category->getForums() as $forum) {
+            foreach ($category->getForums() as $forum) {
 
-        $threadCount = $this->postsRepository->countThreadsByForum($forum->getUid());
-        $postCount   = $this->postsRepository->countPostsByForum($forum->getUid());
+                $threadCount = $this->postsRepository->countThreadsByForum($forum->getUid());
+                $postCount   = $this->postsRepository->countPostsByForum($forum->getUid());
 
-        $forum->_setProperty('threadCountDynamic', $threadCount);
-        $forum->_setProperty('postCountDynamic', $postCount);
-    }
-}
+                $forum->_setProperty('threadCountDynamic', $threadCount);
+                $forum->_setProperty('postCountDynamic', $postCount);
+            }
+        }
 
 
         if (!empty($this->settings['ogImage'])) {
@@ -390,18 +394,18 @@ final class ForumController extends ActionController
             //$uri = $this->uriBuilder->uriFor('show', ['action' => 'show', 'controller' => 'Forum', 'forum' => $forumObject, 'post' => $parentUid, 'reply' => 1]);
 
             $uri = $this->uriBuilder
-    ->reset()
-    ->uriFor(
-        'show',
-        [
-            'forum' => $forumObject,
-            'post' => $parentUid,
-            'currentPage' => $targetPage,
-            'reply' => 1
-        ],
-        'Forum',
-        'Forumman'
-    );
+                ->reset()
+                ->uriFor(
+                    'show',
+                    [
+                        'forum' => $forumObject,
+                        'post' => $parentUid,
+                        'currentPage' => $targetPage,
+                        'reply' => 1
+                    ],
+                    'Forum',
+                    'Forumman'
+                );
             return $this->redirectToUri($uri . '#latest');
         }
 
@@ -512,6 +516,9 @@ final class ForumController extends ActionController
 
         return $this->htmlResponse();
     }
+
+
+
 
 
 

@@ -11,6 +11,8 @@ use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 use Lanius\Forumman\Controller\WhoIsOnlineController;
 use Lanius\Forumman\Controller\LastLoggedInController;
 use Lanius\Forumman\Controller\NewUserController;
+use Lanius\Forumman\Controller\StatisticsController;
+use Lanius\Forumman\Controller\SearchController;
 
 ExtensionUtility::configurePlugin(
     'Forumman',
@@ -86,6 +88,24 @@ ExtensionUtility::configurePlugin(
     [
         NewUserController::class => ''
     ],
+);
+ExtensionUtility::configurePlugin(
+    'Forumman',
+    'ForumForumStats',
+    [
+        StatisticsController::class => 'index',
+    ],
+    []
+);
+ExtensionUtility::configurePlugin(
+    'Forumman',
+    'ForumForumSearch',
+    [
+        SearchController::class => 'search',
+    ],
+    [
+        SearchController::class => 'search',
+    ]
 );
 
 

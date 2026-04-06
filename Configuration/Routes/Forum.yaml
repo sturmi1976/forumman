@@ -90,7 +90,6 @@ routeEnhancers:
     defaultController: 'Forum::index'
 
     aspects:
-
       forum-slug:
         type: PersistedAliasMapper
         tableName: tx_forumman_domain_model_forums

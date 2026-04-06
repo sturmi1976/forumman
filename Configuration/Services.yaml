@@ -7,4 +7,25 @@ services:
     resource: '../Classes/*'
     exclude:
       - '../Classes/Domain/Model/*'
+      - '../Classes/Pagination/*'
+
+  Lanius\Forumman\Controller\SearchController:
+    public: true
+
+  Lanius\Forumman\Service\ElasticsearchService:
+    arguments:
+      $extensionConfiguration: '@TYPO3\CMS\Core\Configuration\ExtensionConfiguration'
+
+  Lanius\Forumman\Domain\Service\PostIndexer:
+    arguments:
+      $elasticsearchService: '@Lanius\Forumman\Service\ElasticsearchService'
+
+  Lanius\Forumman\Domain\Service\UserIndexer:
+    arguments:
+      $elasticsearchService: '@Lanius\Forumman\Service\ElasticsearchService'
+
+  Lanius\Forumman\Command\ReindexCommand:
+    tags:
+      - name: 'console.command'
+        command: 'forumman:reindex'
 

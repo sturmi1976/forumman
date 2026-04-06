@@ -54,3 +54,20 @@ ExtensionUtility::registerPlugin(
     'Forum',
     'Anzeigebox der 3 neuesten Users',
 );
+ExtensionUtility::registerPlugin(
+    'Forumman',
+    'ForumForumStats',
+    'Forum: Statistics',
+    'install-clear-cache',
+    'Forum',
+    'Anzeigebox für Statistiken',
+    'FILE:EXT:forumman/Configuration/FlexForms/Statistics.xml'
+);
+ExtensionUtility::registerPlugin(
+    'Forumman',
+    'ForumForumSearch',
+    'Forum: Elasticsearch Suche',
+    'install-clear-cache',
+    'Forum-Suche',
+    'Suchergebnisse und Formular: Hierfür wird Elasticsearch benötigt - in der Extensionkonfiguration müssen die Einstellungen zu Elasticsearch getätigt werden.',
+);

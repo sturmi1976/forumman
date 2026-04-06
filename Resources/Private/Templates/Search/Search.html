@@ -1,0 +1,152 @@
+{namespace core = TYPO3\CMS\Core\ViewHelpers}
+{namespace fm=Lanius\Forumman\ViewHelpers}
+
+<fm:pageTitle prefix="Suche: " title="{query}" />
+
+
+<f:asset.css identifier="search" href="EXT:forumman/Resources/Public/Css/search.css" />
+
+<div class="search-wrapper">
+
+    <h1 class="search-title">Suche</h1>
+
+    <f:form action="search" method="post" class="search-form">
+        <f:form.textfield name="query" value="{query}" placeholder="Search..." class="search-input" />
+        <f:form.submit value="Search" class="search-button" />
+    </f:form>
+
+    <f:if condition="!{results} && {query}">
+
+    <div class="search-empty">
+
+        <div class="search-empty-icon">🔍</div>
+
+        <h2>Keine Ergebnisse gefunden</h2>
+
+        <p>
+            Für <strong>"{query}"</strong> wurde nichts gefunden.
+        </p>
+
+        <p class="search-empty-hint">
+            Versuche andere Begriffe oder kürzere Suchwörter.
+        </p>
+
+    </div>
+
+</f:if>
+
+    <f:if condition="{results}">
+        <p class="search-count">{total} results found</p>
+
+        <div class="search-results">
+
+            <f:for each="{results}" as="result">
+
+                <!-- USER -->
+                <f:if condition="{result.type} == 'user'">
+                    <div class="search-card user-card">
+
+                        <div class="search-icon">👤</div>
+
+                        <div class="search-content">
+
+                            <f:link.action
+                                action="show"
+                                controller="User"
+                                pageUid="{settings.forumPagePid}"
+                                arguments="{user: result.uid}"
+                                class="search-title-link">
+
+                                {result.username}
+                            </f:link.action>
+
+                            <div class="search-meta">
+                                <span class="badge">User</span>
+                                <span class="meta-item">👥 {result.usergroup}</span>
+                                <span class="meta-item">📝 {result.postCount} Posts</span>
+                            </div>
+
+                        </div>
+                    </div>
+                </f:if>
+
+                <!-- POST -->
+                <f:if condition="{result.type} != 'user'">
+                    <div class="search-card post-card">
+
+                        <div class="search-badge">
+                            <span class="badge">{result.label}</span>
+                        </div>
+
+                        <div class="search-icon">📝</div>
+
+                        <div class="search-content">
+
+                            <f:link.action
+                                action="show"
+                                controller="Forum"
+                                pageUid="{settings.forumPagePid}"
+                                arguments="{post: result.uid, forum: result.forum}"
+                                class="search-title-link">
+
+                                <h3>{result.title}</h3>
+                            </f:link.action>
+
+                            <div class="search-meta">
+                                <span class="meta-item">👤 {result.username}</span>
+                            </div>
+
+                        </div>
+                    </div>
+                </f:if>
+
+            </f:for>
+
+        </div>
+    </f:if>
+
+    <!-- PAGINATION -->
+    <f:if condition="{paginator.numberOfPages} > 1">
+
+        <div class="pagination">
+            <ul class="pagination">
+
+                <f:if condition="{previousPage}">
+                    <li class="page-item">
+                        <f:link.action action="search"
+                            arguments="{query: query, currentPage: previousPage}"
+                            class="page-link">
+                            &laquo; Prev
+                        </f:link.action>
+                    </li>
+                </f:if>
+
+                <f:for each="{pagination.allPageNumbers}" as="page">
+                    <li class="page-item">
+                        <f:link.action action="search"
+                            arguments="{query: query, currentPage: page}"
+                            class="page-link {f:if(condition:'{currentPage} == {page}', then:'active')}">
+                            {page}
+                        </f:link.action>
+                    </li>
+                </f:for>
+
+                <f:if condition="{nextPage}">
+                    <li class="page-item">
+                        <f:link.action action="search"
+                            arguments="{query: query, currentPage: nextPage}"
+                            class="page-link">
+                            Next &raquo;
+                        </f:link.action>
+                    </li>
+                </f:if>
+
+            </ul>
+        </div>
+
+    </f:if>
+
+</div>
+
+
+

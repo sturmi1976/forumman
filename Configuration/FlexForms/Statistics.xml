@@ -1,0 +1,106 @@
+<T3DataStructure>
+    <sheets>
+        <!-- Tab 1 -->
+        <sDEF>
+            <ROOT>
+                <sheetTitle>Anzeige Optionen</sheetTitle>
+                <type>array</type>
+                <el>
+                    <settings.statisticsOptions>
+                        <label>Allgemeine Statistik Optionen</label>
+                        <config>
+                            <type>check</type>
+                            <cols>2</cols>
+                            <items>
+                                <numIndex index="0">
+                                    <numIndex index="0">Allgemeine Statistiken anzeigen?</numIndex>
+                                    <numIndex index="1">1</numIndex>
+                                </numIndex>
+                                <numIndex index="1">
+                                    <numIndex index="0">Anzahl heutiger Posts anzeigen?</numIndex>
+                                    <numIndex index="1">2</numIndex>
+                                </numIndex> 
+                            </items>
+                        </config>
+                </settings.statisticsOptions>
+
+
+                    <settings.showTopThreads>
+                            <label>Top Beiträge anzeigen?</label>
+                            <description>Hier kannst du auswählen, ob die Top Beiträge angezeigt werden sollen.</description>
+                            <config>
+                                <type>check</type>
+                                <default>0</default>
+                            </config>
+                            <onChange>reload</onChange>
+                    </settings.showTopThreads>
+
+                    <settings.topThreadsLimit>
+                            <label>Anzahl der max. sichtbaren Top Beiträge.</label>
+                            <displayCond>FIELD:settings.showTopThreads:=:1</displayCond>
+                            <config>
+                                <type>input</type>
+                                <size>5</size>
+                                <eval>int,required</eval>
+                                <range>
+                                    <lower>1</lower>
+                                </range>
+                                <default>5</default>
+                            </config>
+                    </settings.topThreadsLimit>
+
+
+                <settings.showTopUsers>
+                            <label>Top Users anzeigen?</label>
+                            <description>Anzeige der Top Users aktivieren.</description>
+                            <config>
+                                <type>check</type>
+                                <default>0</default>
+                            </config>
+                            <onChange>reload</onChange>
+                    </settings.showTopUsers>
+
+                <settings.topUsersLimit>
+                            <label>Anzahl der max. sichtbaren Top Users.</label>
+                            <displayCond>FIELD:settings.showTopUsers:=:1</displayCond>
+                            <config>
+                                <type>input</type>
+                                <size>5</size>
+                                <eval>int,required</eval>
+                                <range>
+                                    <lower>1</lower>
+                                </range>
+                                <default>5</default>
+                            </config>
+                    </settings.topUsersLimit>
+
+                <settings.showTopLastDays>
+                            <label>Anzahl der Beiträge der letzten X Tage anzeigen?</label>
+                            <description>Hier kannst du aktivieren, ob die Anzahl der letzten X Tage angezeigt werden sollen.</description>
+                            <config>
+                                <type>check</type>
+                                <default>0</default>
+                            </config>
+                            <onChange>reload</onChange>
+                    </settings.showTopLastDays>
+
+                <settings.showTopLastDaysLimit>
+                            <label>Anzahl der Tage.</label>
+                            <displayCond>FIELD:settings.showTopLastDays:=:1</displayCond>
+                            <config>
+                                <type>input</type>
+                                <size>5</size>
+                                <eval>int,required</eval>
+                                <range>
+                                    <lower>1</lower>
+                                </range>
+                                <default>5</default>
+                            </config>
+                    </settings.showTopLastDaysLimit>
+
+                </el>
+            </ROOT>
+        </sDEF>
+
+    </sheets>
+</T3DataStructure>

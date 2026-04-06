@@ -1,0 +1,103 @@
+
+<f:asset.css identifier="statisticbox" href="EXT:forumman/Resources/Public/Css/statistics.css" />
+
+<div class="forum-stats">
+
+<f:if condition="{showGeneralStats}">
+    <div class="stat-card">
+        <div class="stat-icon">👥</div>
+        <div class="stat-content">
+            <div class="stat-value">{userCount}</div>
+            <div class="stat-label">Users</div>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon">🧵</div>
+        <div class="stat-content">
+            <div class="stat-value">{threadCount}</div>
+            <div class="stat-label">Threads</div>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon">💬</div>
+        <div class="stat-content">
+            <div class="stat-value">{postCount}</div>
+            <div class="stat-label">Posts</div>
+        </div>
+    </div>
+</f:if>
+
+
+    <f:if condition="{settings.showTopThreads}">
+    <div class="stats-section">
+    <h3>🔥 Top Threads</h3>
+
+    <div class="stats-list">
+        <f:for each="{topThreads}" as="thread">
+            <div class="stats-item">
+                <span class="title">
+                    <f:link.action action="show" controller="Forum" arguments="{post: thread.uid, forum: thread.forum}">
+                        {thread.title}
+                    </f:link.action>
+                </span>
+                <span class="count">{thread.replyCount} replies</span>
+            </div>
+        </f:for>
+    </div>
+</div>
+</f:if>
+
+
+<f:if condition="{settings.showTopUsers}">
+<div class="stats-section">
+    <h3>👤 Top Users</h3>
+
+    <div class="stats-list">
+        <f:for each="{topUsers}" as="user">
+            <div class="stats-item">
+                <span class="title">
+                    <f:link.action action="show" controller="User" arguments="{user: user.uid}">
+                        {user.username}
+                    </f:link.action>
+                </span>
+                <span class="count">{user.postCount} posts</span>
+            </div>
+        </f:for>
+    </div>
+</div>
+</f:if>
+
+
+<f:if condition="{settings.showTopLastDays}">
+<div class="stats-section">
+    <h3>📅 Posts last 7 days</h3>
+
+    <div class="stats-list">
+        <f:for each="{postsLast7Days}" as="day">
+            <div class="stats-item">
+                <span class="title">
+                    {day.day -> f:format.date(format: 'd.m.Y')}
+                </span>
+                <span class="count">
+                    {day.count} Posts
+                </span>
+            </div>
+        </f:for>
+    </div>
+</div>
+</f:if>
+
+
+<f:if condition="{showTodayPosts}">
+    <div class="stat-card highlight">
+        <div class="stat-icon">⚡</div>
+        <div class="stat-content">
+            <div class="stat-value">{postsToday}</div>
+            <div class="stat-label">Posts today</div>
+        </div>
+    </div>
+</f:if>
+
+</div>

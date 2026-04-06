@@ -1,0 +1,155 @@
+ .search-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.search-title {
+    margin-bottom: 15px;
+}
+
+.search-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.search-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.search-button {
+    padding: 10px 15px;
+    border: none;
+    background: #2b6cb0;
+    color: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.search-count {
+    margin-bottom: 15px;
+    color: #666;
+}
+
+/* RESULTS */
+.search-results {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.search-card {
+    display: flex;
+    gap: 15px;
+    padding: 15px;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    background: #fff;
+    transition: 0.2s ease;
+}
+
+.search-card:hover {
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+    transform: translateY(-1px);
+}
+
+.search-icon {
+    font-size: 22px;
+}
+
+.search-content {
+    flex: 1;
+}
+
+.search-title-link h3,
+.search-title-link {
+    margin: 0;
+    font-size: 16px;
+    color: #2b6cb0;
+    text-decoration: none;
+}
+
+.search-meta {
+    margin-top: 6px;
+    font-size: 13px;
+    color: #666;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.badge {
+    background: #edf2f7;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.user-card {
+    border-left: 4px solid #38a169;
+}
+
+.post-card {
+    border-left: 4px solid #2b6cb0;
+}
+
+/* PAGINATION */
+.pagination {
+    margin-top: 20px;
+}
+
+.pagination ul {
+    display: flex;
+    list-style: none;
+    gap: 5px;
+    padding: 0;
+}
+
+.page-link {
+    padding: 6px 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #333;
+}
+
+.page-link.active {
+    background: #2b6cb0;
+    color: #fff;
+}
+
+
+
+.search-empty {
+    text-align: center;
+    padding: 50px 20px;
+    border: 1px dashed #ddd;
+    border-radius: 12px;
+    background: #fafafa;
+    margin-top: 20px;
+}
+
+.search-empty-icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.search-empty h2 {
+    margin-bottom: 10px;
+    font-size: 20px;
+    color: #333;
+}
+
+.search-empty p {
+    color: #666;
+    margin: 5px 0;
+}
+
+.search-empty-hint {
+    font-size: 13px;
+    color: #999;
+}
