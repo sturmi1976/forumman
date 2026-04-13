@@ -80,6 +80,8 @@ Add the following configuration to the end of your `config.yaml` file:
 imports:
   -
     resource: 'EXT:forumman/Configuration/Routes/Forum.yaml'
+  -
+    resource: 'EXT:forumman/Configuration/Routes/Userlist.yaml'
 ```
 
 This enables search engine friendly URLs for your forum.

@@ -13,6 +13,8 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference as ExtbaseFileReference;
 use TYPO3\CMS\Core\Resource\FileRepository;
 
+use TYPO3\CMS\Core\Database\Query\QueryBuilder;
+
 final class FrontendUserRepository extends Repository
 {
     /**
@@ -28,6 +30,88 @@ final class FrontendUserRepository extends Repository
         $this->connectionPool = $connectionPool;
     }
 
+
+    /* All Users / Userlist */
+    public function findAllUsersObjects(): array
+    {
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable('fe_users');
+
+        $rows = $queryBuilder
+            ->select('*')
+            ->from('fe_users')
+            ->where(
+                $queryBuilder->expr()->eq('deleted', 0),
+                $queryBuilder->expr()->eq('disable', 0)
+            )
+            ->orderBy('username', 'ASC')
+            ->executeQuery()
+            ->fetchAllAssociative();
+
+        $users = [];
+
+        $groupRepository = GeneralUtility::makeInstance(GroupRepository::class);
+        $fileRepository = GeneralUtility::makeInstance(FileRepository::class);
+
+        foreach ($rows as $row) {
+
+            /** @var FrontendUser $user */
+            $user = GeneralUtility::makeInstance(FrontendUser::class);
+
+            // Basis-Felder
+            $user->_setProperty('uid', (int)$row['uid']);
+            $user->_setProperty('username', ucfirst($row['username']));
+            $user->_setProperty('birthday', $row['birthday']);
+            $user->_setProperty('slug', $row['slug']);
+            $user->_setProperty('lastlogin', (int)$row['lastlogin']);
+            $user->_setProperty('showAge', (int)$row['show_age']);
+
+            // Social Links (NEU)
+            $user->_setProperty('facebooklink', $row['facebooklink'] ?? '');
+            $user->_setProperty('twitterlink', $row['twitterlink'] ?? '');
+            $user->_setProperty('linkedinlink', $row['linkedinlink'] ?? '');
+            $user->_setProperty('instagramlink', $row['instagramlink'] ?? '');
+            $user->_setProperty('youtubelink', $row['youtubelink'] ?? '');
+            $user->_setProperty('xinglink', $row['xinglink'] ?? '');
+
+            // Alter berechnen
+            if (!empty($row['birthday'])) {
+                try {
+                    $birthDate = new \DateTime($row['birthday']);
+                    $today = new \DateTime('today');
+                    $age = $birthDate->diff($today)->y;
+                    $user->_setProperty('age2', $age);
+                } catch (\Exception $e) {
+                    // ignorieren falls Datum kaputt
+                }
+            }
+
+            // Usergruppen
+            $usergroupStorage = new ObjectStorage();
+            if (!empty($row['usergroup'])) {
+                $uids = GeneralUtility::intExplode(',', $row['usergroup'], true);
+                foreach ($uids as $uid) {
+                    $group = $groupRepository->findByUid($uid);
+                    if ($group !== null) {
+                        $usergroupStorage->attach($group);
+                    }
+                }
+            }
+            $user->_setProperty('usergroup', $usergroupStorage);
+
+            // FAL Image
+            $files = $fileRepository->findByRelation('fe_users', 'image', (int)$row['uid']);
+            if (!empty($files)) {
+                $file = reset($files);
+                $extbaseFile = GeneralUtility::makeInstance(ExtbaseFileReference::class);
+                $extbaseFile->_setProperty('originalResource', $file);
+                $user->_setProperty('image', $extbaseFile);
+            }
+
+            $users[] = $user;
+        }
+
+        return $users;
+    }
 
     /**
      * Prüft, ob ein User aktuell online ist

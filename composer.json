@@ -3,7 +3,7 @@
     "description": "A modern TYPO3 forum extension for private messaging, threads, and community discussions.",
     "type": "typo3-cms-extension",
     "license": "GPL-2.0-or-later",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "authors": [
         {
             "name": "Andre Lanius", 

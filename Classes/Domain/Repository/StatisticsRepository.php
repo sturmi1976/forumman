@@ -135,7 +135,7 @@ final class StatisticsRepository
                 )
             )
             ->groupBy('day')
-            ->orderBy('day', 'ASC')
+            ->orderBy('day', 'DESC')
             ->setMaxResults($limit);
 
         return $qb->executeQuery()->fetchAllAssociative();

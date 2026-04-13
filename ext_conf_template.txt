@@ -3,3 +3,6 @@ elasticsearchUrl = http://localhost:9200
 
 # cat=elasticsearch//b; type=string; label=Index name
 elasticsearchIndex = forumman_posts
+
+# cat=elasticsearch//c; type=boolean; label=Enable Backend Reindex Button
+enableReindexButton = 0

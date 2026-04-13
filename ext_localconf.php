@@ -29,6 +29,17 @@ ExtensionUtility::configurePlugin(
 );
 ExtensionUtility::configurePlugin(
     'Forumman',
+    'ForumForumuserlist',
+    [
+        UserController::class => 'userlist',
+    ],
+    [
+        UserController::class => '',
+    ],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
+);
+ExtensionUtility::configurePlugin(
+    'Forumman',
     'ForumForumlogin',
     [
         LoginController::class => 'index,logout',
@@ -38,6 +49,7 @@ ExtensionUtility::configurePlugin(
     ],
     ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
 );
+
 ExtensionUtility::configurePlugin(
     'Forumman',
     'ForumForumregister',
@@ -112,3 +124,8 @@ ExtensionUtility::configurePlugin(
 // Mail Templates for Fluid Mail
 $GLOBALS['TYPO3_CONF_VARS']['MAIL']['templateRootPaths'][800] = 'EXT:forumman/Resources/Private/Templates/Email';
 $GLOBALS['TYPO3_CONF_VARS']['MAIL']['layoutRootPaths'][800] = 'EXT:forumman/Resources/Private/Layouts/Email';
+
+
+$GLOBALS['TYPO3_CONF_VARS']['BE']['ajaxUrls']['forumman_reindex'] = [
+    'path' => '/forumman/elasticsearch/reindex'
+];

@@ -223,6 +223,15 @@ Hallo %s,<br /><br />
         <trans-unit id="settings.imageUpload">
             <target>Profilbild hochladen</target>
         </trans-unit>
+        <trans-unit id="settings.linksHeadline">
+            <target>Links / Social Media</target>
+        </trans-unit>
+        <trans-unit id="settings.linkError">
+            <target>Bitte gebe einen gültigen Link ein.</target>
+        </trans-unit>
+        <trans-unit id="socialLinksHeadline">
+            <target>Social Links</target>
+        </trans-unit>
         </body>
     </file>
 </xliff>

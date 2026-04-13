@@ -99,7 +99,7 @@
 <div class="settings-form-item">
     <div class="form-group switch-group">
         <div class="switch-text">
-            <strong>{f:translate(key: 'settings.yourName', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}</strong><br>
+            <strong>{f:translate(key: 'settings.city', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}</strong><br>
         </div>
         <label class="switch">
             <f:form.textfield property="city" class="form-lg-control" />
@@ -184,6 +184,79 @@
         </label>
     </div>
 </div>
+
+<hr />
+
+<h3>
+{f:translate(key: 'settings.linksHeadline', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
+</h3>
+
+<div class="settings-form-item">
+    <div class="form-group switch-group">
+        <div class="switch-text">
+            <strong>Facebook</strong><br>
+        </div>
+        <label class="switch">
+            <f:form.textfield property="facebooklink" placeholder="https://..." class="form-lg-control" />
+        </label>
+    </div>
+</div>
+
+<div class="settings-form-item">
+    <div class="form-group switch-group">
+        <div class="switch-text">
+            <strong>X (Twitter)</strong><br>
+        </div>
+        <label class="switch">
+            <f:form.textfield property="twitterlink" placeholder="https://..." class="form-lg-control" />
+        </label>
+    </div>
+</div>
+
+<div class="settings-form-item">
+    <div class="form-group switch-group">
+        <div class="switch-text">
+            <strong>LinkedIn</strong><br>
+        </div>
+        <label class="switch">
+            <f:form.textfield property="linkedinlink" placeholder="https://..." class="form-lg-control" />
+        </label>
+    </div>
+</div>
+
+<div class="settings-form-item">
+    <div class="form-group switch-group">
+        <div class="switch-text">
+            <strong>Instagram</strong><br>
+        </div>
+        <label class="switch">
+            <f:form.textfield property="instagramlink" placeholder="https://..." class="form-lg-control" />
+        </label>
+    </div>
+</div>
+
+<div class="settings-form-item">
+    <div class="form-group switch-group">
+        <div class="switch-text">
+            <strong>Youtube</strong><br>
+        </div>
+        <label class="switch">
+            <f:form.textfield property="youtubelink" placeholder="https://..." class="form-lg-control" />
+        </label>
+    </div>
+</div>
+
+<div class="settings-form-item">
+    <div class="form-group switch-group">
+        <div class="switch-text">
+            <strong>Xing</strong><br>
+        </div>
+        <label class="switch">
+            <f:form.textfield property="xinglink" placeholder="https://..." class="form-lg-control" />
+        </label>
+    </div>
+</div>
+
 
     <f:form.submit value="Speichern" class="btn btn-primary" />
 </f:form>

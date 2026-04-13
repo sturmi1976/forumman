@@ -223,6 +223,15 @@ Hello %s,<br /><br />
         <trans-unit id="settings.imageUpload">
             <source>Image upload</source>
         </trans-unit>
+        <trans-unit id="settings.linksHeadline">
+            <source>Hyperlinks / Social media</source>
+        </trans-unit>
+        <trans-unit id="settings.linkError">
+            <source>Please enter a valid website link.</source>
+        </trans-unit>
+        <trans-unit id="socialLinksHeadline">
+            <source>Socialmedia</source>
+        </trans-unit>
         </body>
     </file>
 </xliff>

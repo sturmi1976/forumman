@@ -1,0 +1,19 @@
+routeEnhancers:
+  ForumForumUserList:
+    type: Extbase
+    extension: Forumman
+    plugin: ForumForumuserlist
+
+    routes:
+      - routePath: '/p-{currentPage}'
+        _controller: 'User::userlist'
+        _arguments:
+          currentPage: currentPage
+
+    defaultController: 'User::userlist'
+
+    aspects:
+      currentPage:
+        type: StaticRangeMapper
+        start: '1'
+        end: '1000' 

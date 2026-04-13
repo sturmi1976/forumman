@@ -1,0 +1,235 @@
+ /* Layout */
+.userGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+/* Card */
+.userCard {
+    background: #fff;
+    border-radius: 14px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    transition: all 0.25s ease;
+}
+
+.userCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+}
+
+/* Image */
+.userImage {
+    margin-bottom: 12px;
+}
+
+.userImage img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.noImage {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+}
+
+/* Name */
+.userName {
+    font-size: 18px;
+    margin: 8px 0;
+    font-weight: 600;
+}
+
+/* Meta (Alter etc.) */
+.userMeta {
+    font-size: 13px;
+    color: #777;
+    margin-bottom: 10px;
+}
+
+/* Gruppen */
+.userGroups {
+    margin-bottom: 10px;
+}
+
+.groupBadge {
+    display: inline-block;
+    background: #f0f0f0;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    margin: 2px;
+}
+
+/* Social Links */
+.userSocials {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.userSocials a {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.userSocials a:hover {
+    transform: scale(1.1);
+}
+
+/* Farben */
+.facebook { background: #1877F2; }
+.twitter { background: #000; }
+.linkedin { background: #0A66C2; }
+.instagram { background: #E4405F; }
+.youtube { background: #FF0000; }
+.xing { background: #006567; }
+
+
+.userCard {
+    background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
+}
+
+
+.userStats {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 10px 0;
+}
+
+.stat {
+    text-align: center;
+}
+
+.statNumber {
+    display: block;
+    font-size: 16px;
+    font-weight: 700;
+    color: #222;
+}
+
+.statLabel {
+    font-size: 11px;
+    color: #777;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+
+.userSocials {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* Icon Container */
+.userSocials span {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+    cursor: default;
+
+    transition: all 0.2s ease;
+}
+
+/* SVG Grundverhalten */
+.userSocials svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+}
+
+/* Hover Effekt */
+.userSocials span:hover {
+    transform: translateY(-2px) scale(1.08);
+}
+
+/* ===== Farben ===== */
+.facebook {
+    color: #1877F2;
+    background: rgba(24, 119, 242, 0.12);
+}
+
+.facebook:hover {
+    background: #1877F2;
+    color: #fff;
+}
+
+/* Twitter / X */
+.twitter {
+    color: #000;
+    background: rgba(0, 0, 0, 0.08);
+}
+
+.twitter:hover {
+    background: #000;
+    color: #fff;
+}
+
+/* LinkedIn */
+.linkedin {
+    color: #0A66C2;
+    background: rgba(10, 102, 194, 0.12);
+}
+
+.linkedin:hover {
+    background: #0A66C2;
+    color: #fff;
+}
+
+/* Instagram */
+.instagram {
+    color: #E4405F;
+    background: rgba(228, 64, 95, 0.12);
+}
+
+.instagram:hover {
+    background: #E4405F;
+    color: #fff;
+}
+
+/* YouTube */
+.youtube {
+    color: #FF0000;
+    background: rgba(255, 0, 0, 0.12);
+}
+
+.youtube:hover {
+    background: #FF0000;
+    color: #fff;
+}
+
+/* Xing */
+.xing {
+    color: #006567 !important;
+    background: rgba(0, 101, 103, 0.12);
+}
+
+.xing:hover {
+    background: #006567 !important;
+    color: #fff !important;
+}

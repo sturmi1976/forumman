@@ -15,4 +15,5 @@ return [
         'provider' => SvgIconProvider::class,
         'source' => 'EXT:forumman/Resources/Public/Icons/Loginbox.svg',
     ],
+
 ];

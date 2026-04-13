@@ -29,3 +29,6 @@ services:
       - name: 'console.command'
         command: 'forumman:reindex'
 
+  Lanius\Forumman\Backend\Toolbar\ElasticsearchToolbarItem:
+    tags:
+      - name: backend.toolbar.item

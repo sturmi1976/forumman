@@ -1,0 +1,22 @@
+<T3DataStructure>
+    <sheets>
+        <sDEF3>
+        <ROOT>
+                <sheetTitle>Pagination</sheetTitle>
+                <type>array</type>
+                <el>
+            <settings.itemsPerPage>
+                        <label>Items per page</label>
+                        <description>Items per page.</description>
+                        <config>
+                                <type>input</type>
+                                <size>30</size>
+                                <eval>trim</eval>
+                                <default>20</default>
+                            </config>
+                    </settings.itemsPerPage>
+        </el>
+        </ROOT>
+        </sDEF3>
+    </sheets>
+</T3DataStructure>

@@ -41,15 +41,80 @@ final class FrontendUser extends AbstractEntity
 
     protected int $showAge = 0;
 
-    public function getShowAge(): int
-{
-    return $this->showAge;
-}
+    protected string $facebooklink = '';
+    protected string $linkedinlink = '';
+    protected string $instagramlink = '';
+    protected string $youtubelink = '';
+    protected string $twitterlink = '';
+    protected string $xinglink = '';
 
-public function setShowAge($showAge): void
-{
-    $this->showAge = (int)$showAge;
-}
+    public function getXinglink(): string
+    {
+        return $this->xinglink;
+    }
+
+    public function setXinglink(string $xinglink): void
+    {
+        $this->xinglink = $xinglink;
+    }
+
+    public function getTwitterlink(): string
+    {
+        return $this->twitterlink;
+    }
+
+    public function setTwitterlink(string $twitterlink): void
+    {
+        $this->twitterlink = $twitterlink;
+    }
+
+    public function getFacebooklink(): string
+    {
+        return $this->facebooklink;
+    }
+    public function setFacebooklink(string $facebooklink): void
+    {
+        $this->facebooklink = $facebooklink;
+    }
+    public function getLinkedinlink(): string
+    {
+        return $this->linkedinlink;
+    }
+    public function setLinkedinlink(string $linkedinlink): void
+    {
+        $this->linkedinlink = $linkedinlink;
+    }
+    public function getInstagramlink(): string
+    {
+        return $this->instagramlink;
+    }
+    public function setInstagramlink(string $instagramlink): void
+    {
+        $this->instagramlink = $instagramlink;
+    }
+    public function getYoutubelink(): string
+    {
+        return $this->youtubelink;
+    }
+    public function setYoutubelink(string $youtubelink): void
+    {
+        $this->youtubelink = $youtubelink;
+    }
+
+
+
+
+
+
+    public function getShowAge(): int
+    {
+        return $this->showAge;
+    }
+
+    public function setShowAge($showAge): void
+    {
+        $this->showAge = (int)$showAge;
+    }
 
 
     public function getAge2(): int

@@ -13,6 +13,17 @@ ExtensionUtility::registerPlugin(
     'Zur Darstellung der Foren',
     'FILE:EXT:forumman/Configuration/FlexForms/Forum.xml'
 );
+
+ExtensionUtility::registerPlugin(
+    'Forumman',
+    'ForumForumuserlist',
+    'Forum: Userlist',
+    'apps-pagetree-page-backend-users-root',
+    'Forum',
+    'Zur Darstellung der User',
+    'FILE:EXT:forumman/Configuration/FlexForms/Userlist.xml'
+);
+
 ExtensionUtility::registerPlugin(
     'Forumman',
     'ForumForumlogin',

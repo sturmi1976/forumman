@@ -98,14 +98,75 @@ $newColumns = [
         ],
     ],
     'show_age' => [
-    'exclude' => true,
-    'label' => 'Show Age',
-    'config' => [
-        'type' => 'check',
-        'renderType' => 'checkboxToggle', 
-        'default' => 0,
+        'exclude' => true,
+        'label' => 'Show Age',
+        'config' => [
+            'type' => 'check',
+            'renderType' => 'checkboxToggle',
+            'default' => 0,
+        ],
     ],
-],
+
+    'facebooklink' => [
+        'exclude' => true,
+        'label' => 'Facebook',
+        'config' => [
+            'type' => 'input',
+            'size' => 100,
+            'eval' => 'trim',
+            'placeholder' => '',
+        ],
+    ],
+    'twitterlink' => [
+        'exclude' => true,
+        'label' => 'Twitter / X',
+        'config' => [
+            'type' => 'input',
+            'size' => 100,
+            'eval' => 'trim',
+            'placeholder' => '',
+        ],
+    ],
+    'linkedinlink' => [
+        'exclude' => true,
+        'label' => 'LinkedIn',
+        'config' => [
+            'type' => 'input',
+            'size' => 100,
+            'eval' => 'trim',
+            'placeholder' => '',
+        ],
+    ],
+    'instagramlink' => [
+        'exclude' => true,
+        'label' => 'Instagram',
+        'config' => [
+            'type' => 'input',
+            'size' => 100,
+            'eval' => 'trim',
+            'placeholder' => '',
+        ],
+    ],
+    'youtubelink' => [
+        'exclude' => true,
+        'label' => 'YouTube',
+        'config' => [
+            'type' => 'input',
+            'size' => 100,
+            'eval' => 'trim',
+            'placeholder' => '',
+        ],
+    ],
+    'xinglink' => [
+        'exclude' => true,
+        'label' => 'Xing',
+        'config' => [
+            'type' => 'input',
+            'size' => 100,
+            'eval' => 'trim',
+            'placeholder' => '',
+        ],
+    ],
 ];
 
 ExtensionManagementUtility::addTCAcolumns('fe_users', $newColumns);
@@ -118,9 +179,16 @@ ExtensionManagementUtility::addToAllTCAtypes(
 
 ExtensionManagementUtility::addToAllTCAtypes(
     'fe_users',
-    'profilbeschreibung,signature',
-    '0',
-    'after:email'
+    '--div--;Links,facebooklink,twitterlink,linkedinlink,instagramlink,youtubelink,xinglink',
+    '',
+    ''
+);
+
+ExtensionManagementUtility::addToAllTCAtypes(
+    'fe_users',
+    '--div--;Profiltext und Signatur,profilbeschreibung,signature',
+    '',
+    ''
 );
 
 

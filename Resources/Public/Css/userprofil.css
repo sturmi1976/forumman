@@ -94,3 +94,102 @@
         inset 0 0 2px rgba(0, 0, 0, 0.2);
     opacity: 0.8;
 }
+
+
+
+.socialLinks {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.socialLinks a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    text-decoration: none;
+    border-radius: 50%;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.socialLinks a:hover {
+    transform: scale(1.1);
+    opacity: 0.85;
+}
+
+/* Icon Größe */
+.socialLinks svg {
+    width: 40px;
+    height: 40px;
+}
+
+
+.socialLinks {
+    display: flex;
+    gap: 12px;
+}
+
+/* Basis-Link */
+.socialLinks a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+
+    color: #666; /* fallback */
+    text-decoration: none;
+
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+/* 🔵 Facebook */
+.facebookLink a {
+    color: #1877F2 !important;
+}
+.facebookLink a:hover {
+    color: #fff;
+}
+
+/* ⚫ X / Twitter */
+.twitterLink a {
+    color: #000000 !important;
+}
+.twitterLink a:hover {
+    color: #fff;
+}
+
+/* 🔵 LinkedIn */
+.linkedinLink a {
+    color: #0A66C2 !important;
+}
+.linkedinLink a:hover {
+    color: #fff;
+}
+
+/* 🌈 Instagram */
+.instagramLink a {
+    color: #E4405F !important;
+}
+.instagramLink a:hover {
+    color: #fff;
+}
+
+/* 🔴 YouTube */
+.youtubeLink a {
+    color: #FF0000 !important;
+}
+.youtubeLink a:hover {
+    color: #fff;
+}
+
+.xingLink a {
+    color: #006567 !important;
+}
+
+.xingLink a:hover {
+    color: #fff;
+}

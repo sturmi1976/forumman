@@ -29,8 +29,12 @@ use TYPO3\CMS\Core\Resource\StorageRepository;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference as ExtbaseFileReference;
 use TYPO3\CMS\Core\Resource\FileReference as CoreFileReference;
+use TYPO3\CMS\Core\Pagination\ArrayPaginator;
 
 use TYPO3\CMS\Core\Resource\Enum\DuplicationBehavior;
+
+use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
+use TYPO3\CMS\Core\Pagination\SlidingWindowPagination;
 
 
 
@@ -133,17 +137,95 @@ final class UserController extends ActionController
 
 
     public function saveSettingsAction(\Lanius\Forumman\Domain\Model\FrontendUser $user): ResponseInterface
-{
-    $this->frontendUserRepository->update($user);
+    {
+        /** @var \TYPO3\CMS\Extbase\Mvc\RequestInterface $request */
+        $request = $this->request;
+        // GET-Parameter für *dieses Plugin / Controller*
+        $arguments = $request->getArguments();
 
-    $this->addFlashMessage(
-        'Einstellungen gespeichert',
-        '',
-        \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK
-    );
+        // Language
+        $language = $this->request->getAttribute('language');
+        $locale = $language->getLocale();
+        $languageKey = $locale->getLanguageCode();
 
-    return $this->redirect('settings');
-}
+        $linkErrorText = LocalizationUtility::translate(
+            'settings.linkError',
+            'Forumman',
+            [],
+            $languageKey
+        );
+
+        $facebooklink = $arguments['user']['facebooklink'] ?? '';
+        if ($facebooklink !== '' && !$this->isValidUrl($facebooklink)) {
+            $this->addFlashMessage(
+                $linkErrorText,
+                '',
+                \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR
+            );
+            return $this->redirect('settings');
+        }
+
+        $twitterlink = $arguments['user']['twitterlink'] ?? '';
+        if ($twitterlink !== '' && !$this->isValidUrl($twitterlink)) {
+            $this->addFlashMessage(
+                $linkErrorText,
+                '',
+                \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR
+            );
+            return $this->redirect('settings');
+        }
+
+        $linkedinlink = $arguments['user']['linkedinlink'] ?? '';
+        if ($linkedinlink !== '' && !$this->isValidUrl($linkedinlink)) {
+            $this->addFlashMessage(
+                $linkErrorText,
+                '',
+                \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR
+            );
+            return $this->redirect('settings');
+        }
+
+        $instagramlink = $arguments['user']['instagramlink'] ?? '';
+        if ($instagramlink !== '' && !$this->isValidUrl($instagramlink)) {
+            $this->addFlashMessage(
+                $linkErrorText,
+                '',
+                \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR
+            );
+            return $this->redirect('settings');
+        }
+
+        $youtubelink = $arguments['user']['youtubelink'] ?? '';
+        if ($youtubelink !== '' && !$this->isValidUrl($youtubelink)) {
+            $this->addFlashMessage(
+                $linkErrorText,
+                '',
+                \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR
+            );
+            return $this->redirect('settings');
+        }
+
+        $xinglink = $arguments['user']['xinglink'] ?? '';
+        if ($xinglink !== '' && !$this->isValidUrl($xinglink)) {
+            $this->addFlashMessage(
+                $linkErrorText,
+                '',
+                \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR
+            );
+            return $this->redirect('settings');
+        }
+
+
+        $this->frontendUserRepository->update($user);
+
+        $this->addFlashMessage(
+            'Einstellungen gespeichert',
+            '',
+            \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::OK
+        );
+
+        return $this->redirect('settings');
+    }
 
 
 
@@ -238,5 +320,81 @@ final class UserController extends ActionController
         }
 
         return $this->redirect('settings');
+    }
+
+
+
+    public function userlistAction(): ResponseInterface
+    {
+        $findAllUser = $this->frontendUserRepository->findAllUsersObjects();
+
+        // Pagination Parameter
+        $currentPage = (int)($this->request->hasArgument('currentPage') ? $this->request->getArgument('currentPage') : 1);
+        $itemsPerPage = (int)($this->settings['itemsPerPage'] ?? 10);
+        $maximumLinks = 5;
+
+        // Extbase Paginator
+        $paginator = new ArrayPaginator(
+            $findAllUser,
+            $currentPage,
+            $itemsPerPage
+        );
+
+        // Sliding Window Pagination
+        $pagination = new SlidingWindowPagination($paginator, $maximumLinks);
+
+        $paginatedUsers = $paginator->getPaginatedItems();
+
+
+        // --- Cache-Tags set ---
+        /** @var ServerRequestInterface $request */
+        $request = $GLOBALS['TYPO3_REQUEST'];
+        $collector = $request->getAttribute('frontend.cache.collector');
+
+        $collector->addCacheTags(
+            new CacheTag('userlist'),
+        );
+
+
+
+        $this->view->assignMultiple([
+            'paginator' => $paginator,
+            'pagination' => $pagination,
+            'users' => $paginatedUsers,
+            'previousPage' => $pagination->getPreviousPageNumber(),
+            'nextPage' => $pagination->getNextPageNumber(),
+            'currentPage' => $currentPage,
+        ]);
+
+        return $this->htmlResponse();
+    }
+
+
+
+    function isValidUrl(string $url): bool
+    {
+        // Muss mit https:// anfangen
+        if (!str_starts_with($url, 'https://')) {
+            return false;
+        }
+
+        // PHP URL-Validierung
+        if (!filter_var($url, FILTER_VALIDATE_URL)) {
+            return false;
+        }
+
+        // Prüfen ob Domain eine gültige TLD hat (.de, .com, etc.)
+        $host = parse_url($url, PHP_URL_HOST);
+
+        if (!$host) {
+            return false;
+        }
+
+        // Regex für TLD (z.B. .de, .com, .org, .net, ...)
+        if (!preg_match('/\.[a-z]{2,}$/i', $host)) {
+            return false;
+        }
+
+        return true;
     }
 }
