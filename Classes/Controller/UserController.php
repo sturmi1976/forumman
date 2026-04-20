@@ -32,6 +32,7 @@ use TYPO3\CMS\Core\Resource\FileReference as CoreFileReference;
 use TYPO3\CMS\Core\Pagination\ArrayPaginator;
 
 use TYPO3\CMS\Core\Resource\Enum\DuplicationBehavior;
+use TYPO3\CMS\Core\Resource\FileRepository;
 
 use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 use TYPO3\CMS\Core\Pagination\SlidingWindowPagination;
@@ -101,11 +102,19 @@ final class UserController extends ActionController
             }
         }
 
+        if (!empty($user->getBirthday())) {
+            $birthDate = new \DateTime($user->getBirthday());
+            $today = new \DateTime('today');
+            $age2 = $birthDate->diff($today)->y;
+            $user->_setProperty('age2', $age2);
+        }
+
         $user->getUserGroup();
 
         $user->setIsOnline();
 
         $online = $this->frontendUserRepository->isUserOnline($user->getUid());
+
 
         $this->view->assign('user', $user);
         $this->view->assign('feUser', $feUser);
@@ -235,6 +244,11 @@ final class UserController extends ActionController
         $context = GeneralUtility::makeInstance(Context::class);
         $userId = $context->getPropertyFromAspect('frontend.user', 'id');
 
+        // Language
+        $language = $this->request->getAttribute('language');
+        $locale = $language->getLocale();
+        $languageKey = $locale->getLanguageCode();
+
         if (!$userId) {
             $this->addFlashMessage('Kein eingeloggter User gefunden.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::ERROR);
             return $this->redirect('settings');
@@ -314,9 +328,22 @@ final class UserController extends ActionController
             $user->setImage($extbaseFileReference);
             $this->frontendUserRepository->update($user);
 
-            $this->addFlashMessage('Profilbild erfolgreich aktualisiert.');
+            $successText = LocalizationUtility::translate(
+                'settings.uploadSuccessText',
+                'Forumman',
+                [],
+                $languageKey
+            );
+
+            $this->addFlashMessage($successText);
         } else {
-            $this->addFlashMessage('Keine Datei ausgewählt.', '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::WARNING);
+            $successText2 = LocalizationUtility::translate(
+                'settings.uploadNotSuccessText',
+                'Forumman',
+                [],
+                $languageKey
+            );
+            $this->addFlashMessage($successText2, '', \TYPO3\CMS\Core\Type\ContextualFeedbackSeverity::WARNING);
         }
 
         return $this->redirect('settings');

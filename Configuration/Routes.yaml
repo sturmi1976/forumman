@@ -1,0 +1,5 @@
+ajax_edit_post:
+  path: /ajax/edit-post
+  methods: [POST]
+  defaults:
+    _controller: 'Lanius\Forumman\Controller\Ajax\PostAjaxController::edit'

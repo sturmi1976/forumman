@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Lanius\Forumman\Controller;
 
 use Lanius\Forumman\Domain\Model\FrontendUser;
+use Lanius\Forumman\Domain\Model\Posts;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use Psr\Http\Message\ServerRequestInterface;
@@ -287,9 +288,16 @@ final class ForumController extends ActionController
         );
 
 
+
+
+        $url = (string)$this->request->getUri();
+        $url = strtok($url, '?');
+
+
         // --- Template Assign ---
         $this->view->assignMultiple([
             'post' => $postObject,
+            'currentUrl' => $url,
             'isOnline' => $isOnline,
             'forum' => $forum,
             //'replies' => $paginatedReplies,
@@ -300,12 +308,65 @@ final class ForumController extends ActionController
             'nextPage' => $pagination->getNextPageNumber(),
             'currentPage' => $currentPage,
             'arguments' => $arguments,
+            'frontendUser' => $this->getFrontendUserId(),
         ]);
 
         return $this->htmlResponse();
     }
 
 
+    public function editAction(int $post): ResponseInterface
+    {
+        $postObject = $this->postsRepository->findByUid($post);
+
+        if (!$postObject) {
+            throw new \RuntimeException('Post not found', 404);
+        }
+
+        $currentUser = $this->getFrontendUserId();
+
+        // 🔒 Security Check
+        if ($postObject->getUser()->getUid() !== $currentUser) {
+            throw new \RuntimeException('Access denied', 403);
+        }
+
+        $this->view->assign('post', $postObject);
+
+        return $this->htmlResponse();
+    }
+
+
+
+    public function updateAction(\Lanius\Forumman\Domain\Model\Posts $post): ResponseInterface
+    {
+        $currentUser = $this->getCurrentUser();
+
+        // 🔒 Security Check
+        if ($post->getUser()->getUid() !== $currentUser->getUid()) {
+            throw new \RuntimeException('Access denied', 403);
+        }
+
+        $this->postsRepository->update($post);
+
+        $this->addFlashMessage('Post updated successfully');
+
+        return $this->redirect('show', null, null, ['post' => $post->getUid()]);
+    }
+
+
+    public function getCurrentUser(): ?\Lanius\Forumman\Domain\Model\FrontendUser
+    {
+        $context = GeneralUtility::makeInstance(Context::class);
+        $userAspect = $context->getAspect('frontend.user');
+
+        $userId = (int)$userAspect->get('id');
+
+        if ($userId === 0) {
+            return null;
+        }
+
+        return $this->findByUid($userId);
+    }
 
 
     public function newThreadAction(int $forumUid): ResponseInterface
@@ -341,7 +402,7 @@ final class ForumController extends ActionController
 
         if ($this->request->hasArgument('submit')) {
 
-            $title   = trim($this->request->getArgument('title') ?? '');
+            //$title   = trim($this->request->getArgument('title') ?? '');
             $content = trim($this->request->getArgument('content') ?? '');
             $parentUid = (int)$this->request->getArgument('parent');
             $forumUid  = (int)$this->request->getArgument('forum');
@@ -353,7 +414,7 @@ final class ForumController extends ActionController
             }
 
             $reply = new \Lanius\Forumman\Domain\Model\Posts();
-            $reply->setTitle($title);
+            //$reply->setTitle($title);
             $reply->setContent($content);
             $reply->setCreatedAt(time());
             $reply->setParent($parentUid);

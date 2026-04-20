@@ -232,6 +232,81 @@ Hallo %s,<br /><br />
         <trans-unit id="socialLinksHeadline">
             <target>Social Links</target>
         </trans-unit>
+        <trans-unit id="settings.or">
+            <target>oder</target>
+        </trans-unit>
+        <trans-unit id="settings.uploadSuccessText">
+            <target>Profilbild erfolgreich aktualisiert.</target>
+        </trans-unit>
+        <trans-unit id="settings.uploadNotSuccessText">
+            <target>Keine Datei ausgewählt</target>
+        </trans-unit>
+        <trans-unit id="settings.showAge">
+            <target>Alter anzeigen</target>
+        </trans-unit>
+        <trans-unit id="settings.showAgeText">
+            <target>Wird nur angezeigt, wenn ein Geburtsdatum angegeben wurde.</target>
+        </trans-unit>
+        <trans-unit id="settings.birthdayLabel">
+            <target>Geburtstag</target>
+        </trans-unit>
+        <trans-unit id="settings.saveButtonText">
+            <target>Speichern</target>
+        </trans-unit>
+        <trans-unit id="settings.writeMessage">
+            <target>Nachricht schreiben</target>
+        </trans-unit>
+        <trans-unit id="profile.age">
+            <target>Alter</target>
+        </trans-unit>
+        <trans-unit id="profile.posts">
+            <target>Beiträge</target>
+        </trans-unit>
+        <trans-unit id="profile.name">
+            <target>Name</target>
+        </trans-unit>
+        <trans-unit id="profile.company">
+            <target>Firma</target>
+        </trans-unit>
+        <trans-unit id="profile.rank">
+            <target>Rang</target>
+        </trans-unit>
+        <trans-unit id="profile.city">
+            <target>Stadt</target>
+        </trans-unit>
+        <trans-unit id="profile.Country">
+            <target>Land</target>
+        </trans-unit>
+        <trans-unit id="profile.www">
+            <target>Webseite</target>
+        </trans-unit>
+        <trans-unit id="profile.description">
+            <target>Beschreibung</target>
+        </trans-unit>
+        <trans-unit id="message.from">
+            <target>Von</target>
+        </trans-unit>
+        <trans-unit id="message.backToMailbox">
+            <target>Zurück zur Mailbox</target>
+        </trans-unit>
+        <trans-unit id="message.messageDelete">
+            <target>Nachricht löschen</target>
+        </trans-unit>
+        <trans-unit id="message.messageDeleteHeadline">
+            <target>Nachricht löschen?</target>
+        </trans-unit>
+        <trans-unit id="message.messageDeleteText">
+            <target>Möchtest du diese Nachricht wirklich löschen?</target>
+        </trans-unit>
+        <trans-unit id="cancel">
+            <target>Abbrechen</target>
+        </trans-unit>
+        <trans-unit id="delete">
+            <target>Löschen</target>
+        </trans-unit>
+        <trans-unit id="sharingHeadline">
+            <target>Beitrag teilen</target>
+        </trans-unit>
         </body>
     </file>
 </xliff>

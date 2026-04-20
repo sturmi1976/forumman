@@ -23,6 +23,8 @@ plugin.tx_forumman {
 }
 
 
+
+
 config {
   pageTitleProviders {
     forum {
@@ -32,7 +34,7 @@ config {
   }
 }
 
-#[traverse(page, "uid") == {$forumman.uid}]
+
 [frontend.user.isLoggedIn]
 config {
     compressJs = 0

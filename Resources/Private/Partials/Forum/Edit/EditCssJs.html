@@ -1,0 +1,350 @@
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    document.querySelectorAll('.editBtn').forEach(btn => {
+
+        btn.addEventListener('click', function () {
+
+            const postId = this.dataset.id;
+            const container = document.getElementById('post-' + postId);
+            const textEl = container.querySelector('.text');
+
+            const original = textEl.innerHTML;
+            const textareaId = 'edit-' + postId;
+
+            // UI ersetzen
+            textEl.innerHTML = `
+                <textarea id="${textareaId}">${original}</textarea>
+                <div class="editActions">
+                    <button class="saveBtn">💾 Speichern</button>
+                    <button class="cancelBtn">❌ Abbrechen</button>
+                </div>
+            `;
+
+            // TinyMCE vorher entfernen (falls vorhanden)
+            if (tinymce.get(textareaId)) {
+                tinymce.get(textareaId).remove();
+            }
+
+            tinymce.init({
+                selector: '#' + textareaId,
+                license_key: 'gpl',
+                height: 300,
+                menubar: true,
+                plugins: [
+        'advlist',
+        'autolink',
+        'lists',
+        'link',
+        'image',
+        'charmap',
+        'preview',
+        'anchor',
+        'searchreplace',
+        'visualblocks',
+        'code',
+        'fullscreen',
+        'insertdatetime',
+        'media',
+        'table',
+        'help',
+        'wordcount',
+        'emoticons',
+        'codesample',
+        'paste'
+    ],
+
+    codesample_languages: [
+    { text: 'HTML/XML', value: 'markup' },
+    { text: 'JavaScript', value: 'javascript' },
+    { text: 'CSS', value: 'css' },
+    { text: 'PHP', value: 'php' },
+    { text: 'SQL', value: 'sql' },
+
+    // ⭐ Eigene Sprache
+    { text: 'TypoScript', value: 'typoscript' }
+],
+toolbar:
+        'undo redo | blocks | ' +
+        'bold italic underline strikethrough | ' +
+        'alignleft aligncenter alignright alignjustify | ' +
+        'bullist numlist outdent indent | ' +
+        'link image media table | ' +
+        'emoticons charmap | ' +
+        'codesample code | ' +
+        'fullscreen preview',
+
+    toolbar_mode: 'sliding',
+
+    contextmenu: 'link image table',
+            });
+
+            // ======================
+            // SAVE
+            // ======================
+            container.querySelector('.saveBtn').addEventListener('click', function () {
+
+                const editor = tinymce.get(textareaId);
+                const content = editor.getContent();
+
+                console.log('➡ SEND:', {
+                    postId: postId,
+                    content: content
+                });
+
+                fetch('/?type=448', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        postId: postId,
+                        content: content
+                    })
+                })
+                .then(async (response) => {
+
+                    const text = await response.text();
+
+                    console.log('STATUS:', response.status);
+                    console.log('RAW RESPONSE:', text);
+
+                    // Versuch JSON zu parsen
+                    try {
+                        return JSON.parse(text);
+                    } catch (e) {
+                        throw new Error('Kein gültiges JSON: ' + text);
+                    }
+                })
+                .then(data => {
+
+    if (data.success) {
+        tinymce.get(textareaId).remove();
+        textEl.innerHTML = content;
+
+        showToast('Beitrag gespeichert ✔');
+
+    } else {
+        showToast(data.message || 'Fehler beim Speichern', 'error');
+    }
+
+})
+                .catch(error => {
+
+                    console.error('❌ Fehler:', error);
+                    alert('Speichern fehlgeschlagen');
+                });
+
+            });
+
+            // ======================
+            // CANCEL
+            // ======================
+            container.querySelector('.cancelBtn').addEventListener('click', function () {
+
+                if (tinymce.get(textareaId)) {
+                    tinymce.get(textareaId).remove();
+                }
+
+                textEl.innerHTML = original;
+            });
+
+        });
+
+    });
+
+});
+</script>
+
+
+
+<script>
+    function showToast(message, type = 'success') {
+
+    const toast = document.getElementById('toast');
+
+    toast.textContent = message;
+    toast.className = 'toast show';
+
+    if (type === 'error') {
+        toast.classList.add('error');
+    }
+
+    setTimeout(() => {
+        toast.classList.remove('show');
+    }, 3000);
+}
+</script>
+
+
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () { 
+
+    const hash = window.location.hash;
+
+    if (hash === '#latest') {
+        const target = document.getElementById('last');
+        const flash = document.getElementById('flash-message-container');
+
+        if (!target) return;
+
+        // Scroll-Funktion ähnlich zu deinem Klick-Beispiel
+        function scrollToAnchor() {
+            const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
+        }
+
+        // Scrollen starten
+        scrollToAnchor();
+
+        // Intersection Observer: FlashMessage erscheint, sobald sichtbar
+        if (flash) {
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        flash.style.opacity = 1;
+                        flash.style.transform = 'translateY(0)';
+                        obs.disconnect();
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            observer.observe(flash);
+        }
+    }
+});
+
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const container = document.getElementById('flash-message-container');
+
+    if (container) {
+        setTimeout(() => {
+    container.classList.add('hide');
+
+    setTimeout(() => {
+        container.remove();
+    }, 600);
+}, 3000);
+    }
+
+});
+</script>
+
+
+
+
+<style>
+    #flash-message-container {
+    margin-bottom: 20px;
+}
+
+.flash-message {
+    padding: 15px 20px;
+    border-radius: 10px;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* Farben */
+.flash-ok {
+    background: linear-gradient(135deg, #4CAF50, #66BB6A);
+    color: #fff;
+}
+
+.flash-error {
+    background: linear-gradient(135deg, #f44336, #e57373);
+    color: #fff;
+}
+
+#flash-message-container {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.6s ease;
+}
+
+#flash-message-container.hide {
+    opacity: 0 !important;
+    transform: translateY(-20px) !important;
+}
+</style>
+
+
+
+
+<style>
+    .toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #2ecc71;
+    color: #fff;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.toast.error {
+    background: #e74c3c;
+}
+</style>
+
+
+<style>
+    .post-meta {
+        width:100%;
+    }
+    .post_toolbar {
+        width: 100%;
+        display:flex;
+        justify-content: flex-end;
+        gap: 13px;
+    }
+    .post_toolbar {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+}
+
+/* Button Style */
+.toolbar-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    background: #f5f5f5;
+    color: #333;
+    text-decoration: none;
+    font-size: 13px;
+    transition: all 0.2s ease;
+}
+
+/* Hover */
+.toolbar-btn:hover {
+    background: #e0e0e0;
+}
+
+/* Icon */
+.toolbar-btn .icon {
+    font-size: 14px;
+    line-height: 1;
+}
+</style>

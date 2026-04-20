@@ -8,7 +8,7 @@
     <div class="mailbox-single-header">
         <h2>{message.subject}</h2>
         <div class="mailbox-single-meta">
-            Von: <strong>{message.sender.username}</strong>  
+            {f:translate(key: 'message.from', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}: <strong>{message.sender.username}</strong>  
             • <f:format.date format="d.m.Y, H:i">{date}</f:format.date> 
         </div>
     </div>
@@ -23,7 +23,7 @@
             controller="Message" 
             arguments="{user: feUser.user.uid}"
             class="mailbox-back-button">
-            ← Zurück zur Mailbox
+            ← {f:translate(key: 'message.backToMailbox', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
         </f:link.action>
 
         <f:link.action
@@ -31,17 +31,17 @@
         controller="Message"
         arguments="{message: message}"
         class="mailbox-delete-button">
-        🗑 Nachricht löschen
+        🗑 {f:translate(key: 'message.messageDelete', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
     </f:link.action>
 
     <!-- Modal -->
 <div id="deleteModal" class="modal">
     <div class="modal-content">
-        <h3>Nachricht löschen?</h3>
-        <p>Möchten Sie diese Nachricht wirklich löschen?</p>
+        <h3>{f:translate(key: 'message.messageDeleteHeadline', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}</h3>
+        <p>{f:translate(key: 'message.messageDeleteText', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}</p>
         <div class="modal-buttons">
-            <button id="cancelBtn" class="btn btn-secondary">Abbrechen</button>
-            <button id="confirmBtn" class="btn btn-danger">Löschen</button>
+            <button id="cancelBtn" class="btn btn-secondary"><f:translate key="cancel" extensionName="Forumman"/></button>
+            <button id="confirmBtn" class="btn btn-danger"><f:translate key="delete" extensionName="Forumman"/></button>
         </div>
     </div>
 </div>

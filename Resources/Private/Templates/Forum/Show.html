@@ -3,12 +3,31 @@
 
 <f:section name="HeadMetaTags">
     <fm:pageTitle title="{post.title}" suffix=" / {post.forum.title}" />
+
+    <fm:metaTag property="og:title" content="{post.title} / {post.forum.title}" />
+    <fm:metaTag property="og:description" content="{post.content -> f:format.crop(maxCharacters: 160, respectWordBoundaries: true)}" />
+    <fm:metaTag property="og:url" content="{currentUrl}" />
+    <fm:metaTag property="og:type" content="website" />
+
+    <fm:metaTag property="twitter:card" content="summary_large_image" />
+    <fm:metaTag property="twitter:title" content="{post.title} / {post.forum.title}" />
+    <fm:metaTag property="twitter:description" content="{post.content -> f:format.crop(maxCharacters: 160, respectWordBoundaries: true)}" />
+
+    <f:if condition="{post.user.image}">
+        <f:then>
+            <fm:metaTag property="og:image" content="{f:uri.image(image: post.user.image, absolute: 1)}" />
+            <fm:metaTag property="twitter:image" content="{f:uri.image(image: post.user.image, absolute: 1)}" />
+        </f:then>
+        <f:else>
+            <fm:metaTag property="og:image" content="{f:uri.image(src: 'EXT:forumman/Resources/Public/Images/no_pic.png', absolute: 1)}" />
+            <fm:metaTag property="twitter:image" content="{f:uri.image(src: 'EXT:forumman/Resources/Public/Images/no_pic.png', absolute: 1)}" />
+        </f:else>
+    </f:if>
 </f:section>
 
 
 <f:section name="main">
-   
-<!-- Zurück-Button ganz oben -->
+
  <div class="button_tool_bar">
     <div class="tool_bar_left">
         <f:link.action action="showThreads" arguments="{forumUid: post.forum.uid}" class="btn back-link">
@@ -32,7 +51,7 @@
         <div class="avatar">
             <f:if condition="{post.user.image}">
                 <f:then>
-                    <f:image image="{post.user.image}" alt="Avatar von {post.user.username}" width="80" height="80" />
+                    <f:image image="{post.user.image}" alt="{post.user.username}" width="80" height="80" />
                 </f:then>
                 <f:else>
                     <f:image src="EXT:forumman/Resources/Public/Images/no_pic.png" width="80" height="80" alt="no image" />
@@ -40,6 +59,16 @@
             </f:if>
         </div>
         <div class="post-meta">
+
+            <f:if condition="{post.user.uid} == {frontendUser}">
+                <div class="post_toolbar">
+                    <a href="javascript:void(0);" class="toolbar-btn editBtn" data-id="{post.uid}">
+                        <span class="icon">✏️</span>
+                        <span class="label">Beitrag bearbeiten</span>
+                    </a>
+                </div>
+            </f:if>
+
             <h1>{post.title}</h1>
             <p>
                 <strong>{f:translate(key: 'created_by', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}:</strong>
@@ -62,7 +91,11 @@
     </div>
 
     <div class="post-content">
-        <f:format.html>{post.content}</f:format.html>
+        <div class="post" id="post-{post.uid}">
+            <div class="text">
+                <f:format.html>{post.content}</f:format.html>
+            </div>
+        </div>
         <f:if condition="{post.user.signature}">
             <hr />
             <div class="signature">
@@ -95,6 +128,19 @@
     </f:security.ifAuthenticated>
 
     <div class="reply-wrapper">
+
+        
+        
+        <f:if condition="{reply.reply.user.uid} == {frontendUser}">
+            <div class="post_toolbar">
+                <a href="javascript:void(0);" class="toolbar-btn editBtn" data-id="{reply.reply.uid}">
+                    <span class="icon">✏️</span>
+                    <span class="label">Beitrag bearbeiten</span>
+                </a>
+            </div>
+        </f:if>
+
+
         <div class="reply-header">
             <div class="avatar">
                 <f:if condition="{reply.reply.user.image}">
@@ -129,7 +175,13 @@
             </div>
         </div>
         <div class="reply-content">
-            <f:format.raw>{reply.reply.content}</f:format.raw>
+            <div class="post" id="post-{reply.reply.uid}">
+ 
+            <div class="text">
+                <f:format.raw>{reply.reply.content}</f:format.raw>
+            </div>
+
+            </div>
             <f:if condition="{reply.reply.user.signature}">
             <hr />
             <div class="signature">
@@ -201,98 +253,15 @@
 
 
 
-<script>
-document.addEventListener('DOMContentLoaded', function () { 
-
-    const hash = window.location.hash;
-
-    if (hash === '#latest') {
-        const target = document.getElementById('last');
-        const flash = document.getElementById('flash-message-container');
-
-        if (!target) return;
-
-        // Scroll-Funktion ähnlich zu deinem Klick-Beispiel
-        function scrollToAnchor() {
-            const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
-            window.scrollTo({
-                top: targetPosition,
-                behavior: 'smooth'
-            });
-        }
-
-        // Scrollen starten
-        scrollToAnchor();
-
-        // Intersection Observer: FlashMessage erscheint, sobald sichtbar
-        if (flash) {
-            const observer = new IntersectionObserver((entries, obs) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        flash.style.opacity = 1;
-                        flash.style.transform = 'translateY(0)';
-                        obs.disconnect();
-                    }
-                });
-            }, { threshold: 0.3 });
-
-            observer.observe(flash);
-        }
-    }
-});
+<f:render partial="Forum/Show/Socialbuttons" arguments="{_all}" />
 
 
-document.addEventListener('DOMContentLoaded', function () {
 
-    const container = document.getElementById('flash-message-container');
-
-    if (container) {
-        setTimeout(() => {
-    container.classList.add('hide');
-
-    setTimeout(() => {
-        container.remove();
-    }, 600);
-}, 3000);
-    }
-
-});
-</script>
+<div id="toast" class="toast"></div>
 
 
-<style>
-    #flash-message-container {
-    margin-bottom: 20px;
-}
-
-.flash-message {
-    padding: 15px 20px;
-    border-radius: 10px;
-    font-weight: 500;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
-
-/* Farben */
-.flash-ok {
-    background: linear-gradient(135deg, #4CAF50, #66BB6A);
-    color: #fff;
-}
-
-.flash-error {
-    background: linear-gradient(135deg, #f44336, #e57373);
-    color: #fff;
-}
-
-#flash-message-container {
-    opacity: 1;
-    transform: translateY(0);
-    transition: all 0.6s ease;
-}
-
-#flash-message-container.hide {
-    opacity: 0 !important;
-    transform: translateY(-20px) !important;
-}
-</style>
+<f:security.ifAuthenticated>
+    <f:render partial="Forum/Edit/EditCssJs" arguments="{_all}" />
+</f:security.ifAuthenticated>
 
 </f:section>

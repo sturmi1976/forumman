@@ -9,13 +9,7 @@
 
 <f:form action="replyWrite" method="post">
 
-    <!-- Titel -->
-    <div class="form-group">
-        <label for="title">Titel</label>
-        <f:form.textfield name="title" id="title" class="form-control" />
-    </div>
-
-    <!-- Inhalt -->
+    <!-- Content -->
     <div class="form-group">
         <label for="content">Inhalt</label>
         <div class="editor-container editor-container_classic-editor">
@@ -25,7 +19,7 @@
         </div>
     </div>
 
-    <!-- Versteckte Felder -->
+    <!-- Hidden fields -->
     <f:form.hidden name="parent" value="{post.uid}" />
     <f:form.hidden name="forum" value="{forum.uid}" />
     <f:form.hidden name="user" value="{userid}" />
@@ -34,7 +28,7 @@
     <div class="button_tool_bar">
         <div class="tool_bar_left">
             <f:link.action action="show" arguments="{forum: forum, post: post}" class="btn btn-secondary">
-                Zurück zur Übersicht
+                {f:translate(key: 'backLinkText', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
             </f:link.action>
         </div>
 

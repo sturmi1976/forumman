@@ -32,3 +32,8 @@ services:
   Lanius\Forumman\Backend\Toolbar\ElasticsearchToolbarItem:
     tags:
       - name: backend.toolbar.item
+
+  Lanius\Forumman\Seo\EventListener\CanonicalListener:
+    tags:
+      - name: event.listener
+        identifier: forumman/canonical

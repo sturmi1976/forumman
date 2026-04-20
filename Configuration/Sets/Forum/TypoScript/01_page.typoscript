@@ -4,6 +4,7 @@ page {
         userprofil = EXT:forumman/Resources/Public/Css/userprofil.css
         messages = EXT:forumman/Resources/Public/Css/messages.css
         prism = EXT:forumman/Resources/Public/prism/prism.css
+        lastUsers = EXT:forumman/Resources/Public/Css/lastUsers.css
     }
 }
 

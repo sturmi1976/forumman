@@ -1,0 +1,31 @@
+ajaxEditPost = PAGE
+ajaxEditPost {
+    typeNum = 448
+
+    config {
+        disableAllHeaderCode = 1
+        no_cache = 1
+        additionalHeaders = Content-Type:application/json
+        admPanel = 0
+    }
+
+    10 = USER
+    10 {
+        userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+
+        extensionName = Forumman
+        pluginName = ForumForumPostEdit
+        vendorName = Lanius
+
+        controller = PostAjax
+        action = edit
+
+        switchableControllerActions {
+            PostAjax {
+                1 = edit
+            }
+        }
+
+        settings < plugin.tx_forumman.settings
+    }
+}

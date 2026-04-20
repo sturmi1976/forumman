@@ -12,15 +12,24 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 final class PostsRepository extends Repository
 {
 
-    /*
-    public function findRepliesByParent(int $parentUid)
+    public function updateEdit(int $postId, string $content): bool
     {
-        $query = $this->createQuery();
-        return $query
-            ->matching($query->equals('parent', $parentUid))
-            ->setOrderings(['createdAt' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING])
-            ->execute();
-    }*/
+        $connection = GeneralUtility::makeInstance(ConnectionPool::class)
+            ->getConnectionForTable('tx_forumman_domain_model_posts');
+
+        $affectedRows = $connection->update(
+            'tx_forumman_domain_model_posts',
+            [
+                'content' => $content,
+                'tstamp' => time()
+            ],
+            [
+                'uid' => $postId
+            ]
+        );
+
+        return $affectedRows > 0;
+    }
 
 
     public function findRepliesByParent(int $parentUid, int $languageUid)
@@ -153,13 +162,12 @@ final class PostsRepository extends Repository
     }
 
 
-public function countPostsByForum(int $forumUid): int
-{
-    $query = $this->createQuery();
+    public function countPostsByForum(int $forumUid): int
+    {
+        $query = $this->createQuery();
 
-    return $query->matching(
-        $query->equals('forum', $forumUid)
-    )->count();
-}
-
+        return $query->matching(
+            $query->equals('forum', $forumUid)
+        )->count();
+    }
 }

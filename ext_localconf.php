@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Lanius\Forumman\Controller\ForumController;
+use Lanius\Forumman\Controller\PostAjaxController;
 use Lanius\Forumman\Controller\LoginController;
 use Lanius\Forumman\Controller\UserController;
 use Lanius\Forumman\Controller\RegisterController;
@@ -18,11 +19,11 @@ ExtensionUtility::configurePlugin(
     'Forumman',
     'ForumForumlist',
     [
-        ForumController::class => 'index,showThreads,newThread,createThread,show,replyWrite',
+        ForumController::class => 'index,showThreads,newThread,createThread,show,replyWrite,edit',
         UserController::class  => 'show,settings,updateProfileImage,saveSettings',
     ],
     [
-        ForumController::class => 'createThread,replyWrite',
+        ForumController::class => 'createThread,replyWrite,edit',
         UserController::class  => 'show,settings,updateProfileImage,saveSettings',
     ],
     ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
@@ -71,6 +72,20 @@ ExtensionUtility::configurePlugin(
         MessageController::class => 'send,showMailbox,show,delete'
     ],
 );
+
+
+ExtensionUtility::configurePlugin(
+    'Forumman',
+    'ForumForumPostEdit',
+    [
+        PostAjaxController::class => 'edit'
+    ],
+    [
+        PostAjaxController::class => 'edit'
+    ],
+);
+
+
 ExtensionUtility::configurePlugin(
     'Forumman',
     'ForumForumWhoIsOnline',

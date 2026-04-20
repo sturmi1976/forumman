@@ -37,7 +37,7 @@
                 {f:translate(key: 'settings.selectImage', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
             </span>
             <span class="file-upload-hint">
-                PNG, JPG, GIF, AVIF oder WEBP
+                PNG, JPG, GIF, AVIF {f:translate(key: 'settings.or', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')} WEBP
             </span>
         </div>
     </label>
@@ -45,9 +45,9 @@
     <f:form.upload property="image" id="image" class="file-input-hidden" />
 
     <div id="file-name" class="file-name">
-        <!--
-        Keine Datei gewählt
-        -->
+        
+        {f:translate(key: 'settings.uploadNotSuccessText', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
+        
     </div>
 
     <img id="image-preview" class="image-preview" style="display:none;" />
@@ -164,8 +164,13 @@
 <div class="settings-form-item">
     <div class="form-group switch-group">
         <div class="switch-text">
-            <strong>Alter anzeigen</strong><br>
-            <small>Wird nur angezeigt, wenn ein Geburtsdatum angegeben wurde.</small>
+            <strong>
+                {f:translate(key: 'settings.showAge', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
+            </strong><br>
+            <small>
+                {f:translate(key: 'settings.showAgeText', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
+                
+            </small>
         </div>
         <label class="switch">
             <f:form.checkbox property="showAge" value="1" class="switch-input" />
@@ -177,7 +182,9 @@
 <div class="settings-form-item">
     <div class="form-group switch-group">
         <div class="switch-text">
-            <strong>Geburtsdatum</strong><br>
+            <strong>
+                {f:translate(key: 'settings.birthdayLabel', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
+            </strong><br>
         </div>
         <label class="switch">
             <f:form.textfield property="birthday" placeholder="dd-mm-yyyy" class="form-lg-control" />
@@ -258,7 +265,7 @@
 </div>
 
 
-    <f:form.submit value="Speichern" class="btn btn-primary" />
+    <f:form.submit value="{f:translate(key: 'settings.saveButtonText', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}" class="btn btn-primary" />
 </f:form>
 
 

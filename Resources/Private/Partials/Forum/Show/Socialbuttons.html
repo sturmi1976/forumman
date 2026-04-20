@@ -1,0 +1,312 @@
+{namespace fm=Lanius\Forumman\ViewHelpers}
+
+<div class="share-buttons">
+
+    <h3>
+        {f:translate(key: 'sharingHeadline', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
+    </h3>
+
+    <!-- Facebook -->
+    <a href="https://www.facebook.com/sharer/sharer.php?u={currentUrl -> f:format.urlencode()}"
+       target="_blank" rel="noopener" aria-label="Facebook">
+        <svg width="800px" height="800px" viewBox="0 0 100 100" version="1.1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+<style type="text/css">
+	.st0{fill:#FFFFFF;}
+	.st1{fill:#F5BB41;}
+	.st2{fill:#2167D1;}
+	.st3{fill:#3D84F3;}
+	.st4{fill:#4CA853;}
+	.st5{fill:#398039;}
+	.st6{fill:#D74F3F;}
+	.st7{fill:#D43C89;}
+	.st8{fill:#B2005F;}
+	.st9{fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	
+		.st10{fill-rule:evenodd;clip-rule:evenodd;fill:none;stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	
+		.st11{fill-rule:evenodd;clip-rule:evenodd;fill:none;stroke:#040404;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st12{fill-rule:evenodd;clip-rule:evenodd;}
+	.st13{fill-rule:evenodd;clip-rule:evenodd;fill:#040404;}
+	.st14{fill:url(#SVGID_1_);}
+	.st15{fill:url(#SVGID_2_);}
+	.st16{fill:url(#SVGID_3_);}
+	.st17{fill:url(#SVGID_4_);}
+	.st18{fill:url(#SVGID_5_);}
+	.st19{fill:url(#SVGID_6_);}
+	.st20{fill:url(#SVGID_7_);}
+	.st21{fill:url(#SVGID_8_);}
+	.st22{fill:url(#SVGID_9_);}
+	.st23{fill:url(#SVGID_10_);}
+	.st24{fill:url(#SVGID_11_);}
+	.st25{fill:url(#SVGID_12_);}
+	.st26{fill:url(#SVGID_13_);}
+	.st27{fill:url(#SVGID_14_);}
+	.st28{fill:url(#SVGID_15_);}
+	.st29{fill:url(#SVGID_16_);}
+	.st30{fill:url(#SVGID_17_);}
+	.st31{fill:url(#SVGID_18_);}
+	.st32{fill:url(#SVGID_19_);}
+	.st33{fill:url(#SVGID_20_);}
+	.st34{fill:url(#SVGID_21_);}
+	.st35{fill:url(#SVGID_22_);}
+	.st36{fill:url(#SVGID_23_);}
+	.st37{fill:url(#SVGID_24_);}
+	.st38{fill:url(#SVGID_25_);}
+	.st39{fill:url(#SVGID_26_);}
+	.st40{fill:url(#SVGID_27_);}
+	.st41{fill:url(#SVGID_28_);}
+	.st42{fill:url(#SVGID_29_);}
+	.st43{fill:url(#SVGID_30_);}
+	.st44{fill:url(#SVGID_31_);}
+	.st45{fill:url(#SVGID_32_);}
+	.st46{fill:url(#SVGID_33_);}
+	.st47{fill:url(#SVGID_34_);}
+	.st48{fill:url(#SVGID_35_);}
+	.st49{fill:url(#SVGID_36_);}
+	.st50{fill:url(#SVGID_37_);}
+	.st51{fill:url(#SVGID_38_);}
+	.st52{fill:url(#SVGID_39_);}
+	.st53{fill:url(#SVGID_40_);}
+	.st54{fill:url(#SVGID_41_);}
+	.st55{fill:url(#SVGID_42_);}
+	.st56{fill:url(#SVGID_43_);}
+	.st57{fill:url(#SVGID_44_);}
+	.st58{fill:url(#SVGID_45_);}
+	.st59{fill:#040404;}
+	.st60{fill:url(#SVGID_46_);}
+	.st61{fill:url(#SVGID_47_);}
+	.st62{fill:url(#SVGID_48_);}
+	.st63{fill:url(#SVGID_49_);}
+	.st64{fill:url(#SVGID_50_);}
+	.st65{fill:url(#SVGID_51_);}
+	.st66{fill:url(#SVGID_52_);}
+	.st67{fill:url(#SVGID_53_);}
+	.st68{fill:url(#SVGID_54_);}
+	.st69{fill:url(#SVGID_55_);}
+	.st70{fill:url(#SVGID_56_);}
+	.st71{fill:url(#SVGID_57_);}
+	.st72{fill:url(#SVGID_58_);}
+	.st73{fill:url(#SVGID_59_);}
+	.st74{fill:url(#SVGID_60_);}
+	.st75{fill:url(#SVGID_61_);}
+	.st76{fill:url(#SVGID_62_);}
+	.st77{fill:none;stroke:#000000;stroke-width:3;stroke-miterlimit:10;}
+	.st78{fill:none;stroke:#FFFFFF;stroke-miterlimit:10;}
+	.st79{fill:#4BC9FF;}
+	.st80{fill:#5500DD;}
+	.st81{fill:#FF3A00;}
+	.st82{fill:#E6162D;}
+	.st83{fill:#F1F1F1;}
+	.st84{fill:#FF9933;}
+	.st85{fill:#B92B27;}
+	.st86{fill:#00ACED;}
+	.st87{fill:#BD2125;}
+	.st88{fill:#1877F2;}
+	.st89{fill:#6665D2;}
+	.st90{fill:#CE3056;}
+	.st91{fill:#5BB381;}
+	.st92{fill:#61C3EC;}
+	.st93{fill:#E4B34B;}
+	.st94{fill:#181EF2;}
+	.st95{fill:#FF0000;}
+	.st96{fill:#FE466C;}
+	.st97{fill:#FA4778;}
+	.st98{fill:#FF7700;}
+	.st99{fill-rule:evenodd;clip-rule:evenodd;fill:#1F6BF6;}
+	.st100{fill:#520094;}
+	.st101{fill:#4477E8;}
+	.st102{fill:#3D1D1C;}
+	.st103{fill:#FFE812;}
+	.st104{fill:#344356;}
+	.st105{fill:#00CC76;}
+	.st106{fill-rule:evenodd;clip-rule:evenodd;fill:#345E90;}
+	.st107{fill:#1F65D8;}
+	.st108{fill:#EB3587;}
+	.st109{fill-rule:evenodd;clip-rule:evenodd;fill:#603A88;}
+	.st110{fill:#E3CE99;}
+	.st111{fill:#783AF9;}
+	.st112{fill:#FF515E;}
+	.st113{fill:#FF4906;}
+	.st114{fill:#503227;}
+	.st115{fill:#4C7BD9;}
+	.st116{fill:#69C9D0;}
+	.st117{fill:#1B92D1;}
+	.st118{fill:#EB4F4A;}
+	.st119{fill:#513728;}
+	.st120{fill:#FF6600;}
+	.st121{fill-rule:evenodd;clip-rule:evenodd;fill:#B61438;}
+	.st122{fill:#FFFC00;}
+	.st123{fill:#141414;}
+	.st124{fill:#94D137;}
+	.st125{fill-rule:evenodd;clip-rule:evenodd;fill:#F1F1F1;}
+	.st126{fill-rule:evenodd;clip-rule:evenodd;fill:#66E066;}
+	.st127{fill:#2D8CFF;}
+	.st128{fill:#F1A300;}
+	.st129{fill:#4BA2F2;}
+	.st130{fill:#1A5099;}
+	.st131{fill:#EE6060;}
+	.st132{fill-rule:evenodd;clip-rule:evenodd;fill:#F48120;}
+	.st133{fill:#222222;}
+	.st134{fill:url(#SVGID_63_);}
+	.st135{fill:#0077B5;}
+	.st136{fill:#FFCC00;}
+	.st137{fill:#EB3352;}
+	.st138{fill:#F9D265;}
+	.st139{fill:#F5B955;}
+	.st140{fill:#DD2A7B;}
+	.st141{fill:#66E066;}
+	.st142{fill:#EB4E00;}
+	.st143{fill:#FFC794;}
+	.st144{fill:#B5332A;}
+	.st145{fill:#4E85EB;}
+	.st146{fill:#58A45C;}
+	.st147{fill:#F2BC42;}
+	.st148{fill:#D85040;}
+	.st149{fill:#464EB8;}
+	.st150{fill:#7B83EB;}
+</style>
+
+<g id="Layer_1"/>
+
+<g id="Layer_2">
+
+<g>
+
+<path class="st88" d="M50,2.5c-58.892,1.725-64.898,84.363-7.46,95l0,0h0H50h7.46l0,0C114.911,86.853,108.879,4.219,50,2.5z"/>
+
+<path class="st83" d="M57.46,64.104h11.125l2.117-13.814H57.46v-8.965c0-3.779,1.85-7.463,7.781-7.463h6.021    c0,0,0-11.761,0-11.761c-12.894-2.323-28.385-1.616-28.722,17.66V50.29H30.417v13.814H42.54c0,0,0,33.395,0,33.396H50h7.46l0,0h0    V64.104z"/>
+
+</g>
+
+</g>
+
+</svg>
+    <span>Facebook</span>
+    </a>
+
+    <!-- X -->
+    <a href="https://twitter.com/intent/tweet?url={currentUrl -> f:format.urlencode()}"
+       target="_blank" rel="noopener" aria-label="X">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><g fill="currentColor"><path d="M9.303 6.928 14.403 1h-1.208L8.766 6.147 5.23 1H1.15L6.5 8.784 1.15 15h1.208l4.676-5.436L10.77 15h4.08L9.302 6.928zM7.648 8.852l-.542-.775L2.795 1.91H4.65l3.48 4.977.541.775 4.523 6.47H11.34l-3.691-5.28z"></path></g></svg>
+    <span>Twitter (X)</span>
+    </a>
+
+    <!-- WhatsApp -->
+    <a href="https://api.whatsapp.com/send?text={currentUrl -> f:format.urlencode()}"
+       target="_blank" rel="noopener" aria-label="WhatsApp">
+        <svg width="800px" height="800px" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M16 31C23.732 31 30 24.732 30 17C30 9.26801 23.732 3 16 3C8.26801 3 2 9.26801 2 17C2 19.5109 2.661 21.8674 3.81847 23.905L2 31L9.31486 29.3038C11.3014 30.3854 13.5789 31 16 31ZM16 28.8462C22.5425 28.8462 27.8462 23.5425 27.8462 17C27.8462 10.4576 22.5425 5.15385 16 5.15385C9.45755 5.15385 4.15385 10.4576 4.15385 17C4.15385 19.5261 4.9445 21.8675 6.29184 23.7902L5.23077 27.7692L9.27993 26.7569C11.1894 28.0746 13.5046 28.8462 16 28.8462Z" fill="#BFC8D0"/>
+<path d="M28 16C28 22.6274 22.6274 28 16 28C13.4722 28 11.1269 27.2184 9.19266 25.8837L5.09091 26.9091L6.16576 22.8784C4.80092 20.9307 4 18.5589 4 16C4 9.37258 9.37258 4 16 4C22.6274 4 28 9.37258 28 16Z" fill="url(#paint0_linear_87_7264)"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M16 30C23.732 30 30 23.732 30 16C30 8.26801 23.732 2 16 2C8.26801 2 2 8.26801 2 16C2 18.5109 2.661 20.8674 3.81847 22.905L2 30L9.31486 28.3038C11.3014 29.3854 13.5789 30 16 30ZM16 27.8462C22.5425 27.8462 27.8462 22.5425 27.8462 16C27.8462 9.45755 22.5425 4.15385 16 4.15385C9.45755 4.15385 4.15385 9.45755 4.15385 16C4.15385 18.5261 4.9445 20.8675 6.29184 22.7902L5.23077 26.7692L9.27993 25.7569C11.1894 27.0746 13.5046 27.8462 16 27.8462Z" fill="white"/>
+<path d="M12.5 9.49989C12.1672 8.83131 11.6565 8.8905 11.1407 8.8905C10.2188 8.8905 8.78125 9.99478 8.78125 12.05C8.78125 13.7343 9.52345 15.578 12.0244 18.3361C14.438 20.9979 17.6094 22.3748 20.2422 22.3279C22.875 22.2811 23.4167 20.0154 23.4167 19.2503C23.4167 18.9112 23.2062 18.742 23.0613 18.696C22.1641 18.2654 20.5093 17.4631 20.1328 17.3124C19.7563 17.1617 19.5597 17.3656 19.4375 17.4765C19.0961 17.8018 18.4193 18.7608 18.1875 18.9765C17.9558 19.1922 17.6103 19.083 17.4665 19.0015C16.9374 18.7892 15.5029 18.1511 14.3595 17.0426C12.9453 15.6718 12.8623 15.2001 12.5959 14.7803C12.3828 14.4444 12.5392 14.2384 12.6172 14.1483C12.9219 13.7968 13.3426 13.254 13.5313 12.9843C13.7199 12.7145 13.5702 12.305 13.4803 12.05C13.0938 10.953 12.7663 10.0347 12.5 9.49989Z" fill="white"/>
+<defs>
+<linearGradient id="paint0_linear_87_7264" x1="26.5" y1="7" x2="4" y2="28" gradientUnits="userSpaceOnUse">
+<stop stop-color="#5BD066"/>
+<stop offset="1" stop-color="#27B43E"/>
+</linearGradient>
+</defs>
+</svg>
+        <span>Whatsapp</span>
+    </a>
+
+    <!-- Xing -->
+    <a href="https://www.xing.com/spi/shares/new?url={currentUrl -> f:format.urlencode()}"
+   target="_blank" rel="noopener">
+<svg width="800px" height="800px" viewBox="411.99600000000004 102.499 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M442.394 142c-1.736 0-3.197.61-3.934 1.803-.76 1.231-.645 2.818.166 4.424l19.503 33.761c.033.064.033.105 0 .164l-30.648 54.084c-.799 1.592-.76 3.191 0 4.425.736 1.187 2.033 1.966 3.771 1.966h28.844c4.312 0 6.393-2.91 7.867-5.57 0 0 29.973-53.01 31.14-55.068-.118-.19-19.83-34.58-19.83-34.58-1.439-2.557-3.606-5.41-8.03-5.41h-28.849z" fill="#005a5f"/><path d="M563.574 102.501c-4.309 0-6.176 2.714-7.723 5.494 0 0-62.14 110.2-64.188 113.818.105.196 40.984 75.191 40.984 75.191 1.432 2.558 3.641 5.494 8.06 5.494h28.81c1.738 0 3.096-.654 3.828-1.843.77-1.23.748-2.857-.059-4.458l-40.664-74.295a.167.167 0 0 1 0-.189l63.863-112.92c.803-1.594.82-3.22.061-4.452-.736-1.188-2.098-1.843-3.836-1.843h-29.139v.002h.003z" fill="#d4d600"/></svg>
+<span>Xing</span>
+</a>
+
+
+<!-- Mail -->
+ <a href="mailto:?subject={post.title -> f:format.urlencode()}&body={currentUrl -> f:format.urlencode()}">
+    <svg version="1.1" id="_x34_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+	 viewBox="0 0 512 512"  xml:space="preserve">
+<g>
+	<polygon style="fill:#C4C4C4;" points="511.402,173.657 506.53,176.734 502.513,179.212 467.816,201.091 458.244,207.073 
+		341.333,280.399 334.923,284.416 300.91,305.781 299.115,306.891 297.235,308.089 294.5,309.798 268.605,326.035 266.213,327.659 
+		265.956,327.745 265.7,327.916 256.043,333.983 255.701,334.154 247.753,329.198 246.3,328.257 246.044,328.086 235.019,321.164 
+		216.901,309.798 214.85,308.516 210.492,305.781 176.478,284.416 170.068,280.399 66.66,215.448 54.439,207.842 44.696,201.689 
+		0.598,173.999 0,173.657 0.598,173.316 1.026,173.059 44.696,145.627 54.439,139.473 116.655,100.417 122.979,96.401 
+		156.993,75.035 163.317,71.104 249.548,16.921 261.854,16.921 340.051,66.062 401.327,104.519 458.244,140.242 464.74,144.344 
+		467.816,146.31 490.036,160.24 510.974,173.402 	"/>
+	<path style="fill:#5EB2B2;" d="M467.816,16.066v383.809c0,0.256,0,0.598-0.086,0.853c-0.171,4.017-2.051,7.522-4.871,10.256
+		c-3.247,2.991-7.692,4.871-12.649,4.871H62.302c-4.957,0-9.401-1.88-12.649-4.871c-3.076-2.905-4.957-6.751-4.957-11.109V16.066
+		C44.696,7.178,52.645,0,62.302,0h387.909C459.954,0,467.816,7.178,467.816,16.066z"/>
+	<g>
+		<g>
+			<rect x="110.759" y="75.071" style="fill:#86CCCA;" width="190.508" height="25.378"/>
+			<rect x="110.759" y="71.064" style="fill:#52A6A3;" width="190.508" height="25.378"/>
+		</g>
+		<g>
+			<rect x="110.759" y="214.653" style="fill:#86CCCA;" width="289.501" height="25.378"/>
+			<rect x="110.759" y="210.646" style="fill:#52A6A3;" width="289.501" height="25.378"/>
+		</g>
+		<g>
+			<rect x="110.759" y="284.444" style="fill:#86CCCA;" width="289.501" height="25.378"/>
+			<rect x="110.759" y="280.437" style="fill:#52A6A3;" width="289.501" height="25.378"/>
+		</g>
+		<g>
+			<rect x="110.759" y="144.862" style="fill:#86CCCA;" width="289.501" height="25.378"/>
+			<rect x="110.759" y="140.855" style="fill:#52A6A3;" width="289.501" height="25.378"/>
+		</g>
+	</g>
+	<polygon style="fill:#FFFFFF;" points="256.299,322.104 253.308,323.813 246.044,328.086 195.45,357.656 188.357,361.844 
+		108.451,408.506 95.802,415.855 12.392,464.569 5.982,468.244 0.598,471.405 0.598,172.803 1.026,173.059 44.696,198.527 
+		71.446,214.166 110.758,237.156 115.8,240.061 184.853,280.399 191.776,284.416 223.652,303.046 228.353,305.781 235.19,309.798 
+		244.078,314.925 246.642,316.464 248.009,317.233 256.043,321.933 	"/>
+	<polygon style="fill:#E3E2E2;" points="511.972,172.795 511.972,471.458 511.887,471.384 511.459,471.09 511.117,470.87 
+		511.031,470.87 263.706,326.496 259.348,323.925 256.271,322.089 266.014,316.435 266.271,316.288 266.527,316.141 275.5,310.927 	
+		"/>
+	<circle style="opacity:0.68;fill:#EEF3CA;" cx="377.114" cy="75.071" r="38.186"/>
+	<path style="fill:#757575;" d="M511.972,425.222v45.808h-0.513l-7.35,0.342H27.662l-0.341-7.094
+		c8.632-5.896,20.082-13.845,27.518-18.887l1.024-0.684l24.956-17.178l38.97-26.92l11.281-7.777l118.365-81.615l7.947-5.556
+		c1.88-1.195,4.016-2.222,6.324-2.904c2.735-0.941,5.726-1.539,8.717-1.795c1.026-0.086,1.965-0.171,2.991-0.086
+		c1.025-0.171,2.052-0.171,3.077-0.171c2.735-0.085,5.385,0.171,7.948,0.683c2.734,0.513,5.213,1.369,7.435,2.564l89.735,49.91
+		l44.354,24.697l11.538,6.41l41.79,23.245l27.518,15.298c0.77,0.428,1.624,0.855,2.479,1.368
+		C511.459,424.966,511.716,425.137,511.972,425.222z"/>
+	<path style="fill:#EAEAEA;" d="M512,441.408v29.997H0.598v-29.997c8.973-5.469,20.767-12.905,28.459-17.519l1.025-0.683
+		l19.57-12.221l6.153-3.761l40.252-24.954l11.623-7.265l105.032-65.206l2.137-1.282l4.359-2.734l4.444-2.735l6.154-3.845
+		l8.204-5.129c4.273-2.563,9.828-3.845,15.297-3.931c1.025-0.086,1.965-0.086,2.991,0c1.026-0.086,2.051-0.086,3.077,0
+		c2.393,0,4.7,0.257,6.922,0.77c3.077,0.598,5.897,1.709,8.29,3.161l11.879,7.351l2.564,1.623l4.444,2.735l3.76,2.308l2.735,1.709
+		l61.874,38.458l43.072,26.749l11.195,7.008l40.68,25.211l6.068,3.761l20.682,12.905c0.769,0.427,1.538,0.854,2.393,1.368
+		c5.47,3.503,12.478,7.862,19.058,11.878C507.385,438.673,509.778,440.127,512,441.408z"/>
+	<path style="opacity:0.2;fill:#ABDBDF;" d="M467.816,16.066v4.273c0-8.887-7.862-16.066-17.605-16.066H62.302
+		c-9.657,0-17.605,7.178-17.605,16.066v-4.273C44.696,7.178,52.645,0,62.302,0h387.909C459.954,0,467.816,7.178,467.816,16.066z"/>
+</g>
+</svg>
+    <span>Mail</span>
+</a>
+
+
+<!-- LinkedIn -->
+ <a href="https://www.linkedin.com/sharing/share-offsite/?url={currentUrl -> f:format.urlencode()}"
+   target="_blank" rel="noopener">
+   <svg width="800px" height="800px" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+
+<g fill="none">
+
+<path d="M0 18.338C0 8.216 8.474 0 18.92 0h218.16C247.53 0 256 8.216 256 18.338v219.327C256 247.79 247.53 256 237.08 256H18.92C8.475 256 0 247.791 0 237.668V18.335z" fill="#069"/>
+
+<path d="M77.796 214.238V98.986H39.488v115.252H77.8zM58.65 83.253c13.356 0 21.671-8.85 21.671-19.91-.25-11.312-8.315-19.915-21.417-19.915-13.111 0-21.674 8.603-21.674 19.914 0 11.06 8.312 19.91 21.169 19.91h.248zM99 214.238h38.305v-64.355c0-3.44.25-6.889 1.262-9.346 2.768-6.885 9.071-14.012 19.656-14.012 13.858 0 19.405 10.568 19.405 26.063v61.65h38.304v-66.082c0-35.399-18.896-51.872-44.099-51.872-20.663 0-29.738 11.549-34.78 19.415h.255V98.99H99.002c.5 10.812-.003 115.252-.003 115.252z" fill="#ffffff"/>
+
+</g>
+
+</svg>
+   <span>LinkedIn</span>
+</a>
+
+
+<!-- Telegram -->
+ <a href="https://t.me/share/url?url={currentUrl -> f:format.urlencode()}&text={post.title -> f:format.urlencode()}"
+   target="_blank" rel="noopener">
+<svg xmlns="http://www.w3.org/2000/svg"
+aria-label="Telegram" role="img"
+viewBox="0 0 512 512"><rect
+width="512" height="512"
+rx="15%"
+fill="#37aee2"/><path fill="#c8daea" d="M199 404c-11 0-10-4-13-14l-32-105 245-144"/><path fill="#a9c9dd" d="M199 404c7 0 11-4 16-8l45-43-56-34"/><path fill="#f6fbfe" d="M204 319l135 99c14 9 26 4 30-14l55-258c5-22-9-32-24-25L79 245c-21 8-21 21-4 26l83 26 190-121c9-5 17-3 11 4"/></svg>
+    <span>Telegram</span>
+</a>
+
+</div>

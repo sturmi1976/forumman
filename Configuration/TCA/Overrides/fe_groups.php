@@ -16,12 +16,30 @@ $newColumns = [
             'default' => '#000000',
         ],
     ],
+    'admingroup' => [
+        'exclude' => true,
+        'label' => 'Administrator Gruppe',
+        'config' => [
+            'type' => 'check',
+            'renderType' => 'checkboxToggle',
+            'default' => 0,
+        ],
+    ],
+    'moderatorgroup' => [
+        'exclude' => true,
+        'label' => 'Moderatoren Gruppe',
+        'config' => [
+            'type' => 'check',
+            'renderType' => 'checkboxToggle',
+            'default' => 0,
+        ],
+    ],
 ];
 
 ExtensionManagementUtility::addTCAcolumns('fe_groups', $newColumns);
 ExtensionManagementUtility::addToAllTCAtypes(
     'fe_groups',
-    'group_color',
+    'group_color,admingroup,moderatorgroup',
     '',
     'after:title'
 );

@@ -3,19 +3,37 @@
 
 <f:comment>Title Tag</f:comment>
 <fm:pageTitle suffix="{f:if(condition: '{user.company}', then: ' - {user.company}', else: '')}" title="User: {f:format.case(value: user.username, mode: 'capital')}" />
+<fm:metaTag property="og:title" content="User: {f:format.case(value: user.username, mode: 'capital')}{f:if(condition: '{user.company}', then: ' - {user.company}', else: '')}" />
+
+
+<f:if condition="{user.image}">
+    <f:then>
+        <fm:metaTag property="og:image" content="{f:uri.image(image: user.image, absolute: 1)}" />
+    </f:then>
+    <f:else>
+        <fm:metaTag property="og:image" content="{f:uri.image(src: 'EXT:forumman/Resources/Public/Images/no_pic.png', absolute: 1)}" />
+    </f:else>
+</f:if>
+
+<f:if condition="{user.profilbeschreibung}">
+    <fm:metaTag property="og:description" content="{user.profilbeschreibung -> f:format.stripTags() -> f:format.htmlspecialchars()}" />
+</f:if>
+
+<fm:metaTag name="robots" content="index,follow" />
+
 
 
 <f:security.ifAuthenticated>
 <f:if condition="{feUser.user.uid} !== {user.uid}">
         <button class="forum-message-btn" data-user="{user.uid}">
-    Nachricht schreiben
+    {f:translate(key: 'settings.writeMessage', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
 </button>
 </f:if>
 </f:security.ifAuthenticated>
 
 <article class="user-profile">
   
-    <h1>Userprofil von 
+    <h1>
         <f:format.htmlspecialchars>
             <f:format.case mode="capitalWords">
         {user.username}
@@ -44,41 +62,44 @@
         </div>
 
         <div class="details">
-            <p class="user-rank">Rang: 
+            <p class="user-rank">{f:translate(key: 'profile.rank', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}: 
                 <f:for each="{user.usergroup}" as="group" iteration="i">
                     <span style="color:{group.groupColor};">{group.title}</span><f:if condition="!{i.isLast}">, </f:if>
                 </f:for>
             </p>
-            <f:if condition="{user.age}">
-                <p class="user-age">Alter: {user.age}</p>
+            <f:if condition="{user.age2}">
+                <p class="user-age">{f:translate(key: 'profile.age', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}: {user.age2}</p>
             </f:if>
+
             
-            <p class="user-posts">Beiträge: {user.postCount}</p>
+            <p class="user-posts">{f:translate(key: 'profile.posts', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}: {user.postCount}</p>
 
             <f:if condition="{user.name}">
-                <p class="user-name">Name: {user.name}</p>
+                <p class="user-name">{f:translate(key: 'profile.name', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}: {user.name}</p>
             </f:if>
 
             <f:if condition="{user.company}">
-                <p class="user-company">Firma: {user.company}</p>
+                <p class="user-company">{f:translate(key: 'profile.company', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}: {user.company}</p>
             </f:if>
 
             <f:if condition="{user.city}">
-                <p class="user-city">Stadt: {user.city}</p>
+                <p class="user-city">{f:translate(key: 'profile.city', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}: {user.city}</p>
             </f:if>
 
             <f:if condition="{user.country}">
-                <p class="user-country">Land: {user.country}</p>
+                <p class="user-country">{f:translate(key: 'profile.Country', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}: {user.country}</p>
             </f:if>
 
             <f:if condition="{user.www}">
                 <p class="user-www">
-                    Website: <f:link.external uri="{user.www}" target="_blank">{user.www}</f:link.external>
+                    {f:translate(key: 'profile.www', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}: <f:link.external uri="{user.www}" target="_blank">{user.www}</f:link.external>
                 </p>
             </f:if>
 
         </div>
     </section>
+
+    
 
     <f:if condition="{user.facebooklink} || {user.twitterlink} || {user.linkedinlink} || {user.instagramlink} || {user.youtubelink}">
         <h2>
@@ -163,7 +184,9 @@
     <f:if condition="{user.profilbeschreibung}">
         <section class="user-description">
             <hr />
-            <h2>Beschreibung</h2>
+            <h2>
+                {f:translate(key: 'profile.description', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
+            </h2>
             <div class="profil-description">
                 <f:format.raw>
                     {user.profilbeschreibung}

@@ -86,6 +86,9 @@ routeEnhancers:
         _arguments:
           user-slug: user
 
+      - routePath: '/post/edit'
+        _controller: 'Forum::editPost'
+
 
     defaultController: 'Forum::index'
 
