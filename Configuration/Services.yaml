@@ -37,3 +37,7 @@ services:
     tags:
       - name: event.listener
         identifier: forumman/canonical
+
+  Lanius\Forumman\Configuration\EventListener\ImportRoutesIntoSiteConfiguration:
+    tags:
+      - name: event.listener
