@@ -31,21 +31,24 @@ final class Forums extends AbstractEntity
 
     protected int $threadCountDynamic = 0;
     protected int $postCountDynamic = 0;
-    protected $latestActivity = null;
 
     protected ?ObjectStorage $posts = null;
 
-    protected ?\Lanius\Forumman\Domain\Model\Posts $latestPost = null;
+    //protected ?\Lanius\Forumman\Domain\Model\Posts $latestPost = null;
 
-    public function getLatestActivity()
+    protected ?array $latestActivity = null;
+
+    public function getLatestActivity(): ?array
     {
         return $this->latestActivity;
     }
 
-    public function setLatestActivity($activity): void
+    public function setLatestActivity(?array $latestActivity): void
     {
-        $this->latestActivity = $activity;
+        $this->latestActivity = $latestActivity;
     }
+
+
 
     public function getLatestPost(): ?\Lanius\Forumman\Domain\Model\Posts
     {

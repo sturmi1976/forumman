@@ -96,12 +96,12 @@ final class ForumController extends ActionController
                 $latestActivity = $this->postsRepository->findLatestActivityByForum($forum->getUid());
 
 
+                if ($latestActivity !== null) {
+                    $forum->setLatestActivity($latestActivity);
+                }
 
-                $forum->setLatestActivity($latestActivity);
-                //$forum->setLatestPost($latestPost);
                 $forum->_setProperty('threadCountDynamic', $threadCount);
                 $forum->_setProperty('postCountDynamic', $postCount);
-                //$forum->_setProperty('latestPost', $latestPost);
             }
         }
 
