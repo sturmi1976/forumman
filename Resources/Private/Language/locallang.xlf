@@ -307,6 +307,18 @@ Hello %s,<br /><br />
         <trans-unit id="sharingHeadline">
             <source>Share this post</source>
         </trans-unit>
+        <trans-unit id="by">
+            <source>by</source>
+        </trans-unit>
+        <trans-unit id="reply.singular">
+            <source>Reply</source>
+        </trans-unit>
+        <trans-unit id="reply.plural">
+            <source>Replies</source>
+        </trans-unit>
+        <trans-unit id="lastPostLabel">
+            <source>Last post</source>
+        </trans-unit>
         </body>
     </file>
 </xliff>

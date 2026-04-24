@@ -7,78 +7,78 @@ use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 ExtensionUtility::registerPlugin(
     'Forumman',
     'ForumForumlist',
-    'Forum: Forumlist',
-    'apps-pagetree-page-backend-users-root',
+    'LLL:EXT:forumman/Resources/Private/Language/locallang_db.xlf:plugin.forumlist.title',
+    'ext-forumman-forumlist2',
     'Forum',
-    'Zur Darstellung der Foren',
+    'LLL:EXT:forumman/Resources/Private/Language/locallang_db.xlf:plugin.forumlist.description',
     'FILE:EXT:forumman/Configuration/FlexForms/Forum.xml'
 );
 
 ExtensionUtility::registerPlugin(
     'Forumman',
     'ForumForumuserlist',
-    'Forum: Userlist',
-    'apps-pagetree-page-backend-users-root',
+    'LLL:EXT:forumman/Resources/Private/Language/locallang_db.xlf:plugin.forumlist.usertitle',
+    'ext-forumman-userlist',
     'Forum',
-    'Zur Darstellung der User',
+    'LLL:EXT:forumman/Resources/Private/Language/locallang_db.xlf:plugin.forumlist.userdescription',
     'FILE:EXT:forumman/Configuration/FlexForms/Userlist.xml'
 );
 
 ExtensionUtility::registerPlugin(
     'Forumman',
     'ForumForumlogin',
-    'Login Box / Settings',
-    'mimetypes-x-content-login',
+    'LLL:EXT:forumman/Resources/Private/Language/locallang_db.xlf:plugin.forumlist.loginboxTitle',
+    'ext-forumman-loginbox',
     'Forum',
-    'Login Formular und Logout Box inkl. Einstellungsmöglichkeiten für den User.',
+    'LLL:EXT:forumman/Resources/Private/Language/locallang_db.xlf:plugin.forumlist.loginboxDescription',
 );
 ExtensionUtility::registerPlugin(
     'Forumman',
     'ForumForumregister',
-    'Forum: Register form',
+    'LLL:EXT:forumman/Resources/Private/Language/locallang_db.xlf:plugin.forumlist.registerTitle',
     'content-webhook',
     'Forum',
-    'Registrierungs Formular',
+    'LLL:EXT:forumman/Resources/Private/Language/locallang_db.xlf:plugin.forumlist.registerDescription',
     'FILE:EXT:forumman/Configuration/FlexForms/Register.xml'
 );
 ExtensionUtility::registerPlugin(
     'Forumman',
     'ForumForumWhoIsOnline',
-    'Forum: Who is online?',
-    'apps-pagetree-folder-contains-fe_users',
+    'LLL:EXT:forumman/Resources/Private/Language/locallang_db.xlf:plugin.forumlist.WhoisonlineTitle',
+    'ext-forumman-whoisonline',
     'Forum',
-    'Anzeigebox wer gerade online ist',
+    'LLL:EXT:forumman/Resources/Private/Language/locallang_db.xlf:plugin.forumlist.WhoisonlineDescription',
 );
 ExtensionUtility::registerPlugin(
     'Forumman',
     'ForumForumLastUsersOnline',
-    'Forum: Last user online',
-    'apps-pagetree-folder-contains-fe_users',
+    'LLL:EXT:forumman/Resources/Private/Language/locallang_db.xlf:plugin.forumlist.LastuseronlineTitle',
+    'ext-forumman-lastonline',
     'Forum',
-    'Anzeigebox wer zuletzt online war',
+    'LLL:EXT:forumman/Resources/Private/Language/locallang_db.xlf:plugin.forumlist.LastuseronlineDescription',
 );
 ExtensionUtility::registerPlugin(
     'Forumman',
     'ForumForumNewUser',
-    'Forum: New Users',
+    'LLL:EXT:forumman/Resources/Private/Language/locallang_db.xlf:plugin.forumlist.NewusersTitle',
     'apps-pagetree-folder-contains-fe_users',
     'Forum',
-    'Anzeigebox der 3 neuesten Users',
+    'LLL:EXT:forumman/Resources/Private/Language/locallang_db.xlf:plugin.forumlist.NewusersDescription',
 );
 ExtensionUtility::registerPlugin(
     'Forumman',
     'ForumForumStats',
-    'Forum: Statistics',
-    'install-clear-cache',
+    'LLL:EXT:forumman/Resources/Private/Language/locallang_db.xlf:plugin.forumlist.StatisticTitle',
+    'ext-forumman-statistic',
     'Forum',
-    'Anzeigebox für Statistiken',
+    'LLL:EXT:forumman/Resources/Private/Language/locallang_db.xlf:plugin.forumlist.StatisticDescription',
     'FILE:EXT:forumman/Configuration/FlexForms/Statistics.xml'
 );
 ExtensionUtility::registerPlugin(
     'Forumman',
     'ForumForumSearch',
-    'Forum: Elasticsearch Suche',
-    'install-clear-cache',
+    'LLL:EXT:forumman/Resources/Private/Language/locallang_db.xlf:plugin.forumlist.ElasticsearchTitle',
+    'ext-forumman-search',
     'Forum-Suche',
-    'Suchergebnisse und Formular: Hierfür wird Elasticsearch benötigt - in der Extensionkonfiguration müssen die Einstellungen zu Elasticsearch getätigt werden.',
+    'LLL:EXT:forumman/Resources/Private/Language/locallang_db.xlf:plugin.forumlist.ElasticsearchDescription',
 );

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="de" datatype="plaintext" date="2020-10-18T18:20:51Z" product-name="forumman">
+        <header/>
+        <body>
+        <trans-unit id="plugin.forumlist.title" approved="yes">
+                <source>Forum: Forumlist</source>
+                <target>Forum: Foren-Liste</target>
+            </trans-unit>
+            <trans-unit id="plugin.forumlist.description" approved="yes">
+                <source>Display of categories and forums</source>
+                <target>Zur Darstellung der Kategorien und Foren</target>
+            </trans-unit>
+            <trans-unit id="plugin.forumlist.usertitle" approved="yes">
+                <source>Forum: Userlist</source>
+                <target>Forum: Benutzerliste</target>
+            </trans-unit>
+            <trans-unit id="plugin.forumlist.userdescription" approved="yes">
+                <source>Displays the user overview</source>
+                <target>Übersicht der Benutzer im Forum (Benutzerliste)</target>
+            </trans-unit>
+            <trans-unit id="plugin.forumlist.loginboxTitle" approved="yes">
+                <source>Login Box / Logout / Settings</source>
+                <target>Login Box / Logout / Settings</target>
+            </trans-unit>
+            <trans-unit id="plugin.forumlist.loginboxDescription" approved="yes">
+                <source>Login form and logout box including settings options for the user.</source>
+                <target>Login Formular und Logout Box inkl. Einstellungsmöglichkeiten für den User.</target>
+            </trans-unit>
+            <trans-unit id="plugin.forumlist.registerTitle" approved="yes">
+                <source>Forum: Register form</source>
+                <target>Forum: Registrierungsformular</target>
+            </trans-unit>
+            <trans-unit id="plugin.forumlist.registerDescription" approved="yes">
+                <source>Forum registration form</source>
+                <target>Formular zur Registrierung im Forum</target>
+            </trans-unit>
+            <trans-unit id="plugin.forumlist.WhoisonlineTitle" approved="yes">
+                <source>Forum: Who is online?</source>
+                <target>Forum: Wer ist online?</target>
+            </trans-unit>
+            <trans-unit id="plugin.forumlist.WhoisonlineDescription" approved="yes">
+                <source>Box to show who is currently online.</source>
+                <target>Box zur Anzeige wer gerade online ist.</target>
+            </trans-unit>
+            <trans-unit id="plugin.forumlist.LastuseronlineTitle" approved="yes">
+                <source>Forum: Last user online</source>
+                <target>Forum: Wer war zuletzt online?</target>
+            </trans-unit>
+            <trans-unit id="plugin.forumlist.LastuseronlineDescription" approved="yes">
+                <source>Who was last online</source>
+                <target>Anzeigebox wer zuletzt online war.</target>
+            </trans-unit>
+            <trans-unit id="plugin.forumlist.NewusersTitle" approved="yes">
+                <source>Forum: New Users</source>
+                <target>Forum: Neue Benutzer</target>
+            </trans-unit>
+            <trans-unit id="plugin.forumlist.NewusersDescription" approved="yes">
+                <source>Box to display the 3 newest users</source>
+                <target>Anzeige der 3 neusten Benutzer</target>
+            </trans-unit>
+            <trans-unit id="plugin.forumlist.StatisticTitle" approved="yes">
+                <source>Forum: Statistic</source>
+                <target>Forum: Statistiken</target>
+            </trans-unit>
+            <trans-unit id="plugin.forumlist.StatisticDescription" approved="yes">
+                <source>Statistics display box</source>
+                <target>Anzeigebox für Statistiken</target>
+            </trans-unit>
+            <trans-unit id="plugin.forumlist.ElasticsearchTitle" approved="yes">
+                <source>Forum: Elasticsearch Searchbox</source>
+                <target>Forum: Elasticsearch Suchbox</target>
+            </trans-unit>
+            <trans-unit id="plugin.forumlist.ElasticsearchDescription" approved="yes">
+                <source>Search results and form: Elasticsearch is required for this - the settings for Elasticsearch must be configured in the extension configuration.</source>
+                <target>Suchergebnisse und Formular: Hierfür wird Elasticsearch benötigt - in der Extensionkonfiguration müssen die Einstellungen zu Elasticsearch getätigt werden.</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

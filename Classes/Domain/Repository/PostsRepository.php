@@ -12,6 +12,99 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 final class PostsRepository extends Repository
 {
 
+    public function initializeObject()
+    {
+        $querySettings = $this->createQuery()->getQuerySettings();
+        $querySettings->setRespectStoragePage(false);
+        $this->setDefaultQuerySettings($querySettings);
+    }
+
+    public function findLatestPostByForum(int $forumUid)
+    {
+        $queryBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+            \TYPO3\CMS\Core\Database\ConnectionPool::class
+        )->getQueryBuilderForTable('tx_forumman_domain_model_posts');
+
+        $row = $queryBuilder
+            ->select('*')
+            ->from('tx_forumman_domain_model_posts')
+            ->where(
+                $queryBuilder->expr()->eq(
+                    'forum',
+                    $queryBuilder->createNamedParameter($forumUid)
+                ),
+                $queryBuilder->expr()->eq('deleted', 0),
+                $queryBuilder->expr()->eq('hidden', 0)
+            )
+            ->orderBy('tstamp', 'DESC')
+            ->setMaxResults(1)
+            ->executeQuery()
+            ->fetchAssociative();
+
+        //\TYPO3\CMS\Core\Utility\DebugUtility::debug($row);
+        //die();
+
+        if (!$row) {
+            return null;
+        }
+
+        // 👉 DAS ist der entscheidende Teil:
+        return $this->findByUid((int)$row['uid']);
+    }
+
+
+
+
+
+    public function findLatestActivityByForum(int $forumUid): ?array
+    {
+        $queryBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+            \TYPO3\CMS\Core\Database\ConnectionPool::class
+        )->getQueryBuilderForTable('tx_forumman_domain_model_posts');
+
+        $row = $queryBuilder
+            ->select('uid')
+            ->from('tx_forumman_domain_model_posts')
+            ->where(
+                $queryBuilder->expr()->eq(
+                    'forum',
+                    $queryBuilder->createNamedParameter($forumUid)
+                ),
+                $queryBuilder->expr()->eq('deleted', 0),
+                $queryBuilder->expr()->eq('hidden', 0)
+            )
+            ->orderBy('tstamp', 'DESC')
+            ->setMaxResults(1)
+            ->executeQuery()
+            ->fetchAssociative();
+
+        // 🔥 WICHTIG: Wenn kein Post existiert → sofort raus
+        if (!$row) {
+            return null;
+        }
+
+        $latestPost = $this->findByUid((int)$row['uid']);
+
+        // 🔥 ZUSÄTZLICHE ABSICHERUNG
+        if (!$latestPost) {
+            return null;
+        }
+
+        // 🔥 JETZT ERST getParent() verwenden!
+        if ($latestPost->getParent() && $latestPost->getParent() > 0) {
+            $thread = $this->findByUid($latestPost->getParent());
+        } else {
+            $thread = $latestPost;
+        }
+
+        return [
+            'post' => $latestPost,
+            'thread' => $thread,
+        ];
+    }
+
+
+
     public function updateEdit(int $postId, string $content): bool
     {
         $connection = GeneralUtility::makeInstance(ConnectionPool::class)
@@ -169,5 +262,27 @@ final class PostsRepository extends Repository
         return $query->matching(
             $query->equals('forum', $forumUid)
         )->count();
+    }
+
+
+    public function countRepliesByThread(int $threadUid): int
+    {
+        $queryBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+            \TYPO3\CMS\Core\Database\ConnectionPool::class
+        )->getQueryBuilderForTable('tx_forumman_domain_model_posts');
+
+        return (int)$queryBuilder
+            ->count('uid')
+            ->from('tx_forumman_domain_model_posts')
+            ->where(
+                $queryBuilder->expr()->eq(
+                    'parent',
+                    $queryBuilder->createNamedParameter($threadUid)
+                ),
+                $queryBuilder->expr()->eq('deleted', 0),
+                $queryBuilder->expr()->eq('hidden', 0)
+            )
+            ->executeQuery()
+            ->fetchOne();
     }
 }

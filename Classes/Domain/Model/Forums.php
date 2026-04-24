@@ -12,6 +12,8 @@ declare(strict_types=1);
 namespace Lanius\Forumman\Domain\Model;
 
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+use Lanius\Forumman\Domain\Model\Posts;
 
 final class Forums extends AbstractEntity
 {
@@ -24,52 +26,77 @@ final class Forums extends AbstractEntity
     protected int $sorting = 0;
 
     protected int $threadCount = 0;
-protected int $postCount = 0;
+    protected int $postCount = 0;
 
 
-protected int $threadCountDynamic = 0;
-protected int $postCountDynamic = 0;
+    protected int $threadCountDynamic = 0;
+    protected int $postCountDynamic = 0;
+    protected $latestActivity = null;
 
-public function getThreadCountDynamic(): int
-{
-    return $this->threadCountDynamic;
-}
+    protected ?ObjectStorage $posts = null;
 
-public function setThreadCountDynamic(int $count): void
-{
-    $this->threadCountDynamic = $count;
-}
+    protected ?\Lanius\Forumman\Domain\Model\Posts $latestPost = null;
 
-public function getPostCountDynamic(): int
-{
-    return $this->postCountDynamic;
-}
+    public function getLatestActivity()
+    {
+        return $this->latestActivity;
+    }
 
-public function setPostCountDynamic(int $count): void
-{
-    $this->postCountDynamic = $count;
-}
+    public function setLatestActivity($activity): void
+    {
+        $this->latestActivity = $activity;
+    }
+
+    public function getLatestPost(): ?\Lanius\Forumman\Domain\Model\Posts
+    {
+        return $this->latestPost;
+    }
+
+    public function setLatestPost(?\Lanius\Forumman\Domain\Model\Posts $post): void
+    {
+        $this->latestPost = $post;
+    }
+
+    public function getThreadCountDynamic(): int
+    {
+        return $this->threadCountDynamic;
+    }
+
+    public function setThreadCountDynamic(int $count): void
+    {
+        $this->threadCountDynamic = $count;
+    }
+
+    public function getPostCountDynamic(): int
+    {
+        return $this->postCountDynamic;
+    }
+
+    public function setPostCountDynamic(int $count): void
+    {
+        $this->postCountDynamic = $count;
+    }
 
 
-public function getThreadCount(): int
-{
-    return $this->threadCount;
-}
+    public function getThreadCount(): int
+    {
+        return $this->threadCount;
+    }
 
-public function setThreadCount(int $threadCount): void
-{
-    $this->threadCount = $threadCount;
-}
+    public function setThreadCount(int $threadCount): void
+    {
+        $this->threadCount = $threadCount;
+    }
 
-public function getPostCount(): int
-{
-    return $this->postCount;
-}
+    public function getPostCount(): int
+    {
+        return $this->postCount;
+    }
 
-public function setPostCount(int $postCount): void
-{
-    $this->postCount = $postCount;
-}
+    public function setPostCount(int $postCount): void
+    {
+        $this->postCount = $postCount;
+    }
 
     public function getSorting(): int
     {

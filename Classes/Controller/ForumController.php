@@ -93,9 +93,15 @@ final class ForumController extends ActionController
 
                 $threadCount = $this->postsRepository->countThreadsByForum($forum->getUid());
                 $postCount   = $this->postsRepository->countPostsByForum($forum->getUid());
+                $latestActivity = $this->postsRepository->findLatestActivityByForum($forum->getUid());
 
+
+
+                $forum->setLatestActivity($latestActivity);
+                //$forum->setLatestPost($latestPost);
                 $forum->_setProperty('threadCountDynamic', $threadCount);
                 $forum->_setProperty('postCountDynamic', $postCount);
+                //$forum->_setProperty('latestPost', $latestPost);
             }
         }
 
@@ -182,6 +188,12 @@ final class ForumController extends ActionController
         $pagination = new SlidingWindowPagination($paginator, $maximumLinks);
 
         $paginatedThreads = $paginator->getPaginatedItems();
+
+        foreach ($paginatedThreads as $thread) {
+            $replyCount = $this->postsRepository->countRepliesByThread($thread->getUid());
+
+            $thread->setReplyCount($replyCount);
+        }
 
         // --- Cache-Tags set ---
         /** @var ServerRequestInterface $request */

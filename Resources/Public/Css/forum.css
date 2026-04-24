@@ -473,3 +473,147 @@
     flex-shrink: 0;
     fill: currentColor;
 }
+
+
+
+
+/* ===== GLOBAL ===== */
+
+.forum {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* ===== CATEGORY ===== */
+
+.forum-category {
+    margin-bottom: 40px;
+}
+
+.forum-category-header {
+    margin-bottom: 15px;
+    border-bottom: 2px solid #eee;
+}
+
+.forum-category-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #222;
+    padding-bottom: 5px;
+}
+
+/* ===== FORUM LIST ===== */
+
+.forum-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* ===== CARD ===== */
+
+.forum-card {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+
+    padding: 20px;
+    border-radius: 12px;
+    background: #fff;
+
+    border: 1px solid #e5e7eb;
+
+    transition: all 0.2s ease;
+}
+
+.forum-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+}
+
+/* ===== LEFT ===== */
+
+.forum-main {
+    flex: 1;
+}
+
+.forum-title {
+    font-size: 1.2rem;
+    margin: 0 0 5px 0;
+}
+
+.forum-title a {
+    color: #111;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.forum-title a:hover {
+    color: #0077ff;
+}
+
+.forum-description {
+    color: #666;
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+}
+
+/* ===== LATEST ===== */
+
+.forum-latest {
+    font-size: 0.85rem;
+    color: #888;
+}
+
+.forum-latest-label {
+    font-weight: 500;
+}
+
+.forum-latest-thread {
+    color: #333;
+    /*margin-left: 5px;*/
+}
+
+.forum-latest-user {
+    margin-left: 5px;
+    color: #0077ff;
+}
+
+/* ===== RIGHT ===== */
+
+.forum-meta {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.forum-stat {
+    text-align: center;
+}
+
+.forum-stat-number {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #111;
+}
+
+.forum-stat-label {
+    font-size: 0.75rem;
+    color: #888;
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 768px) {
+    .forum-card {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .forum-meta {
+        justify-content: flex-start;
+    }
+}

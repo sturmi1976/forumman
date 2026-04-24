@@ -17,7 +17,7 @@ routeEnhancers:
           forum-slug: forumUid
 
       # Forum Pagination
-      - routePath: '/{forum-slug}/seite-{currentPage}'
+      - routePath: '/{forum-slug}/p-{currentPage}'
         _controller: 'Forum::showThreads'
         _arguments:
           forum-slug: forumUid
@@ -37,7 +37,7 @@ routeEnhancers:
           post-slug: post
 
       # Post Pagination (Replies)
-      - routePath: '/{forum-slug}/{post-slug}/seite-{currentPage}'
+      - routePath: '/{forum-slug}/{post-slug}/p-{currentPage}'
         _controller: 'Forum::show'
         _arguments:
           forum-slug: forum

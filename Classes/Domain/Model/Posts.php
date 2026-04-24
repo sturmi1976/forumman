@@ -20,6 +20,7 @@ final class Posts extends AbstractEntity
     protected ?int $createdAt = null;
 
     protected ?Forums $forum = null;
+    protected int $replyCount = 0;
 
 
     public function initializeObject(): void
@@ -141,5 +142,16 @@ final class Posts extends AbstractEntity
     public function setHidden(bool $hidden): void
     {
         $this->hidden = $hidden;
+    }
+
+
+    public function getReplyCount(): int
+    {
+        return $this->replyCount;
+    }
+
+    public function setReplyCount(int $count): void
+    {
+        $this->replyCount = $count;
     }
 }

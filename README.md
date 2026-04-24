@@ -72,16 +72,3 @@ Create the pages in the page tree as shown in the screenshot (or similar). On th
 
 ![Screenshot](docs/tree.png)
 
-## SEO
-
-Add the following configuration to the end of your `config.yaml` file:
-
-```yaml
-imports:
-  -
-    resource: 'EXT:forumman/Configuration/Routes/Forum.yaml'
-  -
-    resource: 'EXT:forumman/Configuration/Routes/Userlist.yaml'
-```
-
-This enables search engine friendly URLs for your forum.

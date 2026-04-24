@@ -307,6 +307,18 @@ Hallo %s,<br /><br />
         <trans-unit id="sharingHeadline">
             <target>Beitrag teilen</target>
         </trans-unit>
+        <trans-unit id="by">
+            <target>von</target>
+        </trans-unit>
+        <trans-unit id="reply.singular">
+            <target>Antwort</target>
+        </trans-unit>
+        <trans-unit id="reply.plural">
+            <target>Antworten</target>
+        </trans-unit>
+        <trans-unit id="lastPostLabel">
+            <target>Letzter Beitrag</target>
+        </trans-unit>
         </body>
     </file>
 </xliff>

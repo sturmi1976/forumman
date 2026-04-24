@@ -6,3 +6,6 @@ elasticsearchIndex = forumman_posts
 
 # cat=elasticsearch//c; type=boolean; label=Enable Backend Reindex Button
 enableReindexButton = 0
+
+# cat=Route Enhancer//d; type=boolean; label=Enable route import (Forum/User routes)
+enableRouteImport = 1

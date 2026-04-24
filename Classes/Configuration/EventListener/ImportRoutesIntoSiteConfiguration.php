@@ -8,6 +8,7 @@ use TYPO3\CMS\Core\Attribute\AsEventListener;
 use TYPO3\CMS\Core\Configuration\Event\SiteConfigurationLoadedEvent;
 use TYPO3\CMS\Core\Configuration\Loader\YamlFileLoader;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 
 #[AsEventListener(
     identifier: 'forumman/import-routes-into-site-configuration',
@@ -19,24 +20,25 @@ final readonly class ImportRoutesIntoSiteConfiguration
 
     public function __construct(
         private YamlFileLoader $yamlFileLoader,
+        private ExtensionConfiguration $extensionConfiguration,
     ) {}
 
     public function __invoke(SiteConfigurationLoadedEvent $event): void
     {
-        $routeConfiguration = $this->yamlFileLoader->load(self::ROUTES);
-        $routeConfiguration2 = $this->yamlFileLoader->load(self::ROUTES2);
+        $extConf = $this->extensionConfiguration->get('forumman');
+        $enableRouteImport = (bool)($extConf['enableRouteImport'] ?? true);
 
-        $siteConfiguration = $event->getConfiguration();
 
-        ArrayUtility::mergeRecursiveWithOverrule(
-            $siteConfiguration,
-            $routeConfiguration,
-        );
-        ArrayUtility::mergeRecursiveWithOverrule(
-            $siteConfiguration,
-            $routeConfiguration2,
-        );
+        if ($enableRouteImport) {
+            $routeConfiguration = $this->yamlFileLoader->load(self::ROUTES);
+            $routeConfiguration2 = $this->yamlFileLoader->load(self::ROUTES2);
 
-        $event->setConfiguration($siteConfiguration);
+            $siteConfiguration = $event->getConfiguration();
+
+            ArrayUtility::mergeRecursiveWithOverrule($siteConfiguration, $routeConfiguration);
+            ArrayUtility::mergeRecursiveWithOverrule($siteConfiguration, $routeConfiguration2);
+
+            $event->setConfiguration($siteConfiguration);
+        }
     }
 }

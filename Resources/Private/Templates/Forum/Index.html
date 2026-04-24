@@ -16,8 +16,8 @@
 </f:if>
 
 
-<div class="forum"> 
 
+<div class="forum">
 
 <f:for each="{categories}" as="category">
 
@@ -33,22 +33,46 @@
 
 <article class="forum-card">
 
+    <!-- LEFT -->
     <div class="forum-main">
 
         <h3 class="forum-title">
             <f:link.action action="showThreads" arguments="{forumUid: forum.uid}">
-    {forum.title}
-</f:link.action>
+                {forum.title}
+            </f:link.action>
         </h3>
 
         <p class="forum-description">
-            <f:format.raw>
-            {forum.description}
-            </f:format.raw>
+            <f:format.raw>{forum.description}</f:format.raw>
         </p>
+
+        <f:if condition="{forum.latestActivity}">
+            <f:then>
+                <div class="forum-latest">
+                    <span class="forum-latest-label">
+                        <f:translate key="lastPostLabel" languageKey="{fm:languageKey()}" />:
+                    </span><br />
+
+                    <f:link.action action="show" arguments="{post: forum.latestActivity.thread, forum: forum}">
+                        <f:format.crop maxCharacters="60" append="&nbsp;...">{forum.latestActivity.thread.title}</f:format.crop>
+                    </f:link.action>
+
+                    <span class="forum-latest-user">
+                        {f:translate(key: 'by', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')} <f:format.case mode="capital">{forum.latestActivity.post.user.username}</f:format.case>
+                    </span>
+                </div>
+            </f:then>
+            <f:else>
+                <div class="forum-latest">
+                    <span class="forum-latest-label">Letzter Beitrag:</span><br />
+                    <em>[ Keine Beiträge vorhanden ]</em>
+                </div>
+            </f:else>
+        </f:if>
 
     </div>
 
+    <!-- RIGHT -->
     <div class="forum-meta">
 
         <div class="forum-stat">
@@ -61,10 +85,6 @@
             <span class="forum-stat-label">Posts</span>
         </div>
 
-    </div>
-
-    <div>
-    
     </div>
 
 </article>

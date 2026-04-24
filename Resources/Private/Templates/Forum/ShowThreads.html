@@ -76,6 +76,22 @@
                 </f:link.action>
             </span>
         </div>
+
+        <f:if condition="{thread.replyCount} > 0">
+            <hr />
+            <div class="thread-meta-count">
+                <span>{thread.replyCount} 
+                    <f:if condition="{thread.replyCount} == 1">
+                        <f:then>
+                            <f:translate key="reply.singular" />
+                        </f:then>
+                        <f:else>
+                            <f:translate key="reply.plural" />
+                        </f:else>
+                    </f:if>
+                </span>
+            </div>
+        </f:if>
     </article>
 </f:for>
 
