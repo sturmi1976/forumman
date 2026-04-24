@@ -3,7 +3,7 @@
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   padding: 15px 20px;
-  max-width: 300px;
+  max-width: 100%;
   font-family: Arial, sans-serif;
 }
 .lastUsersOnline h3 {
@@ -16,7 +16,7 @@
 }
 .lastUsersOnline img {
     border: 1px #979797 solid;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); 
 }
 .lastUsersOnline .user-item {
     display:flex; 
