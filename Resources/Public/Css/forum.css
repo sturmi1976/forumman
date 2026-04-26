@@ -617,3 +617,11 @@
         justify-content: flex-start;
     }
 }
+
+
+span[data-identifier="tx-forumman-solved"] {
+    display: inline-block;
+}
+h2.thread-title {
+    display:inline-block;
+}

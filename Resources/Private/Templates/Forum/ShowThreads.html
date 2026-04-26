@@ -39,8 +39,11 @@
 
 
 <f:for each="{threads}" as="thread" iteration="i">
-    
+
     <article class="thread-card">
+        <f:if condition="{thread.solved}">
+            <core:icon identifier="tx-forumman-solved" size="small" />
+        </f:if>
         <h2 class="thread-title">
             <f:link.action action="show" arguments="{post: thread, forum: forum}">
                 {thread.title}

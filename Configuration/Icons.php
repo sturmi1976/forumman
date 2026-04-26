@@ -43,5 +43,9 @@ return [
         'provider' => SvgIconProvider::class,
         'source' => 'EXT:forumman/Resources/Public/Icons/Search.svg',
     ],
+    'tx-forumman-solved' => [
+        'provider' => SvgIconProvider::class,
+        'source' => 'EXT:forumman/Resources/Public/Icons/Solved.svg',
+    ],
 
 ];
