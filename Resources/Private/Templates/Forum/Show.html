@@ -1,8 +1,10 @@
 {namespace fm=Lanius\Forumman\ViewHelpers}
+{namespace f=TYPO3\CMS\Fluid\ViewHelpers}
+
 <f:layout name="Default" />
 
 <f:section name="HeadMetaTags">
-    <fm:pageTitle title="{post.title}" suffix=" / {post.forum.title}" />
+    <fm:pageTitle title="{f:if(condition: post.solved, then: '{f:translate(key:\'post.solved\')}: ', else: '')}{post.title}" suffix=" / {post.forum.title}" />
 
     <fm:metaTag property="og:title" content="{post.title} / {post.forum.title}" />
     <fm:metaTag property="og:description" content="{post.content -> f:format.crop(maxCharacters: 160, respectWordBoundaries: true)}" />
@@ -62,12 +64,85 @@
 
             <f:if condition="{post.user.uid} == {frontendUser}">
                 <div class="post_toolbar">
+                    <f:form action="markSolved" method="post">
+                        <f:form.hidden name="postUid" value="{post.uid}" />
+                        <f:form.hidden name="solved" value="{post.solved}" />
+                        <label class="switch">
+                            <input type="checkbox"
+                                name="solved"
+                                value="1"
+                                onchange="this.form.submit()"
+                                {f:if(condition: post.solved, then: 'checked')} />
+                                <span class="slider"></span>
+                                <span class="label toolbar-btn editBtn">
+                                <f:if condition="{post.solved}==0">
+                                    <f:then>
+                                        {f:translate(key: 'solvedLabel', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
+                                    </f:then>
+                                    <f:else>
+                                        {f:translate(key: 'isSolvedLabel', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
+                                    </f:else>
+                                </f:if>
+                            </span>
+                        </label>
+                    </f:form>
+
+
+                    <style>
+                        .switch {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.switch input {
+    display: none;
+}
+
+.slider {
+    position: relative;
+    width: 44px;
+    height: 24px;
+    background: #ccc;
+    border-radius: 999px;
+    transition: background 0.3s;
+}
+
+.slider::before {
+    content: "";
+    position: absolute;
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    top: 3px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.3s;
+}
+
+.switch input:checked + .slider {
+    background: #28a745;
+}
+
+.switch input:checked + .slider::before {
+    transform: translateX(20px);
+}
+
+.label {
+    font-size: 14px;
+}
+                    </style>
+
                     <a href="javascript:void(0);" class="toolbar-btn editBtn" data-id="{post.uid}">
                         <span class="icon">✏️</span>
                         <span class="label">Beitrag bearbeiten</span>
                     </a>
                 </div>
             </f:if>
+
+            
 
             <h1>{post.title}</h1>
             <p>
@@ -93,13 +168,13 @@
     <div class="post-content">
         <div class="post" id="post-{post.uid}">
             <div class="text">
-                <f:format.html>{post.content}</f:format.html>
+                <f:format.raw>{post.content}</f:format.raw>
             </div>
         </div>
         <f:if condition="{post.user.signature}">
             <hr />
             <div class="signature">
-                <f:format.html>{post.user.signature}</f:format.html>
+                <f:format.raw>{post.user.signature}</f:format.raw>
             </div>
         </f:if>
     </div>
@@ -185,7 +260,7 @@
             <f:if condition="{reply.reply.user.signature}">
             <hr />
             <div class="signature">
-                <f:format.html>{reply.reply.user.signature}</f:format.html>
+                <f:format.raw>{reply.reply.user.signature}</f:format.raw>
             </div>
         </f:if>
         </div>

@@ -319,6 +319,15 @@ Hello %s,<br /><br />
         <trans-unit id="lastPostLabel">
             <source>Last post</source>
         </trans-unit>
+        <trans-unit id="post.solved">
+            <source>[Solved]</source>
+        </trans-unit>
+        <trans-unit id="solvedLabel">
+            <source>Mark topic as solved</source>
+        </trans-unit>
+        <trans-unit id="isSolvedLabel">
+            <source>Marked as solved</source>
+        </trans-unit>
         </body>
     </file>
 </xliff>

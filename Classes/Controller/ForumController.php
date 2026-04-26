@@ -30,6 +30,7 @@ use TYPO3\CMS\Core\Pagination\SlidingWindowPagination;
 use Lanius\Forumman\Service\ElasticsearchService;
 
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+use TYPO3\CMS\Core\Information\Typo3Version;
 
 final class ForumController extends ActionController
 {
@@ -383,9 +384,14 @@ final class ForumController extends ActionController
 
     public function newThreadAction(int $forumUid): ResponseInterface
     {
+        $versionInformation = GeneralUtility::makeInstance(Typo3Version::class);
+        $majorVersion = $versionInformation->getMajorVersion();
+
         $forum = $this->forumsRepository->findByUid($forumUid);
 
         $this->view->assign('forum', $forum);
+        $this->view->assign('typo3Version', $majorVersion);
+
         return $this->htmlResponse();
     }
 
@@ -393,6 +399,9 @@ final class ForumController extends ActionController
 
     public function replyWriteAction(): ResponseInterface
     {
+
+        $versionInformation = GeneralUtility::makeInstance(Typo3Version::class);
+        $majorVersion = $versionInformation->getMajorVersion();
 
         // Language
         $language = $this->request->getAttribute('language');
@@ -496,7 +505,8 @@ final class ForumController extends ActionController
         $this->view->assignMultiple([
             'forum' => $forum,
             'post' => $post,
-            'userid' => $userId
+            'userid' => $userId,
+            'typo3Version' => $majorVersion
         ]);
 
         return $this->htmlResponse();
@@ -591,6 +601,37 @@ final class ForumController extends ActionController
     }
 
 
+
+
+    /* Thema als gelöst makieren */
+    public function markSolvedAction(int $postUid, ?int $solved = null): ResponseInterface
+    {
+        $post = $this->postsRepository->findByUid($postUid);
+
+        if (!$post) {
+            throw new \RuntimeException('Post not found', 404);
+        }
+
+        $post = $this->postsRepository->findByUid($postUid);
+
+        if (!$post) {
+            throw new \RuntimeException('Post not found', 404);
+        }
+
+        // 🔁 Toggle sicher berechnen
+        $current = (int)$post->isSolved();
+
+        $post->setSolved(!$current);
+
+        $this->postsRepository->update($post);
+
+        $forumUid = $post->getForum()?->getUid();
+
+        return $this->redirect('show', null, null, [
+            'forum' => $forumUid,
+            'post' => $postUid
+        ]);
+    }
 
 
 

@@ -30,6 +30,23 @@ final class Posts extends AbstractEntity
         }
     }
 
+    protected bool $solved = false;
+
+    public function isSolved(): bool
+    {
+        return $this->solved;
+    }
+
+    public function setSolved(bool $solved): void
+    {
+        $this->solved = $solved;
+    }
+
+    public function getSolved(): bool
+    {
+        return $this->solved;
+    }
+
 
     protected int $sysLanguageUid = 0;
 

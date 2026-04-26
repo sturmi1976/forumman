@@ -94,6 +94,14 @@ return [
                 //'readOnly' => true,
             ],
         ],
+        'solved' => [
+            'exclude' => true,
+            'label' => 'Solved',
+            'config' => [
+                'type' => 'check',
+                'default' => 0,
+            ],
+        ],
         'parent' => [
             'exclude' => true,
             'label' => 'Parent Post (Reply)',

@@ -319,6 +319,15 @@ Hallo %s,<br /><br />
         <trans-unit id="lastPostLabel">
             <target>Letzter Beitrag</target>
         </trans-unit>
+        <trans-unit id="post.solved">
+            <target>[Gelöst]</target>
+        </trans-unit>
+        <trans-unit id="solvedLabel">
+            <target>Thema als gelöst markieren</target>
+        </trans-unit>
+        <trans-unit id="isSolvedLabel">
+            <target>Als gelöst markiert</target>
+        </trans-unit>
         </body>
     </file>
 </xliff>

@@ -36,7 +36,7 @@ use TYPO3\CMS\Core\Resource\FileRepository;
 
 use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 use TYPO3\CMS\Core\Pagination\SlidingWindowPagination;
-
+use TYPO3\CMS\Core\Information\Typo3Version;
 
 
 final class UserController extends ActionController
@@ -126,6 +126,10 @@ final class UserController extends ActionController
 
     public function settingsAction(): ResponseInterface
     {
+        $versionInformation = GeneralUtility::makeInstance(Typo3Version::class);
+        $majorVersion = $versionInformation->getMajorVersion();
+
+
         /** @var \TYPO3\CMS\Extbase\Mvc\RequestInterface $request */
         $request = $this->request;
         // GET-Parameter für *dieses Plugin / Controller*
@@ -138,6 +142,7 @@ final class UserController extends ActionController
 
         $this->view->assign('user', $user);
         $this->view->assign('arguments', $arguments);
+        $this->view->assign('typo3Version', $majorVersion);
 
 
         return $this->htmlResponse();
