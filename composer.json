@@ -3,7 +3,7 @@
     "description": "Modern forum extension for TYPO3. Create discussion boards, threads, replies, and community-driven conversations. Includes pagination, latest activity, user interaction, and scalable architecture.",
     "type": "typo3-cms-extension",
     "license": "GPL-2.0-or-later",
-    "version": "1.6.3",
+    "version": "1.6.4",
     "authors": [
         {
             "name": "Andre Lanius", 

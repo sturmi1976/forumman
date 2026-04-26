@@ -10,7 +10,7 @@ $EM_CONF[$_EXTKEY] = [
     'author_email' => 'a-lanius@web.de',
     'author_company' => 'Andre Lanius',
 
-    'version' => '1.6.3',
+    'version' => '1.6.4',
 
     'constraints' => [
         'depends' => [
