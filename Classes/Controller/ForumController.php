@@ -227,6 +227,10 @@ final class ForumController extends ActionController
 
     public function showAction(int $post): ResponseInterface
     {
+        $versionInformation = GeneralUtility::makeInstance(Typo3Version::class);
+        $majorVersion = $versionInformation->getMajorVersion();
+
+
         /** @var \TYPO3\CMS\Extbase\Mvc\RequestInterface $request */
         $request = $this->request;
         // GET-Parameter für *dieses Plugin / Controller*
@@ -322,6 +326,7 @@ final class ForumController extends ActionController
             'currentPage' => $currentPage,
             'arguments' => $arguments,
             'frontendUser' => $this->getFrontendUserId(),
+            'typo3Version' => $majorVersion,
         ]);
 
         return $this->htmlResponse();
@@ -606,6 +611,7 @@ final class ForumController extends ActionController
     /* Thema als gelöst makieren */
     public function markSolvedAction(int $postUid, ?int $solved = null): ResponseInterface
     {
+
         $post = $this->postsRepository->findByUid($postUid);
 
         if (!$post) {

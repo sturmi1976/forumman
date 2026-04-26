@@ -339,4 +339,9 @@
     <f:render partial="Forum/Edit/EditCssJs" arguments="{_all}" />
 </f:security.ifAuthenticated>
 
+
+<f:if condition="{typo3Version} < 14">
+        <script src="https://cdn.jsdelivr.net/npm/tinymce@6/tinymce.min.js"></script>
+</f:if>
+
 </f:section>
