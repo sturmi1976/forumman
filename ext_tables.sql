@@ -7,8 +7,13 @@ CREATE TABLE fe_users (
     `signature` text
 );
 
-
 CREATE TABLE fe_groups (
     group_color VARCHAR(7) DEFAULT '' NOT NULL
 );
 
+CREATE TABLE tx_forumman_domain_model_posts (
+    title varchar(255) DEFAULT '' NOT NULL,
+    content text,
+
+    FULLTEXT KEY fulltext_idx (title, content)
+);

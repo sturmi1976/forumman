@@ -9,6 +9,9 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Lanius\Forumman\Domain\Model\Posts;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 
+use TYPO3\CMS\Core\Database\Connection;
+
+
 final class PostsRepository extends Repository
 {
 
@@ -176,6 +179,7 @@ final class PostsRepository extends Repository
 
         // Sortierung nach Erstellungsdatum absteigend
         $query->setOrderings([
+            'isAdminNotice' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING,
             'crdate' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING,
         ]);
 
@@ -284,5 +288,179 @@ final class PostsRepository extends Repository
             )
             ->executeQuery()
             ->fetchOne();
+    }
+
+
+
+    /* Ähnliche Themen */
+    public function findSimilarThreads(int $postUid, int $languageId, int $limit = 5): array
+    {
+        $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
+
+        $queryBuilder = $connectionPool->getQueryBuilderForTable(
+            'tx_forumman_domain_model_posts'
+        );
+
+        // 👉 aktuellen Post laden
+        $currentPost = $this->findByUid($postUid);
+        if (!$currentPost) {
+            return [];
+        }
+
+        // 👉 Suchtext bauen
+        $text = trim($currentPost->getTitle() . ' ' . strip_tags($currentPost->getContent()));
+
+        if ($text === '') {
+            return [];
+        }
+
+        $words = preg_split('/\s+/', $text);
+        $booleanSearch = '';
+
+        foreach ($words as $word) {
+            $word = trim($word);
+
+            if (mb_strlen($word) < 3) {
+                continue;
+            }
+
+            // Stop words
+            if (in_array(mb_strtolower($word), [
+                'und',
+                'oder',
+                'der',
+                'die',
+                'das',
+                'ein',
+                'eine',
+                'was',
+                'wie',
+                'ist'
+            ])) {
+                continue;
+            }
+
+            $booleanSearch .= $word . '* ';
+        }
+
+        $booleanSearch = trim($booleanSearch);
+
+        if ($booleanSearch === '') {
+            $booleanSearch = $currentPost->getTitle();
+        }
+
+        // Query
+        $rows = $queryBuilder
+            ->select(
+                'p.uid',
+                'p.title',
+                'p.tstamp',
+                'p.created_at',
+                'p.forum',
+                'p.user',
+                'p.sys_language_uid',
+                'p.is_admin_notice',
+            )
+            ->addSelectLiteral(
+                'MATCH(p.title, p.content)
+             AGAINST (:search IN BOOLEAN MODE) AS score'
+            )
+            ->from('tx_forumman_domain_model_posts', 'p')
+            ->where(
+                $queryBuilder->expr()->eq('p.parent', 0),
+                $queryBuilder->expr()->neq('p.uid', $queryBuilder->createNamedParameter($postUid)),
+                $queryBuilder->expr()->eq('p.deleted', 0),
+                $queryBuilder->expr()->eq('p.hidden', 0),
+                $queryBuilder->expr()->eq('p.sys_language_uid', $languageId),
+                $queryBuilder->expr()->eq('p.is_admin_notice', 0)
+            )
+            ->setParameter('search', $booleanSearch)
+            ->having('score > 3')
+            ->orderBy('score', 'DESC')
+            ->addOrderBy('p.created_at', 'DESC')
+            ->setMaxResults($limit)
+            ->executeQuery()
+            ->fetchAllAssociative();
+
+        if (!$rows) {
+            return [];
+        }
+
+        // =====================================================
+        // USER NACHLADEN
+        // =====================================================
+
+        $userIds = [];
+
+        foreach ($rows as $row) {
+            if (!empty($row['user'])) {
+                $userIds[] = (int)$row['user'];
+            }
+        }
+
+        $userIds = array_unique($userIds);
+
+        /** @var \Lanius\Forumman\Domain\Repository\FrontendUserRepository $userRepository */
+        $userRepository = GeneralUtility::makeInstance(FrontendUserRepository::class);
+
+        $users = $this->findByUids($userIds);
+
+        $userMap = [];
+
+        foreach ($users as $user) {
+            $userMap[$user['uid']] = $user;
+        }
+
+        // =====================================================
+        // 👉 RESULTAT BAUEN
+        // =====================================================
+
+        $results = [];
+
+        foreach ($rows as $row) {
+
+            $results[] = [
+                'uid'   => (int)$row['uid'],
+                'title' => $row['title'],
+                'tstamp' => (int)$row['tstamp'],
+                'score' => (float)$row['score'],
+                'forumUid' => (int)$row['forum'],
+                'user'  => $userMap[$row['user']] ?? null,
+            ];
+        }
+
+        return $results;
+    }
+
+
+
+    public function findByUids(array $uids): array
+    {
+        if ($uids === []) {
+            return [];
+        }
+
+        $connectionPool = GeneralUtility::makeInstance(ConnectionPool::class);
+
+        $queryBuilder = $connectionPool->getQueryBuilderForTable('fe_users');
+
+        $rows = $queryBuilder
+            ->select('uid', 'username')
+            ->from('fe_users')
+            ->where(
+                $queryBuilder->expr()->in(
+                    'uid',
+                    $queryBuilder->createNamedParameter(
+                        $uids,
+                        Connection::PARAM_INT_ARRAY
+                    )
+                ),
+                $queryBuilder->expr()->eq('deleted', 0),
+                $queryBuilder->expr()->eq('disable', 0)
+            )
+            ->executeQuery()
+            ->fetchAllAssociative();
+
+        return $rows ?: [];
     }
 }

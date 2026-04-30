@@ -233,6 +233,52 @@
 
 
 
+.switch {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.switch input {
+    display: none;
+}
+
+.slider {
+    position: relative;
+    width: 44px;
+    height: 24px;
+    background: #ccc;
+    border-radius: 999px;
+    transition: background 0.3s;
+}
+
+.slider::before {
+    content: "";
+    position: absolute;
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    top: 3px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.3s;
+}
+
+.switch input:checked + .slider {
+    background: #28a745;
+}
+
+.switch input:checked + .slider::before {
+    transform: translateX(20px);
+}
+
+.label {
+    font-size: 14px;
+}
+
+
 
 /* Grundlegendes Card Styling */
 .card {
@@ -624,4 +670,104 @@ span[data-identifier="tx-forumman-solved"] {
 }
 h2.thread-title {
     display:inline-block;
+}
+
+
+
+  .similar-threads {
+    margin-top: 40px;
+    padding: 20px 0px 20px 0px;
+    border-radius: 14px;
+    background: #ffffff;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+.similar-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #2b2b2b;
+}
+
+/* Table */
+.similar-table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+/* Header */
+.similar-table thead {
+    background: #1f2a44;
+    color: #fff;
+}
+
+.similar-table th {
+    text-align: left;
+    padding: 14px 16px;
+    font-size: 13px;
+    letter-spacing: 0.3px;
+    font-weight: 600;
+}
+
+/* Rows */
+.similar-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #f1f1f1;
+    font-size: 14px;
+    color: #333;
+}
+
+/* Hover */
+.similar-table tbody tr {
+    transition: background 0.2s ease;
+}
+
+.similar-table tbody tr:hover {
+    background: #f6f9ff;
+}
+
+/* Thread Link */
+.thread-title a {
+    color: #1f2a44;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.thread-title a:hover {
+    text-decoration: underline;
+}
+
+/* Author */
+.thread-author {
+    color: #666;
+    font-size: 13px;
+}
+
+/* Date */
+.thread-date {
+    color: #888;
+    font-size: 13px;
+}
+
+/* Score Badge */
+.score-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    background: #e8f0ff;
+    color: #1f2a44;
+}
+.score-badge {
+    background: linear-gradient(135deg, #e8f0ff, #d6e4ff);
+}
+
+@media (max-width: 768px) {
+    .score-col {
+        display: none;
+    }
 }

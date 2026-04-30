@@ -230,6 +230,13 @@ final class ForumController extends ActionController
         $versionInformation = GeneralUtility::makeInstance(Typo3Version::class);
         $majorVersion = $versionInformation->getMajorVersion();
 
+        /* FE User load */
+        $userUid = $this->getFrontendUserId();
+        $userData = null;
+        if ($userUid > 0) {
+            $userData = $this->frontendUserRepository->findByUid($userUid);
+        }
+
 
         /** @var \TYPO3\CMS\Extbase\Mvc\RequestInterface $request */
         $request = $this->request;
@@ -244,10 +251,21 @@ final class ForumController extends ActionController
         $language = $this->request->getAttribute('language');
         $languageId = $language->getLanguageId();
 
-        // Post laden
+        //DebuggerUtility::var_dump($languageId);
+
+        // Post load
         $postObject = $this->postsRepository->findByUid($post);
 
-        $forum = $this->forumsRepository->findByUid($postObject->getForum());
+        $forum = $this->forumsRepository->findByUid($postObject->getForum()->getUid());
+
+        // DebuggerUtility::var_dump($forum);
+
+
+        $similarThreads = $this->postsRepository->findSimilarThreads(
+            $postObject->getUid(),
+            $languageId,
+            5
+        );
 
         if (!$postObject) {
             throw new \RuntimeException('Post not found', 404);
@@ -327,6 +345,8 @@ final class ForumController extends ActionController
             'arguments' => $arguments,
             'frontendUser' => $this->getFrontendUserId(),
             'typo3Version' => $majorVersion,
+            'user' => $userData,
+            'similarThreads' => $similarThreads,
         ]);
 
         return $this->htmlResponse();
@@ -394,8 +414,15 @@ final class ForumController extends ActionController
 
         $forum = $this->forumsRepository->findByUid($forumUid);
 
+        /* FE User load */
+        $userUid = $this->getFrontendUserId();
+        if ($userUid > 0) {
+            $userData = $this->frontendUserRepository->findByUid($userUid);
+        }
+
         $this->view->assign('forum', $forum);
         $this->view->assign('typo3Version', $majorVersion);
+        $this->view->assign('user', $userData);
 
         return $this->htmlResponse();
     }
@@ -636,6 +663,35 @@ final class ForumController extends ActionController
         return $this->redirect('show', null, null, [
             'forum' => $forumUid,
             'post' => $postUid
+        ]);
+    }
+
+
+
+    public function toggleAdminNoticeAction(int $postUid): \Psr\Http\Message\ResponseInterface
+    {
+        $post = $this->postsRepository->findByUid($postUid);
+
+        if (!$post) {
+            throw new \RuntimeException('Post not found', 404);
+        }
+
+
+        // 🔁 Toggle
+        $current = $post->getIsAdminNotice();
+        $post->setIsAdminNotice(!$current);
+
+        $this->postsRepository->update($post);
+
+        // 👉 wichtig bei Extbase
+        $this->persistenceManager->persistAll();
+
+        $forumUid = $post->getForum()?->getUid();
+
+        // 🔁 Redirect zurück zum Thread
+        return $this->redirect('show', null, null, [
+            'forum' => $forumUid,
+            'post' => $post->getUid(),
         ]);
     }
 

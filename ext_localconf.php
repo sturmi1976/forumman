@@ -19,11 +19,11 @@ ExtensionUtility::configurePlugin(
     'Forumman',
     'ForumForumlist',
     [
-        ForumController::class => 'index,showThreads,newThread,createThread,show,replyWrite,edit,markSolved',
+        ForumController::class => 'index,showThreads,newThread,createThread,show,replyWrite,edit,markSolved,toggleAdminNotice',
         UserController::class  => 'show,settings,updateProfileImage,saveSettings',
     ],
     [
-        ForumController::class => 'createThread,replyWrite,edit,markSolved',
+        ForumController::class => 'createThread,replyWrite,edit,markSolved,toggleAdminNotice',
         UserController::class  => 'show,settings,updateProfileImage,saveSettings',
     ],
     ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,

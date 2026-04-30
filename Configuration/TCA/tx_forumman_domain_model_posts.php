@@ -102,6 +102,14 @@ return [
                 'default' => 0,
             ],
         ],
+        'is_admin_notice' => [
+            'exclude' => true,
+            'label' => 'Admin Info',
+            'config' => [
+                'type' => 'check',
+                'default' => 0,
+            ],
+        ],
         'parent' => [
             'exclude' => true,
             'label' => 'Parent Post (Reply)',

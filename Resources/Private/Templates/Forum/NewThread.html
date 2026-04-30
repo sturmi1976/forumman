@@ -2,6 +2,16 @@
 
 <f:form action="createThread" object="{post}" objectName="post" method="post">
 
+
+
+
+<f:if condition="{user.usergroup.0.admingroup}">
+    <label>
+        <f:form.checkbox property="isAdminNotice" name="isAdminNotice" value="1" />
+        Als Admin-Info markieren
+    </label>
+</f:if>
+
     <!-- Forum -->
     <f:form.hidden property="forum" value="{forum.uid}" />
 

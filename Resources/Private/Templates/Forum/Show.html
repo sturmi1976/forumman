@@ -37,18 +37,26 @@
         </f:link.action>
     </div>
     <f:security.ifAuthenticated>
-        <div class="tool_bar_right">
-            <f:link.action action="replyWrite" arguments="{forum: post.forum, post: post}" class="btn btn-primary new-thread">
-                {f:translate(key: 'reply_write_linktext', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
-            </f:link.action>
-        </div>
+        <f:if condition="{post.isAdminNotice} == 0 || {user.usergroup.0.admingroup} == 1">
+            <div class="tool_bar_right">
+                <f:link.action action="replyWrite" arguments="{forum: post.forum, post: post}" class="btn btn-primary new-thread">
+                    {f:translate(key: 'reply_write_linktext', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
+                </f:link.action>
+            </div>
+        </f:if>
     </f:security.ifAuthenticated>
  </div>
 
 
 <!-- Haupt-Post -->
 <f:if condition="{currentPage} < 2">
+<article class="post-wrapper"
+         itemscope
+         itemtype="https://schema.org/DiscussionForumPosting">
+
+
 <div class="post-wrapper">
+    <header class="post-header">
     <div class="post-header">
         <div class="avatar">
             <f:if condition="{post.user.image}">
@@ -62,8 +70,27 @@
         </div>
         <div class="post-meta">
 
-            <f:if condition="{post.user.uid} == {frontendUser}">
+            <f:if condition="{post.user.uid} == {frontendUser} || {user.usergroup.0.admingroup} == 1">
                 <div class="post_toolbar">
+
+                    <f:if condition="{user.usergroup.0.admingroup}">
+                        <f:form action="toggleAdminNotice" method="post">
+                            <f:form.hidden name="postUid" value="{post.uid}" />
+
+                            <label class="switch">
+                                <input type="checkbox"
+                                    name="isAdminNotice"
+                                    value="{post.isAdminNotice}"
+                                    onchange="this.form.submit()"
+                                    {f:if(condition: post.isAdminNotice, then: 'checked')} />
+
+                                <span class="slider"></span>
+                                <span class="label">Admin Info</span>
+                            </label>
+                        </f:form>
+                    </f:if>
+
+
                     <f:form action="markSolved" method="post">
                         <f:form.hidden name="postUid" value="{post.uid}" />
                         
@@ -88,53 +115,6 @@
                     </f:form>
 
 
-                    <style>
-                        .switch {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-}
-
-.switch input {
-    display: none;
-}
-
-.slider {
-    position: relative;
-    width: 44px;
-    height: 24px;
-    background: #ccc;
-    border-radius: 999px;
-    transition: background 0.3s;
-}
-
-.slider::before {
-    content: "";
-    position: absolute;
-    height: 18px;
-    width: 18px;
-    left: 3px;
-    top: 3px;
-    background: white;
-    border-radius: 50%;
-    transition: transform 0.3s;
-}
-
-.switch input:checked + .slider {
-    background: #28a745;
-}
-
-.switch input:checked + .slider::before {
-    transform: translateX(20px);
-}
-
-.label {
-    font-size: 14px;
-}
-                    </style>
-
                     <a href="javascript:void(0);" class="toolbar-btn editBtn" data-id="{post.uid}">
                         <span class="icon">✏️</span>
                         <span class="label">Beitrag bearbeiten</span>
@@ -144,13 +124,22 @@
 
             
 
-            <h1>{post.title}</h1>
+            <h1 itemprop="headline">
+                <f:if condition="{post.solved}">
+                    <span class="solved-badge">
+                        <core:icon identifier="tx-forumman-solved" size="small" />
+                    </span>
+                </f:if>
+                {post.title}
+            </h1>
             <p>
                 <strong>{f:translate(key: 'created_by', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}:</strong>
                 <f:link.action action="show" controller="User" arguments="{user: post.user}">
-                    <f:format.htmlspecialchars>
-                        <f:format.case mode="capitalWords">{post.user.username}</f:format.case>
-                    </f:format.htmlspecialchars>
+                    <span itemprop="author">
+                        <f:format.htmlspecialchars>
+                            <f:format.case mode="capitalWords">{post.user.username}</f:format.case>
+                        </f:format.htmlspecialchars>
+                    </span>
                 </f:link.action>
                 <f:if condition="{isOnline}">
                     <f:then>
@@ -161,14 +150,22 @@
                     </f:else>
                 </f:if>
             </p>
-            <p><strong>{f:translate(key: 'createdAt', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}:</strong> {post.createdAt -> f:format.date(format:'d.m.Y, H:i')}</p>
+            <p><strong>{f:translate(key: 'createdAt', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}:</strong> 
+                <time itemprop="datePublished"
+                      datetime="{post.createdAt -> f:format.date(format:'Y-m-d\TH:i:s')}">
+                    {post.createdAt -> f:format.date(format:'d.m.Y H:i')}
+                </time>
+            </p>
         </div>
     </div>
+</header>
 
     <div class="post-content">
         <div class="post" id="post-{post.uid}">
             <div class="text">
-                <f:format.raw>{post.content}</f:format.raw>
+                <section class="post-content" itemprop="articleBody">
+                    <f:format.raw>{post.content}</f:format.raw>
+                </section>
             </div>
         </div>
         <f:if condition="{post.user.signature}">
@@ -179,17 +176,23 @@
         </f:if>
     </div>
 </div>
+</article>
 </f:if>
 
 
-<!-- Antworten -->
+<!-- Replies -->
  <f:if condition="{replies}">
+    <section class="replies">
     <h3>
         {f:translate(key: 'answers_headline', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
     </h3>
  </f:if>
 
 <f:for each="{replies}" as="reply" iteration="i">
+
+<article class="reply-wrapper"
+                 itemscope
+                 itemtype="https://schema.org/Comment">
 
 <f:security.ifAuthenticated>
         <f:if condition="{i.isLast} && {arguments.reply} == 1">
@@ -216,6 +219,7 @@
         </f:if>
 
 
+        <header class="reply-header">
         <div class="reply-header">
             <div class="avatar">
                 <f:if condition="{reply.reply.user.image}">
@@ -232,11 +236,13 @@
             
             <div class="reply-meta">
                 <f:link.action action="show" controller="User" arguments="{user: reply.reply.user}">
-                    <f:format.htmlspecialchars>
-                            <f:format.case mode="capitalWords">
-                            {reply.reply.user.username}
-                            </f:format.case>
-                    </f:format.htmlspecialchars>
+                    <span itemprop="author">
+                        <f:format.htmlspecialchars>
+                                <f:format.case mode="capitalWords">
+                                {reply.reply.user.username}
+                                </f:format.case>
+                        </f:format.htmlspecialchars>
+                    </span>
                 </f:link.action>
                 <f:if condition="{reply.isOnline2}">
                     <f:then>
@@ -246,13 +252,18 @@
                         <span class="status-dot offline" title="Offline"></span>
                     </f:else>
                 </f:if>
-                <span class="reply-date">{reply.reply.createdAt -> f:format.date(format:'d.m.Y, H:i')}</span>
+            
+                <time itemprop="datePublished"
+                          datetime="{reply.reply.createdAt -> f:format.date(format:'Y-m-d\TH:i:s')}">
+                        <span class="reply-date">{reply.reply.createdAt -> f:format.date(format:'d.m.Y, H:i')}</span>
+                </time>
             </div>
         </div>
+    </header>
         <div class="reply-content">
             <div class="post" id="post-{reply.reply.uid}">
  
-            <div class="text">
+            <div class="text" itemprop="text">
                 <f:format.raw>{reply.reply.content}</f:format.raw>
             </div>
 
@@ -265,7 +276,12 @@
         </f:if>
         </div>
     </div>
+    </article>
 </f:for>
+
+<f:if condition="{replies}">
+    </section>
+</f:if>
 
 <!-- Pagination -->
 <f:if condition="{paginator.numberOfPages} > 1">
@@ -330,9 +346,64 @@
 
 <f:render partial="Forum/Show/Socialbuttons" arguments="{_all}" />
 
-
-
 <div id="toast" class="toast"></div>
+
+
+
+
+<f:if condition="{similarThreads}">
+    <aside class="similar-posts">
+    <div class="similar-threads">
+
+        <h3 class="similar-title">
+            {f:translate(key: 'similar_threads', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
+        </h3>
+
+        <table class="similar-table">
+            <thead>
+                <tr>
+                    <th>{f:translate(key: 'thread_label', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}</th>
+                    <th>{f:translate(key: 'author_label', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}</th>
+                    <th class="score-col">Score</th>
+                    <th>{f:translate(key: 'created_label', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <f:for each="{similarThreads}" as="thread">
+
+                    <tr>
+                        <td class="thread-title">
+                            <f:link.action action="show" arguments="{forum: thread.forumUid, post: thread.uid}">
+                                {thread.title}
+                            </f:link.action>
+                        </td>
+
+                        <td class="thread-author">
+                            <f:format.case mode="capitalWords">
+                                {thread.user.username}
+                            </f:format.case>
+                        </td>
+
+                        <td class="score-col">
+                            <span class="score-badge">
+                                {thread.score -> f:format.number(decimals: 2)}
+                            </span>
+                        </td>
+
+                        <td class="thread-date">
+                            {thread.tstamp -> f:format.date(format:'d.m.Y H:i')}
+                        </td>
+                    </tr>
+
+                </f:for>
+            </tbody>
+        </table>
+
+    </div>
+    </aside>
+</f:if>
+
 
 
 <f:security.ifAuthenticated>

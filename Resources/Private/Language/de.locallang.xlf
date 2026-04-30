@@ -328,6 +328,18 @@ Hallo %s,<br /><br />
         <trans-unit id="isSolvedLabel">
             <target>Als gelöst markiert</target>
         </trans-unit>
+        <trans-unit id="similar_threads">
+            <target>Ähnliche Themen</target>
+        </trans-unit>
+        <trans-unit id="thread_label">
+            <target>Thema</target>
+        </trans-unit>
+        <trans-unit id="author_label">
+            <target>Autor</target>
+        </trans-unit>
+        <trans-unit id="created_label">
+            <target>Erstellt am</target>
+        </trans-unit>
         </body>
     </file>
 </xliff>

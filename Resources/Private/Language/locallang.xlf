@@ -328,6 +328,18 @@ Hello %s,<br /><br />
         <trans-unit id="isSolvedLabel">
             <source>Marked as solved</source>
         </trans-unit>
+        <trans-unit id="similar_threads">
+            <source>Similar topics</source>
+        </trans-unit>
+        <trans-unit id="thread_label">
+            <source>Post</source>
+        </trans-unit>
+        <trans-unit id="author_label">
+            <source>Author</source>
+        </trans-unit>
+        <trans-unit id="created_label">
+            <source>Created at</source>
+        </trans-unit>
         </body>
     </file>
 </xliff>

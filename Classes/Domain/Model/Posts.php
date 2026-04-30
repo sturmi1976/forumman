@@ -30,6 +30,18 @@ final class Posts extends AbstractEntity
         }
     }
 
+    protected bool $isAdminNotice = false;
+
+    public function getIsAdminNotice(): bool
+    {
+        return $this->isAdminNotice;
+    }
+
+    public function setIsAdminNotice(bool $value): void
+    {
+        $this->isAdminNotice = $value;
+    }
+
     protected bool $solved = false;
 
     public function isSolved(): bool

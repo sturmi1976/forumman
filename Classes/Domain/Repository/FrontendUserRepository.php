@@ -313,4 +313,21 @@ final class FrontendUserRepository extends Repository
 
         return $users;
     }
+
+
+
+    public function findByUids(array $uids): array
+    {
+        if ($uids === []) {
+            return [];
+        }
+
+        $query = $this->createQuery();
+
+        $query->matching(
+            $query->in('uid', $uids)
+        );
+
+        return $query->execute()->toArray();
+    }
 }
