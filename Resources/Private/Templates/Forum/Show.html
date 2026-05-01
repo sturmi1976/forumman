@@ -7,6 +7,7 @@
     <fm:pageTitle title="{f:if(condition: post.solved, then: '{f:translate(key:\'post.solved\')}: ', else: '')}{post.title}" suffix=" / {post.forum.title}" />
 
     <fm:metaTag property="og:title" content="{post.title} / {post.forum.title}" />
+    <fm:metaTag property="description" content="{post.content -> f:format.crop(maxCharacters: 160, respectWordBoundaries: true)}" />
     <fm:metaTag property="og:description" content="{post.content -> f:format.crop(maxCharacters: 160, respectWordBoundaries: true)}" />
     <fm:metaTag property="og:url" content="{currentUrl}" />
     <fm:metaTag property="og:type" content="website" />
@@ -52,7 +53,8 @@
 <f:if condition="{currentPage} < 2">
 <article class="post-wrapper"
          itemscope
-         itemtype="https://schema.org/DiscussionForumPosting">
+         itemtype="https://schema.org/DiscussionForumPosting" 
+         itemprop="mainEntity">
 
 
 <div class="post-wrapper">
@@ -61,10 +63,10 @@
         <div class="avatar">
             <f:if condition="{post.user.image}">
                 <f:then>
-                    <f:image image="{post.user.image}" alt="{post.user.username}" width="80" height="80" />
+                    <f:image image="{post.user.image}" alt="{post.user.username}" width="80" height="80" itemprop="image" />
                 </f:then>
                 <f:else>
-                    <f:image src="EXT:forumman/Resources/Public/Images/no_pic.png" width="80" height="80" alt="no image" />
+                    <f:image src="EXT:forumman/Resources/Public/Images/no_pic.png" width="80" height="80" alt="no image" itemprop="image" />
                 </f:else>
             </f:if>
         </div>
@@ -123,6 +125,7 @@
             </f:if>
 
             
+            <link itemprop="url" href="{f:uri.action(action:'show', arguments:{forum: forum, post: post}, absolute:1)}" />
 
             <h1 itemprop="headline">
                 <f:if condition="{post.solved}">
@@ -134,13 +137,15 @@
             </h1>
             <p>
                 <strong>{f:translate(key: 'created_by', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}:</strong>
-                <f:link.action action="show" controller="User" arguments="{user: post.user}">
-                    <span itemprop="author">
+                <span class="thread-author" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <f:link.action action="show" controller="User" arguments="{user: post.user}" additionalAttributes="{itemprop: 'url'}">
+                    <span itemprop="name">
                         <f:format.htmlspecialchars>
                             <f:format.case mode="capitalWords">{post.user.username}</f:format.case>
                         </f:format.htmlspecialchars>
                     </span>
                 </f:link.action>
+                </span>
                 <f:if condition="{isOnline}">
                     <f:then>
                         <span class="status-dot online" title="Online"></span>
@@ -152,7 +157,7 @@
             </p>
             <p><strong>{f:translate(key: 'createdAt', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}:</strong> 
                 <time itemprop="datePublished"
-                      datetime="{post.createdAt -> f:format.date(format:'Y-m-d\TH:i:s')}">
+                    datetime="{post.createdAt -> f:format.date(format:'Y-m-d\\TH:i:sP')}">
                     {post.createdAt -> f:format.date(format:'d.m.Y H:i')}
                 </time>
             </p>
@@ -183,16 +188,20 @@
 <!-- Replies -->
  <f:if condition="{replies}">
     <section class="replies">
+ </f:if>
+
+<f:if condition="{replies}">
+    <section class="replies">
     <h3>
         {f:translate(key: 'answers_headline', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
     </h3>
- </f:if>
+</f:if>
 
 <f:for each="{replies}" as="reply" iteration="i">
 
 <article class="reply-wrapper"
-                 itemscope
-                 itemtype="https://schema.org/Comment">
+         itemscope
+         itemtype="https://schema.org/Comment">
 
 <f:security.ifAuthenticated>
         <f:if condition="{i.isLast} && {arguments.reply} == 1">
@@ -203,12 +212,10 @@
                     </div>
             </div>
         </f:if>
-    </f:security.ifAuthenticated>
+</f:security.ifAuthenticated>
 
     <div class="reply-wrapper">
 
-        
-        
         <f:if condition="{reply.reply.user.uid} == {frontendUser}">
             <div class="post_toolbar">
                 <a href="javascript:void(0);" class="toolbar-btn editBtn" data-id="{reply.reply.uid}">
@@ -218,9 +225,9 @@
             </div>
         </f:if>
 
-
         <header class="reply-header">
         <div class="reply-header">
+
             <div class="avatar">
                 <f:if condition="{reply.reply.user.image}">
                     <f:then>
@@ -232,18 +239,34 @@
                 </f:if>
             </div>
 
-    
-            
             <div class="reply-meta">
-                <f:link.action action="show" controller="User" arguments="{user: reply.reply.user}">
-                    <span itemprop="author">
-                        <f:format.htmlspecialchars>
+
+                <!-- AUTHOR FIX (Schema.org korrekt) -->
+                <span itemprop="author"
+                      itemscope
+                      itemtype="https://schema.org/Person">
+
+                    <!-- author URL (NEU – wichtig für Google) -->
+                    <link itemprop="url"
+                          href="{f:uri.action(action:'show', controller:'User', arguments:{user: reply.reply.user.uid}, absolute:1)}" />
+
+                    <f:link.action action="show"
+                                   controller="User"
+                                   arguments="{user: reply.reply.user.uid}"
+                                   class="userlink">
+
+                        <span itemprop="name">
+                            <f:format.htmlspecialchars>
                                 <f:format.case mode="capitalWords">
-                                {reply.reply.user.username}
+                                    {reply.reply.user.username}
                                 </f:format.case>
-                        </f:format.htmlspecialchars>
-                    </span>
-                </f:link.action>
+                            </f:format.htmlspecialchars>
+                        </span>
+
+                    </f:link.action>
+
+                </span>
+
                 <f:if condition="{reply.isOnline2}">
                     <f:then>
                         <span class="status-dot online" title="Online"></span>
@@ -252,31 +275,42 @@
                         <span class="status-dot offline" title="Offline"></span>
                     </f:else>
                 </f:if>
-            
+
+                <!-- DATE FIX (Zeitzone ergänzt, sonst Google Warning) -->
                 <time itemprop="datePublished"
-                          datetime="{reply.reply.createdAt -> f:format.date(format:'Y-m-d\TH:i:s')}">
-                        <span class="reply-date">{reply.reply.createdAt -> f:format.date(format:'d.m.Y, H:i')}</span>
+                      datetime="{reply.reply.createdAt -> f:format.date(format:'Y-m-d\\TH:i:sP')}">
+                    <span class="reply-date">
+                        {reply.reply.createdAt -> f:format.date(format:'d.m.Y, H:i')}
+                    </span>
                 </time>
+
             </div>
         </div>
     </header>
-        <div class="reply-content">
-            <div class="post" id="post-{reply.reply.uid}">
- 
+
+    <div class="reply-content">
+        <div class="post" id="post-{reply.reply.uid}">
+
+            <!-- TEXT FIX (Schema korrekt) -->
             <div class="text" itemprop="text">
-                <f:format.raw>{reply.reply.content}</f:format.raw>
+                <f:format.html>
+                    {reply.reply.content}
+                </f:format.html>
             </div>
 
-            </div>
-            <f:if condition="{reply.reply.user.signature}">
+        </div>
+
+        <f:if condition="{reply.reply.user.signature}">
             <hr />
             <div class="signature">
                 <f:format.raw>{reply.reply.user.signature}</f:format.raw>
             </div>
         </f:if>
-        </div>
+
     </div>
-    </article>
+</div>
+
+</article>
 </f:for>
 
 <f:if condition="{replies}">
@@ -374,7 +408,7 @@
 
                     <tr>
                         <td class="thread-title">
-                            <f:link.action action="show" arguments="{forum: thread.forumUid, post: thread.uid}">
+                            <f:link.action action="show" arguments="{forum: thread.forum, post: thread.uid}">
                                 {thread.title}
                             </f:link.action>
                         </td>
