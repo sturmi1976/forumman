@@ -29,6 +29,7 @@
 
 <div class="forum-list">
 
+
 <f:for each="{category.forums}" as="forum">
 
 <article class="forum-card">
@@ -46,7 +47,10 @@
             <f:format.raw>{forum.description}</f:format.raw>
         </p>
 
+        
+
         <f:if condition="{forum.latestActivity}">
+            
             <f:then>
                 <div class="forum-latest">
                     <span class="forum-latest-label">
@@ -64,7 +68,7 @@
             </f:then>
             <f:else>
                 <div class="forum-latest">
-                    <span class="forum-latest-label">Letzter Beitrag:</span><br />
+                    <span class="forum-latest-label"><f:translate key="lastPostLabel" languageKey="{fm:languageKey()}" />:</span><br />
                     <em>[ Keine Beiträge vorhanden ]</em>
                 </div>
             </f:else>

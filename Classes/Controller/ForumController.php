@@ -32,6 +32,8 @@ use Lanius\Forumman\Service\ElasticsearchService;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Core\Information\Typo3Version;
 
+use TYPO3\CMS\Core\Database\ConnectionPool;
+
 final class ForumController extends ActionController
 {
 
@@ -96,8 +98,11 @@ final class ForumController extends ActionController
                 $postCount   = $this->postsRepository->countPostsByForum($forum->getUid());
                 $latestActivity = $this->postsRepository->findLatestActivityByForum($forum->getUid());
 
+                //DebuggerUtility::var_dump($latestActivity);
+
 
                 if ($latestActivity !== null) {
+                    //DebuggerUtility::var_dump($latestActivity);
                     $forum->setLatestActivity($latestActivity);
                 }
 
@@ -235,6 +240,7 @@ final class ForumController extends ActionController
         $userData = null;
         if ($userUid > 0) {
             $userData = $this->frontendUserRepository->findByUid($userUid);
+            //DebuggerUtility::var_dump($userData); 
         }
 
 
@@ -365,6 +371,7 @@ final class ForumController extends ActionController
 
         // 🔒 Security Check
         if ($postObject->getUser()->getUid() !== $currentUser) {
+            //DebuggerUtility::var_dump($postObject->getUser());
             throw new \RuntimeException('Access denied', 403);
         }
 
@@ -484,6 +491,19 @@ final class ForumController extends ActionController
 
             $this->postsRepository->add($reply);
             $this->persistenceManager->persistAll();
+
+            $connection = GeneralUtility::makeInstance(ConnectionPool::class)
+                ->getConnectionForTable('tx_forumman_domain_model_posts');
+
+            $connection->update(
+                'tx_forumman_domain_model_posts',
+                [
+                    'tstamp' => time()
+                ],
+                [
+                    'uid' => $parentUid
+                ]
+            );
 
             $this->postsRepository->setLanguageUidForPost($reply->getUid(), $languageId);
 

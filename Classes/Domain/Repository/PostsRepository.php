@@ -61,51 +61,67 @@ final class PostsRepository extends Repository
 
 
     public function findLatestActivityByForum(int $forumUid): ?array
-    {
-        $queryBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
-            \TYPO3\CMS\Core\Database\ConnectionPool::class
-        )->getQueryBuilderForTable('tx_forumman_domain_model_posts');
+{
+    $queryBuilder = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+        \TYPO3\CMS\Core\Database\ConnectionPool::class
+    )->getQueryBuilderForTable('tx_forumman_domain_model_posts');
 
-        $row = $queryBuilder
-            ->select('uid')
-            ->from('tx_forumman_domain_model_posts')
-            ->where(
-                $queryBuilder->expr()->eq(
-                    'forum',
-                    $queryBuilder->createNamedParameter($forumUid)
-                ),
-                $queryBuilder->expr()->eq('deleted', 0),
-                $queryBuilder->expr()->eq('hidden', 0)
-            )
-            ->orderBy('tstamp', 'DESC')
-            ->setMaxResults(1)
-            ->executeQuery()
-            ->fetchAssociative();
+    $row = $queryBuilder
+        ->select('uid')
+        ->from('tx_forumman_domain_model_posts')
+        ->where(
+            $queryBuilder->expr()->eq(
+                'forum',
+                $queryBuilder->createNamedParameter($forumUid)
+            ),
+            $queryBuilder->expr()->eq('deleted', 0),
+            $queryBuilder->expr()->eq('hidden', 0)
+        )
 
-        // 🔥 WICHTIG: Wenn kein Post existiert → sofort raus
-        if (!$row) {
-            return null;
-        }
+        // 🔥 Antworten zuerst bevorzugen
+        ->addOrderBy('parent', 'DESC')
 
-        $latestPost = $this->findByUid((int)$row['uid']);
+        // 🔥 dann nach letzter Aktivität
+        ->addOrderBy('tstamp', 'DESC')
 
-        // 🔥 ZUSÄTZLICHE ABSICHERUNG
-        if (!$latestPost) {
-            return null;
-        }
+        ->setMaxResults(1)
+        ->executeQuery()
+        ->fetchAssociative();
 
-        // 🔥 JETZT ERST getParent() verwenden!
-        if ($latestPost->getParent() && $latestPost->getParent() > 0) {
-            $thread = $this->findByUid($latestPost->getParent());
-        } else {
-            $thread = $latestPost;
-        }
-
-        return [
-            'post' => $latestPost,
-            'thread' => $thread,
-        ];
+    if (!$row) {
+        return null;
     }
+
+    $latestPost = $this->findByUid((int)$row['uid']);
+
+    if (!$latestPost) {
+        return null;
+    }
+
+    // 👉 Thread bestimmen
+    if ($latestPost->getParent() && $latestPost->getParent() > 0) {
+        $thread = $this->findByUid($latestPost->getParent());
+
+        // 👉 User der Antwort
+        $user = $latestPost->getUser();
+
+    } else {
+
+        // 👉 Thread selbst
+        $thread = $latestPost;
+
+        // 👉 User vom Thread
+        $user = $thread->getUser();
+    }
+
+    return [
+        'post'   => $latestPost,
+        'thread' => $thread,
+        'user'   => $user
+    ];
+}
+
+
 
 
 
@@ -181,7 +197,7 @@ final class PostsRepository extends Repository
         // Sortierung nach Erstellungsdatum absteigend
         $query->setOrderings([
             'isAdminNotice' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING,
-            'crdate' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING,
+            'tstamp' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING,
         ]);
 
         return $query->execute();
@@ -350,6 +366,7 @@ final class PostsRepository extends Repository
                 'p.title',
                 'p.content',
                 'p.tstamp',
+                'p.crdate',
                 'p.created_at',
                 'p.forum',
                 'p.user',
@@ -383,14 +400,14 @@ final class PostsRepository extends Repository
             )
             ->setParameter('search', $booleanSearch)
 
-            ->having('score > 3')
+            ->having('score > 4')
             ->orderBy('score', 'DESC')
             ->addOrderBy('p.created_at', 'DESC')
             ->setMaxResults($limit)
             ->executeQuery()
             ->fetchAllAssociative();
 
-        // 👉 User strukturieren
+
         foreach ($rows as &$row) {
             $row['user'] = $row['user_uid'] ? [
                 'uid' => (int)$row['user_uid'],
@@ -399,6 +416,8 @@ final class PostsRepository extends Repository
                 'email' => $row['user_email'],
             ] : null;
             $row['forum'] = (int)$row['forum'];
+            $row['crdate'] = $row['crdate'];
+            $row['tstamp'] = $row['tstamp'];
 
             unset(
                 $row['user_uid'],

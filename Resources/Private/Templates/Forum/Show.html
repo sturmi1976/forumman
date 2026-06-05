@@ -216,7 +216,7 @@
 
     <div class="reply-wrapper">
 
-        <f:if condition="{reply.reply.user.uid} == {frontendUser}">
+        <f:if condition="{reply.reply.user.uid} == {frontendUser} || {user.usergroup.0.admingroup}">
             <div class="post_toolbar">
                 <a href="javascript:void(0);" class="toolbar-btn editBtn" data-id="{reply.reply.uid}">
                     <span class="icon">✏️</span>
@@ -381,8 +381,6 @@
 <f:render partial="Forum/Show/Socialbuttons" arguments="{_all}" />
 
 <div id="toast" class="toast"></div>
-
-
 
 
 <f:if condition="{similarThreads}">

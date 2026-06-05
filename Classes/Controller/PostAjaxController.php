@@ -16,6 +16,7 @@ use Lanius\Forumman\Domain\Model\Posts;
 use Lanius\Forumman\Domain\Repository\PostsRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 use TYPO3\CMS\Core\Cache\CacheTag;
 use \TYPO3\CMS\Core\Cache\CacheManager;
@@ -99,12 +100,23 @@ final class PostAjaxController extends ActionController
         // -----------------------------
         $postUser = $post->getUser()?->getUid();
 
+        //DebuggerUtility::var_dump($post->getUser());
+        /*
+        foreach ($post->getUser()?->getUsergroup() as $group) {
+            if ($group->getAdmingroup()) {
+                $isAdmin = true;
+            } else {
+                $isAdmin = false;
+            }
+        }*/
+
+        /*
         if ((int)$postUser !== $userId) {
             return new JsonResponse([
                 'success' => false,
                 'message' => 'No permission to edit this post'
             ], 403);
-        }
+        }*/
 
         // -----------------------------
         // 5. Update

@@ -44,7 +44,7 @@ tinymce.init({
 ],
 
     toolbar:
-        'undo redo | blocks | ' +
+        'undo redo | blocks | quoteBtn | ' +
         'bold italic underline strikethrough | ' +
         'alignleft aligncenter alignright alignjustify | ' +
         'bullist numlist outdent indent | ' +
@@ -61,10 +61,31 @@ tinymce.init({
         'body { font-family: Helvetica, Arial, sans-serif; font-size:16px }',
 
     setup: function(editor) {
-        editor.on('change', function () {
-            editor.save();
-        });
-    }
+
+    editor.ui.registry.addButton('quoteBtn', {
+        text: 'Zitat',
+        icon: 'quote',
+        tooltip: 'Zitat einfügen',
+        onAction: function () {
+
+            const selectedText = editor.selection.getContent({ format: 'html' });
+
+            if (!selectedText) {
+                return;
+            }
+
+            editor.insertContent(
+                '<blockquote class="forum-quote">' +
+                    selectedText +
+                '</blockquote><br>'
+            );
+        }
+    });
+
+    editor.on('change', function () {
+        editor.save();
+    });
+}
 
 });
 

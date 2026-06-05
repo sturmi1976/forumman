@@ -191,7 +191,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (!target) return;
 
-        // Scroll-Funktion ähnlich zu deinem Klick-Beispiel
+        
         function scrollToAnchor() {
             const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
             window.scrollTo({
@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
 
-        // Scrollen starten
+        // Scroll start
         scrollToAnchor();
 
         // Intersection Observer: FlashMessage erscheint, sobald sichtbar
