@@ -73,59 +73,86 @@
 
 <f:form action="saveSettings" object="{user}" name="user" method="post">
 
+
 <div class="settings-form-item">
     <div class="form-group switch-group">
-        <div class="switch-text">
-            <strong>{f:translate(key: 'settings.companyLabel', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}</strong><br>
-            <small>{f:translate(key: 'settings.companyText', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}</small>
+        <!-- <small style="margin-bottom: 13px; display: block;">{f:translate(key: 'settings.companyText', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}</small> -->
+        <div class="input-wrapper">
+            <f:form.textfield
+                property="company"
+                id="company"
+                class="form-lg-control"
+                placeholder=" "
+            />
+            <label for="company" class="floating-label">
+                {f:translate(key: 'settings.companyLabel', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
+            </label>
         </div>
-        <label class="switch">
-            <f:form.textfield property="company" class="form-lg-control" />
-        </label>
+    </div>
+</div>
+
+
+<div class="settings-form-item">
+    <div class="form-group switch-group">
+        <div class="input-wrapper">
+            <f:form.textfield
+                property="name"
+                id="name"
+                class="form-lg-control"
+                placeholder=" "
+            />
+            <label for="name" class="floating-label">
+                {f:translate(key: 'settings.yourName', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
+            </label>
+        </div>
     </div>
 </div>
 
 <div class="settings-form-item">
     <div class="form-group switch-group">
-        <div class="switch-text">
-            <strong>{f:translate(key: 'settings.yourName', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}</strong><br>
+        <div class="input-wrapper">
+            <f:form.textfield
+                property="city"
+                id="city"
+                class="form-lg-control"
+                placeholder=" "
+            />
+            <label for="city" class="floating-label">
+                {f:translate(key: 'settings.city', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
+            </label>
         </div>
-        <label class="switch">
-            <f:form.textfield property="name" class="form-lg-control" />
-        </label>
     </div>
 </div>
 
 <div class="settings-form-item">
     <div class="form-group switch-group">
-        <div class="switch-text">
-            <strong>{f:translate(key: 'settings.city', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}</strong><br>
+        <div class="input-wrapper">
+            <f:form.textfield
+                property="country"
+                id="country"
+                class="form-lg-control"
+                placeholder=" "
+            />
+            <label for="country" class="floating-label">
+                {f:translate(key: 'settings.country', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
+            </label>
         </div>
-        <label class="switch">
-            <f:form.textfield property="city" class="form-lg-control" />
-        </label>
     </div>
 </div>
 
 <div class="settings-form-item">
     <div class="form-group switch-group">
-        <div class="switch-text">
-            <strong>{f:translate(key: 'settings.country', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}</strong><br>
+        <div class="input-wrapper">
+            <f:form.textfield
+                property="www"
+                id="www"
+                class="form-lg-control"
+                placeholder=" "
+            />
+            <label for="www" class="floating-label">
+                {f:translate(key: 'settings.website', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
+            </label>
         </div>
-        <label class="switch">
-            <f:form.textfield property="country" class="form-lg-control" />
-        </label>
-    </div>
-</div>
-
-<div class="settings-form-item">
-    <div class="form-group switch-group">
-        <div class="switch-text">
-            <strong>{f:translate(key: 'settings.website', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}</strong><br>
-        </div>
-        <label class="switch">
-            <f:form.textfield property="www" placeholder="https://www.company.com" class="form-lg-control" />
-        </label>
     </div>
 </div>
 
@@ -181,14 +208,18 @@
 
 <div class="settings-form-item">
     <div class="form-group switch-group">
-        <div class="switch-text">
-            <strong>
+        <div class="input-wrapper">
+            <f:form.textfield
+                property="birthday"
+                id="birthday"
+                class="form-lg-control"
+                placeholder="dd-mm-yyyy"
+            />
+            <label for="birthday" class="floating-label">
                 {f:translate(key: 'settings.birthdayLabel', extensionName: 'Forumman', languageKey: '{fm:languageKey()}')}
-            </strong><br>
+            </label>
         </div>
-        <label class="switch">
-            <f:form.textfield property="birthday" placeholder="dd-mm-yyyy" class="form-lg-control" />
-        </label>
+
     </div>
 </div>
 
@@ -200,67 +231,97 @@
 
 <div class="settings-form-item">
     <div class="form-group switch-group">
-        <div class="switch-text">
-            <strong>Facebook</strong><br>
+        <div class="input-wrapper">
+            <f:form.textfield
+                property="facebooklink"
+                id="facebooklink"
+                class="form-lg-control"
+                placeholder=" "
+            />
+            <label for="facebooklink" class="floating-label">
+                Facebook
+            </label>
         </div>
-        <label class="switch">
-            <f:form.textfield property="facebooklink" placeholder="https://..." class="form-lg-control" />
-        </label>
     </div>
 </div>
 
 <div class="settings-form-item">
     <div class="form-group switch-group">
-        <div class="switch-text">
-            <strong>X (Twitter)</strong><br>
+        <div class="input-wrapper">
+            <f:form.textfield
+                property="twitterlink"
+                id="twitterlink"
+                class="form-lg-control"
+                placeholder=" "
+            />
+            <label for="twitterlink" class="floating-label">
+                X (Twitter)
+            </label>
         </div>
-        <label class="switch">
-            <f:form.textfield property="twitterlink" placeholder="https://..." class="form-lg-control" />
-        </label>
     </div>
 </div>
 
 <div class="settings-form-item">
     <div class="form-group switch-group">
-        <div class="switch-text">
-            <strong>LinkedIn</strong><br>
+        <div class="input-wrapper">
+            <f:form.textfield
+                property="linkedinlink"
+                id="linkedinlink"
+                class="form-lg-control"
+                placeholder=" "
+            />
+            <label for="linkedinlink" class="floating-label">
+                LinkedIn
+            </label>
         </div>
-        <label class="switch">
-            <f:form.textfield property="linkedinlink" placeholder="https://..." class="form-lg-control" />
-        </label>
     </div>
 </div>
 
 <div class="settings-form-item">
     <div class="form-group switch-group">
-        <div class="switch-text">
-            <strong>Instagram</strong><br>
+        <div class="input-wrapper">
+            <f:form.textfield
+                property="instagramlink"
+                id="instagramlink"
+                class="form-lg-control"
+                placeholder=" "
+            />
+            <label for="instagramlink" class="floating-label">
+                Instagram
+            </label>
         </div>
-        <label class="switch">
-            <f:form.textfield property="instagramlink" placeholder="https://..." class="form-lg-control" />
-        </label>
     </div>
 </div>
 
 <div class="settings-form-item">
     <div class="form-group switch-group">
-        <div class="switch-text">
-            <strong>Youtube</strong><br>
+        <div class="input-wrapper">
+            <f:form.textfield
+                property="youtubelink"
+                id="youtubelink"
+                class="form-lg-control"
+                placeholder=" "
+            />
+            <label for="youtubelink" class="floating-label">
+                YouTube
+            </label>
         </div>
-        <label class="switch">
-            <f:form.textfield property="youtubelink" placeholder="https://..." class="form-lg-control" />
-        </label>
     </div>
 </div>
 
 <div class="settings-form-item">
     <div class="form-group switch-group">
-        <div class="switch-text">
-            <strong>Xing</strong><br>
+        <div class="input-wrapper">
+            <f:form.textfield
+                property="xinglink"
+                id="xinglink"
+                class="form-lg-control"
+                placeholder=" "
+            />
+            <label for="xinglink" class="floating-label">
+                Xing
+            </label>
         </div>
-        <label class="switch">
-            <f:form.textfield property="xinglink" placeholder="https://..." class="form-lg-control" />
-        </label>
     </div>
 </div>
 
@@ -394,6 +455,37 @@
     max-width: 100%;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.form-lg-control {
+    width: 100%;
+    padding: 18px 12px 8px;
+}
+
+.floating-label {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #777;
+    pointer-events: none;
+    transition: all 0.25s ease;
+    background: #fff;
+    padding: 0 4px;
+}
+
+/* Beim Fokus */
+.form-lg-control:focus + .floating-label,
+/* Wenn Feld Inhalt hat */
+.form-lg-control:not(:placeholder-shown) + .floating-label {
+    top: 0;
+    transform: translateY(-50%);
+    font-size: 0.75rem;
+    color: #555;
 }
 </style>
 
