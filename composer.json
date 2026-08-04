@@ -4,6 +4,7 @@
     "type": "typo3-cms-extension",
     "license": "GPL-2.0-or-later",
     "version": "1.8.1",
+    "homepage": "https://www.dev-werk.de",
     "authors": [
         {
             "name": "Andre Lanius", 
